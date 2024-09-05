@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./Card";
+import Card from "./CardProductos";
 import BiciImagen from "../assets/Bici_ejemplo.svg";
 import Navbar from "./Navbar";
 import { nav } from "framer-motion/client";
@@ -10,8 +10,8 @@ export function Productos() {
              <Navbar/>
         <div className=" grid grid-cols-1 gap-8 mx-auto">
             <div className="container m-auto max-w-fit w-3/4 bg-blue p-2 my-4 rounded-md ">
-                <div className="flex gap-8">
-                    <h1 className=" font-secondary font-bold text-xl text-white">Filtrar por </h1>
+                <div className=" flex gap-8">
+                    <h1 className=" font-secondary font-bold text-xl text-white ">Filtrar por </h1>
                     <select class=" text-white w-1/4 m-auto font-secondary  font-bold  bg-blue ">
                         <option value='1'>Marca</option>
                         <option value='2'>Tipo Producto</option>
