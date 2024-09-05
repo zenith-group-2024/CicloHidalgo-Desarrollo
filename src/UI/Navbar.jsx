@@ -5,7 +5,7 @@ import cartIcon from '../assets/icons/cartIcon.svg';
 
 const Navbar = () => {
     return (
-        <nav className="bg-white p-2 w-full flex justify-between items-center">
+        <nav className="bg-white p-2 w-full flex justify-between items-center border-b-2 border-border-gray-opacity">
             <div className="navbar-logo">
                 <img  src={Logo} alt="logo" className="h-20 m-4" />
             </div>

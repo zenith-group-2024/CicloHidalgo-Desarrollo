@@ -12,6 +12,7 @@ export default {
         white: '#F0FAEF',
         black: '#1D1D1D',
         gray: '#6C757E',
+          'border-gray-opacity': '#6C757E80',
       },
       fontFamily: {
         primary: ['Montserrat', 'sans-serif'],
