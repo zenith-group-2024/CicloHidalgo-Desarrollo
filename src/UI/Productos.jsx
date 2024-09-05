@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./CardProductos";
 import BiciImagen from "../assets/Bici_ejemplo.svg";
 import Navbar from "./Navbar";
-import { nav } from "framer-motion/client";
+
 export function Productos() {
     return (
        
@@ -33,6 +33,7 @@ export function Productos() {
 />
                 </div>
             </div>
+          
             <div className="grid grid-cols-3 gap-8 mx-auto">
           
                    <Card
