@@ -11,5 +11,5 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
-Route::post('/user/login', [ClienteController::class, 'login']);
+Route::post('/user/login', [ClienteController::class, 'check']);
 Route::post('/user/singin', [ClienteController::class, 'store']);

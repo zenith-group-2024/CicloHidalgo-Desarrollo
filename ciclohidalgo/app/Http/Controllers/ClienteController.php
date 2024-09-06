@@ -96,23 +96,23 @@ class ClienteController extends Controller
         //
     }
 
-    public function login(Request $request)
+    public function check(Request $request)
     {
 
-        if(!Auth::attempt($request->only('email', 'password')))
+        if(!Auth::attempt($request->only('correo', 'contrasena')))
         {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $user = Cliente::where('email', $request['email'])->firstOrFail();
+        $cliente = Cliente::select('*')->where('clientes.correo', $request['correo'])->firstOrFail();
         
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $cliente->createToken('auth_token')->plainTextToken;
 
-        $uid =  $user->id;
+        $uid =  $cliente->id;
 
         session_start();
 
-        return response()->json($user);
+        return response()->json($cliente);
     }
 
     public function logout()
