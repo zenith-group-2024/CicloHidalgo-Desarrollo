@@ -14,10 +14,17 @@ return new class extends Migration
         Schema::create('ordenes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('productos_id')->constrained();
+<<<<<<< HEAD
             $table->foreignId('users_id')->constrained();
             $table->double('entrega')->notNull();
             $table->double('estado_orden')->notNull();
             $table->double('total')->notNull();
+=======
+            $table->foreignId('clientes_id')->constrained();
+            $table->double('entrega');
+            $table->double('estado_orden');
+            $table->double('total');
+>>>>>>> 09fb55b7be6d92971924a1b6bf3105c85ad0d3bb
             $table->timestamps();
         });
     }

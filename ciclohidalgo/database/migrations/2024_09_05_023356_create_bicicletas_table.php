@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('bicicletas', function (Blueprint $table) {
             $table->id();
-            $table->string('marca')->notNull();
-            $table->string('modelo')->notNull();
-            $table->string('tipo');
-            $table->string('problema');
+            $table->string('marca');
+            $table->string('modelo');
+            $table->string('tipo')->nullable();
+            $table->string('problema')->nullable();
             $table->timestamps();
         });
     }
