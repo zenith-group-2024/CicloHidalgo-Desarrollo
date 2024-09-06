@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import Checkboxes from "./CheckBoxPrueba";
 export function Productos() {
     return (
-        <div className="bg-[#F9F9F9] h-full w-full">
+        <div className="bg-white h-full w-full">
             <Navbar />
             <div className="grid grid-cols-4 gap-8  mt-8 mx-6 max-w-fit">
            
