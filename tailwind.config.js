@@ -9,7 +9,7 @@ export default {
       colors: {
         red: '#E53945',
         blue: '#457B9D', 
-        white: '#F0FAEF',
+        white: '#F9F9F9',
         black: '#1D1D1D',
         gray: '#6C757E',
           'border-gray-opacity': '#6C757E80',
