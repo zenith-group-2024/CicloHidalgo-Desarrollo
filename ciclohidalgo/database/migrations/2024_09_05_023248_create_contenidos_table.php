@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('contenidos', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo')->notNull();
-            $table->string('descripcion');
-            $table->string('video_incrustado')->notNull();
+            $table->string('titulo');
+            $table->string('descripcion')->nullable();
+            $table->string('video_incrustado');
             $table->timestamps();
         });
     }

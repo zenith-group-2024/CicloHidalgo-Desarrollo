@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('productos_id')->constrained();
             $table->foreignId('clientes_id')->constrained();
-            $table->double('entrega')->notNull();
-            $table->double('estado_orden')->notNull();
-            $table->double('total')->notNull();
+            $table->double('entrega');
+            $table->double('estado_orden');
+            $table->double('total');
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('clientes_id')->constrained();
             $table->foreignId('bicicletas_id')->constrained();
-            $table->string('tipo')->notNull();
-            $table->double('precio')->notNull();
-            $table->string('estado')->notNull();
+            $table->string('tipo');
+            $table->double('precio');
+            $table->string('estado');
             $table->timestamps();
         });
     }
