@@ -5,14 +5,15 @@ import './index.css'
 import Navbar from './UI/Navbar';
 import Productos from './UI/Productos';
 import Contenido from './UI/Contenido';
+import Hero from './UI/Hero';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <div className="App">
-      <Contenido/>
+      <Navbar/>
+      <Hero/>
+      
     </div>
     </>
   )

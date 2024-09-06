@@ -1,7 +1,6 @@
 import React from 'react';
 import Logo from '../assets/images/logo.svg';
-import  userIcon from '../assets/icons/userIcon.svg';
-import cartIcon from '../assets/icons/cartIcon.svg';
+import { ShoppingCart, UserRound } from 'lucide-react';
 
 const Navbar = () => {
     return (
@@ -18,8 +17,8 @@ const Navbar = () => {
             </div>
 
             <div className="flex space-x-4 m-4">
-                <img  src={userIcon} alt="logo" className="transform transition-transform duration-300 hover:scale-110" />
-                <img  src={cartIcon} alt="logo" className="transform transition-transform duration-300 hover:scale-110" />
+                <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
+                <UserRound size={28} className="transform transition-transform duration-300 hover:scale-110" />
             </div>
         </nav>
     );
