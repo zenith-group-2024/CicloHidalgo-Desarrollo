@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo')->notNull();
             $table->string('descripcion');
+            $table->string('video_incrustado')->notNull();
             $table->timestamps();
         });
     }
