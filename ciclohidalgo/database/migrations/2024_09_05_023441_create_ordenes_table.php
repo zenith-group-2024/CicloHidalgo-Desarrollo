@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ordenes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('productos_id')->constrained();
-            $table->foreignId('clientes_id')->constrained();
+            $table->foreignId('users_id')->constrained();
             $table->double('entrega')->notNull();
             $table->double('estado_orden')->notNull();
             $table->double('total')->notNull();

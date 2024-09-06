@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('clientes_id')->constrained();
+            $table->foreignId('users_id')->constrained();
             $table->foreignId('bicicletas_id')->constrained();
             $table->string('tipo')->notNull();
             $table->double('precio')->notNull();

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Mail\UserMail;
 use Illuminate\Http\Request;
-use App\Models\Cliente;
+use App\Mail\UserMail;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ClienteController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,21 +33,21 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
         $validator = validator($request->all(), [
-            'nombre' => ['required', 'string', 'max:255'],
-            'contacto' => ['string', 'max:255', 'unique:clientes'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'contacto' => ['string', 'max:255'],
             'direccion' => ['string', 'max:255'],
-            'correo' => ['required', 'string', 'email', 'max:255', 'unique:clientes'],
-            'contrasena' => ['required', 'string', 'min:8'],
-            'cumpleanos' => ['date'],
-            'boletin' => ['required','boolean']
-            
+            'password' => ['required', 'string', 'min:8'],
+            'cumpleanos' => ['string', 'max:255'],
+            'boletin' => ['required', 'boolean', 'max:255', 'unique:users'],
+
         ], [
-            'nombre.required' => 'this field is required.',
-            'contrasena.required' => 'this field is required.',
-            'corrreo.correo' => 'this field is required.',
-            'boletin.boletin' => 'this field is required.'
+            'name.required' => 'Name field is required.',
+            'boletin.required' => 'Boletin field is required.',
+            'password.required' => 'Password field is required.',
+            'email.required' => 'Email field is required.',
+            'email.email' => 'Email must be a valid email address.'
         ]);
 
         // Manejar errores de validación
@@ -61,22 +61,22 @@ class ClienteController extends Controller
 
         // Obtener datos validados
         $validated = $validator->validated();
-        $password = Hash::make($validated['contrasena']);
+        $password = Hash::make($validated['password']);
         $rand_code = random_int(100000, 999999);
 
         // Crear usuario en la base de datos
-        $user = Cliente::create([
-            'nombre' => $validated['nombre'],
+        $user = User::create([
+            'name' => $validated['name'],
             'contacto' => $validated['contacto'],
+            'email' => $validated['email'],
+            'password' => $password,
             'direccion' => $validated['direccion'],
-            'correo' => $validated['correo'],
-            'contrasena' => $password,
             'cumpleanos' => $validated['cumpleanos'],
-            'boletin' => $validated['boletin'],
+            'boletin' => $validated['boletin']
         ]);
 
         // Enviar correo electrónico
-        Mail::to($validated['correo'])->send(new UserMail($validated['nombre'], $user->id, $rand_code));
+        Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
 
         // Retornar respuesta JSON si es una solicitud API
         if ($request->is('api/*') || $request->wantsJson()) {
@@ -84,35 +84,31 @@ class ClienteController extends Controller
         }
 
         return response()->json(['message' => 'registered successfully'], 200);
+        // Retornar respuesta JSON si es una solicitud API
+        if ($request->is('api/*') || $request->wantsJson()) {
+          //  return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
+        }
+
+        return response()->json(['message' => 'registered successfully'], 200);
         // Redirigir a la vista de administración
         //return redirect()->route('admin.index')->with('success', 'User created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
     public function check(Request $request)
     {
-
-        if(!Auth::attempt($request->only('correo', 'contrasena')))
+        if(!Auth::attempt($request->only('email', 'password')))
         {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $cliente = Cliente::select('*')->where('clientes.correo', $request['correo'])->firstOrFail();
+        $user = User::where('email', $request['email'])->firstOrFail();
         
-        $token = $cliente->createToken('auth_token')->plainTextToken;
+        //$token = $user->createToken('auth_token')->plainTextToken;
 
-        $uid =  $cliente->id;
-
+        $uid =  $user->id;
         session_start();
 
-        return response()->json($cliente);
+        return response()->json($user);
     }
 
     public function logout()
@@ -124,6 +120,14 @@ class ClienteController extends Controller
         session_destroy();
         return response()->json(['message' => 'Logged out successfully']);
         //return redirect()->route('admin.login');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
     }
 
     /**
