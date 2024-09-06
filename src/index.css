@@ -7,3 +7,14 @@
 
 
 @tailwind utilities;
+
+/* Ocultar la barra de desplazamiento horizontal */
+.hide-scrollbar {
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari y Chrome */
+}
+
