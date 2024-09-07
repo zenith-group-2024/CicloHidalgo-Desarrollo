@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->date('cumpleanos');
+            $table->date('cumpleanos')->nullable();
             $table->boolean('boletin')->notNull();
             $table->string('password');
             $table->rememberToken();
