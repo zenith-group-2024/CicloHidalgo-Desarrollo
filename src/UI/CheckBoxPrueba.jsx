@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-
-const SelectWithCheckboxes = () => {
-  const [selectedOption, setSelectedOption] = useState('');
-  const [checkboxes, setCheckboxes] = useState({
-    option1: false,
-    option2: false,
-    option3: false,
-  });
-
-  const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+import { ChevronDown } from 'lucide-react';
+const SelectWithCheckboxes = ({checkboxOptions, selectLabel }) => {
+  const [showCheckboxes, setShowCheckboxes] = useState(false); // Por defecto, las marcas están ocultas
+  const [checkboxes, setCheckboxes] = useState(
+    checkboxOptions.reduce((acc, option) => ({ ...acc, [option.name]: false }), {})
+  );
 
   const handleCheckboxChange = (event) => {
     setCheckboxes({
@@ -19,59 +13,40 @@ const SelectWithCheckboxes = () => {
     });
   };
 
+  const toggleCheckboxes = () => {
+    setShowCheckboxes(!showCheckboxes); // Alterna la visibilidad de los checkboxes
+  };
+
   return (
     <div className="space-y-4">
-      {/* Dropdown select */}
-      <select
-        value={selectedOption}
-        onChange={handleSelectChange}
-        className="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      {/* Texto de selección (Marca) con función de toggle */}
+      <div 
+        className=" text-black w-full mb-4 font-secondary font-bold grid grid-cols-2 gap-52 bg-transparent border-b-2  border-gray p-2"
+        onClick={toggleCheckboxes}
+        
       >
-        <option value="">Select an option</option>
-        <option value="showCheckboxes">Show checkboxes</option>
-      </select>
+           {selectLabel} 
+         <ChevronDown className={`transition-transform duration-300 ${showCheckboxes ? 'rotate-180' : ''}`} />
+     
+      </div>
 
-      {/* Conditionally render checkboxes if option is selected */}
-      {selectedOption === 'showCheckboxes' && (
+      {/* Renderizar checkboxes solo si showCheckboxes es true */}
+      {showCheckboxes && (
         <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              name="option1"
-              checked={checkboxes.option1}
-              onChange={handleCheckboxChange}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-            />
-            <label htmlFor="option1" className="text-gray-700">
-              Option 1
-            </label>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              name="option2"
-              checked={checkboxes.option2}
-              onChange={handleCheckboxChange}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-            />
-            <label htmlFor="option2" className="text-gray-700">
-              Option 2
-            </label>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              name="option3"
-              checked={checkboxes.option3}
-              onChange={handleCheckboxChange}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-            />
-            <label htmlFor="option3" className="text-gray-700">
-              Option 3
-            </label>
-          </div>
+          {checkboxOptions.map((option, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                name={option.name}
+                checked={checkboxes[option.name]}
+                onChange={handleCheckboxChange}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label htmlFor={option.name} className="text-gray-700">
+                {option.label}
+              </label>
+            </div>
+          ))}
         </div>
       )}
     </div>
