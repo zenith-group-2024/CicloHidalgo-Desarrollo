@@ -42,9 +42,30 @@ class ProductoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, String $id)
     {
         //
+        $producto =Producto::select(
+            'productos.id',
+            'productos.marca',
+            'productos.especificacion',
+            'productos.subcategoria',
+            'productos.categoria',
+            'productos.modelo',
+            'productos.precio',
+            'productos.imagen',
+            'productos.codigo_barras',
+            'productos.cantidad',
+            'productos.destacado',   
+        )->where('id',$id)
+        ->first();
+
+        // Determinar si la solicitud espera una respuesta JSON
+        if ($request->is('api/*') || $request->wantsJson()) {
+            // Retornar el evento como una respuesta JSON
+            return response()->json(['event' => $producto]);
+        }
+
     }
 
     /**
