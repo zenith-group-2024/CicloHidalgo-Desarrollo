@@ -43,17 +43,7 @@ const CheckBoxMarca = ({ selectedCategory }) => {
   };
 
   // Mantener el estado de los checkboxes según las marcas filtradas
-  useEffect(() => {
-    const filteredBrands = getFilteredBrands();
-    const newCheckboxState = filteredBrands.reduce(
-      (acc, brand) => ({
-        ...acc,
-        [brand.name]: checkboxes[brand.name] || false, // Mantener el estado actual o inicializar en falso
-      }),
-      {}
-    );
-    setCheckboxes(newCheckboxState);
-  }, [selectedCategory]);
+  
 
   // Manejar el cambio de los checkboxes
   const handleCheckboxChange = (event) => {
@@ -85,7 +75,7 @@ const CheckBoxMarca = ({ selectedCategory }) => {
               <input
                 type="checkbox"
                 name={brand.name}
-                checked={checkboxes[brand.name] || false}
+                checked={checkboxes[brand.name]}
                 onChange={handleCheckboxChange}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
