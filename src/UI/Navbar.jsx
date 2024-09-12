@@ -6,7 +6,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef(null);
 
-    // Close menu when clicking outside
+    
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -32,7 +32,7 @@ const Navbar = () => {
                 </button>
             </div>
 
-            {/* Menu visible on desktop */}
+            
             <div className="hidden md:flex flex-grow justify-center space-x-8">
                 <a href="#home" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</a>
                 <a href="#about" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</a>
@@ -40,7 +40,7 @@ const Navbar = () => {
                 <a href="#contact" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</a>
             </div>
 
-            {/* Mobile menu */}
+           
             <div ref={menuRef} className={`fixed top-0 right-0 w-3/4 bg-white h-full shadow-lg flex flex-col items-center transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'} space-y-6 z-50 md:hidden`}>
                 <button
                     onClick={() => setIsOpen(false)}
@@ -60,7 +60,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Icons visible on both desktop and mobile */}
+            
             <div className="flex space-x-4 m-4 md:ml-4 hidden md:flex">
                 <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
                 <UserRound size={28} className="transform transition-transform duration-300 hover:scale-110" />

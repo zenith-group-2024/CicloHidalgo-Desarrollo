@@ -26,34 +26,34 @@ const ProductosDestacados = () => {
                     ref={carouselRef}
                     className="flex hide-scrollbar whitespace-nowrap scroll-smooth"
                 >
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
-                    <div className="inline-block w-96 p-6">
+                    <div className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
                         <Card title="Bici de montaña" precio="₡ 198.000,00 (IVAI)" img={BiciImagen} />
                     </div>
                 </div>

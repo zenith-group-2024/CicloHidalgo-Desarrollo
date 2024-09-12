@@ -8,13 +8,18 @@
 
 @tailwind utilities;
 
-/* Ocultar la barra de desplazamiento horizontal */
+
 .hide-scrollbar {
     overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none; 
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-    display: none; /* Safari y Chrome */
+    display: none; 
+}
+
+body {
+   
+    background-color: #F9F9F9;
 }
 
