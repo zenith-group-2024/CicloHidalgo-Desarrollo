@@ -33,7 +33,7 @@ const CheckBoxCategoria = ({ onCategoryChange }) => {
         <div className="space-y-4">
             {/* Texto de selección con toggle */}
             <div
-                className="text-black w-full mb-4 font-secondary font-bold grid grid-cols-2 gap-52 bg-transparent border-b-2 border-gray p-2"
+                className="text-black w-full mb-4 font-secondary font-bold grid grid-cols-2 gap-56 bg-transparent border-b-2 border-gray p-2"
                 onClick={toggleCheckboxes}
             >
                 Categoría

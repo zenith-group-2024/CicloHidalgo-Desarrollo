@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
-const CheckBoxMarca = ({ selectedCategory }) => {
+const CheckBoxSubCategoria = ({ selectedCategory }) => {
   const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [checkboxes, setCheckboxes] = useState({});
 
@@ -14,13 +14,13 @@ const CheckBoxMarca = ({ selectedCategory }) => {
   const getFilteredBrands = () => {
     const brandsByCategory = {
       Bici: [
-        { name: "Cannondale", label: "Cannondale" },
-        { name: "SCOTT", label: "SCOTT" },
+        { name: "Bici de Montaña", label: "Bici de Montaña" },
+        { name: "Bici de Niño", label: "Bici de Niño" },
       ],
       Ropa: [
-        { name: "Nike", label: "Nike" },
-        { name: "Adidas", label: "Adidas" },
-        { name: "Tommy", label: "TOMMY" },
+        { name: "Guantes", label: "Guantes" },
+        { name: "Camisas", label: "Camisas" },
+        { name: "Pantalonetas", label: "Pantalonetas" },
       ],
       Repuesto: [
         { name: "TOTEM", label: "TOTEM" },
@@ -54,10 +54,10 @@ const CheckBoxMarca = ({ selectedCategory }) => {
     <div className="space-y-4">
      
       <div
-        className="text-black w-full mb-4 font-secondary font-bold grid grid-cols-2 gap-56 bg-transparent border-b-2 border-gray p-2"
+        className="text-black w-full mb-4 font-secondary  font-bold flex items-center gap-40  bg-transparent border-b-2 border-gray p-2"
         onClick={toggleCheckboxes}
       >
-        Marca
+        Sub Categoria
         <ChevronDown
           className={`transition-transform duration-300 ${showCheckboxes ? "rotate-180" : ""}`}
         />
@@ -86,4 +86,4 @@ const CheckBoxMarca = ({ selectedCategory }) => {
   );
 };
 
-export default CheckBoxMarca;
+export default CheckBoxSubCategoria;

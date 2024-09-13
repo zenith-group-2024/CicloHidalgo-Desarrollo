@@ -1,9 +1,11 @@
 import React from "react";
-import Card from "./CardContenidos";
-import Navbar from "./Navbar";
+import Card from "../UI/CardContenidos";
+import Navbar from "../UI/Navbar";
 import PruebaVideo from "../assets/videos/Prueba_video.mp4";
-import ContenidoHero from "../assets/images/ContenidoHero.svg";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Footer from "../UI/Footer";
 
 export function Contenido() {
   const settings = {
@@ -30,16 +32,14 @@ export function Contenido() {
     <div className="bg-white h-full w-full">
       <Navbar />
       <h1 className="text-center text-3xl font-secondary font-bold my-4 hover:underline">Videos</h1>
-      <Slider {...settings} className="px-4">
-        <Card title="Video de prueba Ciclo Hidalgo" videoUrl={PruebaVideo} />
+      <Slider {...settings} className="px-4 mb-8">
         <Card title="Video de prueba Ciclo Hidalgo" videoUrl={PruebaVideo} />
         <Card title="Video de prueba Ciclo Hidalgo" videoUrl={PruebaVideo} />
         <Card title="Video de prueba Ciclo Hidalgo" videoUrl={PruebaVideo} />
         <Card title="Video de prueba Ciclo Hidalgo" videoUrl={PruebaVideo} />
         <Card title="Video de prueba Ciclo Hidalgo" videoUrl={PruebaVideo} />
       </Slider>
-    
-
+      <Footer/>
     </div>
   );
 }

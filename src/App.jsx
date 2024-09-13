@@ -1,29 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './index.css'
-import Navbar from './UI/Navbar';
-import Productos from './UI/Productos';
-import Contenido from './UI/Contenido';
-import AuthForm from './UI/Forms';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import HomePage from './pages/HomePage'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import HomePage from './pages/HomePage';
+import Contenido from './pages/Contenido';
+import Productos from './pages/Productos';
+
+
 
 function App() {
-  
+ 
+
   return (
-    <>
-      <div className="App">
-      < Contenido/>
-
-      <HomePage />
-   
-
+    <BrowserRouter>
       
-    </div>
-    </>
-  )
-} export default App
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/Contenido" element={<Contenido />} />
+        <Route path="/Productos" element={<Productos />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
 
+    
+      
+    </BrowserRouter>
+  );
+}
 
+export default App;
