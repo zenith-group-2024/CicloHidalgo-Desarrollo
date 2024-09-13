@@ -5,12 +5,11 @@ const CheckBoxSubCategoria = ({ selectedCategory }) => {
   const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [checkboxes, setCheckboxes] = useState({});
 
-  // Alternar la visibilidad de las marcas
+ 
   const toggleCheckboxes = () => {
     setShowCheckboxes(!showCheckboxes);
   };
 
-  // Función para combinar marcas de las categorías seleccionadas
   const getFilteredBrands = () => {
     const brandsByCategory = {
       Bici: [
@@ -27,7 +26,7 @@ const CheckBoxSubCategoria = ({ selectedCategory }) => {
       ],
     };
 
-    // Combinar todas las marcas de las categorías seleccionadas
+    
     let combinedBrands = [];
     selectedCategory.forEach((category) => {
       if (brandsByCategory[category]) {
@@ -35,7 +34,7 @@ const CheckBoxSubCategoria = ({ selectedCategory }) => {
       }
     });
 
-    // Eliminar duplicados
+   
     const uniqueBrands = Array.from(new Set(combinedBrands.map((brand) => brand.name)))
       .map((name) => combinedBrands.find((brand) => brand.name === name));
 
@@ -54,7 +53,7 @@ const CheckBoxSubCategoria = ({ selectedCategory }) => {
     <div className="space-y-4">
      
       <div
-        className="text-black w-full mb-4 font-secondary  font-bold flex items-center gap-40  bg-transparent border-b-2 border-gray p-2"
+        className="text-black w-full mb-4 font-secondary  font-bold flex items-center gap-48 bg-transparent border-b-2 border-gray p-2"
         onClick={toggleCheckboxes}
       >
         Sub Categoria

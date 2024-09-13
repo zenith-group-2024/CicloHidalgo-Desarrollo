@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const AuthForm = ({ isOpen, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
 
-  // Función para cerrar el modal al hacer clic fuera del contenido
   const handleCloseModal = (e) => {
     if (e.target.id === 'modal-overlay') {
       onClose();
@@ -18,38 +17,35 @@ const AuthForm = ({ isOpen, onClose }) => {
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       >
         <div
-          onClick={(e) => e.stopPropagation()} // Prevenir el cierre cuando se hace clic dentro del modal
-          className="bg-white h-auto w-11/12 sm:w-2/6 p-8 rounded-lg shadow-lg"
+          onClick={(e) => e.stopPropagation()} 
+          className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-4 sm:mx-6 lg:mx-8"
         >
-          {/* Form Header */}
-          <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: isLogin ? '#1D1D1D' : '#1D1D1D' }}>
+          <h2 className="text-2xl font-bold mb-6 text-center">
             {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
           </h2>
 
-          {/* Form */}
-          <form className="bg-white">
+          <form className="space-y-4">
             {!isLogin && (
-              <div className="mb-4">
+              <div>
                 <label className="block text-black mb-2">Nombre Completo</label>
                 <input type="text" className="w-full px-3 py-2 rounded-lg text-black border" placeholder="Ingresa tu nombre" />
               </div>
             )}
-            <div className="mb-4">
+            <div>
               <label className="block text-black mb-2">Correo Electrónico</label>
               <input type="email" className="w-full px-3 py-2 border rounded-lg text-black" placeholder="Ingresa tu correo" />
             </div>
-            <div className="mb-4">
+            <div>
               <label className="block text-black mb-2">Contraseña</label>
               <input type="password" className="w-full px-3 py-2 border rounded-lg text-black" placeholder="Ingresa tu contraseña" />
             </div>
-            <button type="submit" className={`w-2/4 py-2 rounded-lg text-white mx-28 bg-red mt-5 ${isLogin ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'}`}>
+            <button type="submit" className={`w-full py-2 rounded-lg text-white mt-5 ${isLogin ? 'bg-red hover:bg-red' : 'bg-red hover:bg-red'}`}>
               {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
             </button>
           </form>
 
-          {/* Toggle Button */}
           <div className="mt-4 text-center">
-            <button onClick={() => setIsLogin(!isLogin)} className="text-gray-700 hover:underline">
+            <button onClick={() => setIsLogin(!isLogin)} className="text-gray hover:underline">
               {isLogin ? '¿No tienes cuenta? Registrarse' : '¿Ya tienes cuenta? Inicia sesión'}
             </button>
           </div>

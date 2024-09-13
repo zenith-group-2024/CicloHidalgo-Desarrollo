@@ -2,11 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, UserRound, AlignJustify } from 'lucide-react';
 import { Link } from "react-router-dom";
 import Logo from '../assets/images/logo.svg';
-import AuthForm from './Forms.jsx'; // Importa el componente AuthForm
-
+import AuthForm from './Forms.jsx'; 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false); // Estado para el menú móvil
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); // Estado para el modal de autenticación
+  const [isOpen, setIsOpen] = useState(false); 
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); 
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -54,11 +53,11 @@ const Navbar = () => {
         <UserRound
           size={28}
           className="transform transition-transform duration-300 hover:scale-110 cursor-pointer"
-          onClick={handleOpenAuthModal} // Abre el modal al hacer clic
+          onClick={handleOpenAuthModal} 
         />
       </div>
 
-      {/* Modal de autenticación */}
+      
       {isAuthModalOpen && <AuthForm isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
     </nav>
   );

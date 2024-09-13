@@ -5,12 +5,12 @@ const CheckBoxMarca = ({ selectedCategory }) => {
   const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [checkboxes, setCheckboxes] = useState({});
 
-  // Alternar la visibilidad de las marcas
+ 
   const toggleCheckboxes = () => {
     setShowCheckboxes(!showCheckboxes);
   };
 
-  // Función para combinar marcas de las categorías seleccionadas
+ 
   const getFilteredBrands = () => {
     const brandsByCategory = {
       Bici: [
@@ -27,7 +27,6 @@ const CheckBoxMarca = ({ selectedCategory }) => {
       ],
     };
 
-    // Combinar todas las marcas de las categorías seleccionadas
     let combinedBrands = [];
     selectedCategory.forEach((category) => {
       if (brandsByCategory[category]) {
@@ -35,7 +34,6 @@ const CheckBoxMarca = ({ selectedCategory }) => {
       }
     });
 
-    // Eliminar duplicados
     const uniqueBrands = Array.from(new Set(combinedBrands.map((brand) => brand.name)))
       .map((name) => combinedBrands.find((brand) => brand.name === name));
 
@@ -73,7 +71,7 @@ const CheckBoxMarca = ({ selectedCategory }) => {
                 name={brand.name}
                 checked={checkboxes[brand.name]}
                 onChange={handleCheckboxChange}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 rounded focus:ring-blue"
               />
               <label htmlFor={brand.name} className="text-gray-700 ml-2">
                 {brand.label}

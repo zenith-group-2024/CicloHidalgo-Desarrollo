@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 const SelectWithCheckboxes = ({checkboxOptions, selectLabel }) => {
-  const [showCheckboxes, setShowCheckboxes] = useState(false); // Por defecto, las marcas están ocultas
+  const [showCheckboxes, setShowCheckboxes] = useState(false); 
   const [checkboxes, setCheckboxes] = useState(
     checkboxOptions.reduce((acc, option) => ({ ...acc, [option.name]: false }), {})
   );
@@ -14,14 +14,14 @@ const SelectWithCheckboxes = ({checkboxOptions, selectLabel }) => {
   };
 
   const toggleCheckboxes = () => {
-    setShowCheckboxes(!showCheckboxes); // Alterna la visibilidad de los checkboxes
+    setShowCheckboxes(!showCheckboxes); 
   };
 
   return (
     <div className="space-y-4">
-      {/* Texto de selección (Marca) con función de toggle */}
+     
       <div 
-        className=" text-black w-full mb-4 font-secondary font-bold grid grid-cols-2 gap-52 bg-transparent border-b-2  border-gray p-2"
+        className=" text-black w-full mb-4 font-secondary font-bold grid grid-cols-2 gap-48 bg-transparent border-b-2  border-gray p-2"
         onClick={toggleCheckboxes}
         
       >
@@ -30,7 +30,7 @@ const SelectWithCheckboxes = ({checkboxOptions, selectLabel }) => {
      
       </div>
 
-      {/* Renderizar checkboxes solo si showCheckboxes es true */}
+    
       {showCheckboxes && (
         <div className="space-y-2">
           {checkboxOptions.map((option, index) => (
