@@ -8,6 +8,7 @@ import Contenido from './UI/Contenido';
 import AuthForm from './UI/Forms';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import HomePage from './pages/HomePage'
 
 function App() {
   
@@ -15,6 +16,11 @@ function App() {
     <>
       <div className="App">
       < Contenido/>
+
+      <HomePage />
+   
+
+      
     </div>
     </>
   )

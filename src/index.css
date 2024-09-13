@@ -7,3 +7,19 @@
 
 
 @tailwind utilities;
+
+
+.hide-scrollbar {
+    overflow-x: auto;
+    scrollbar-width: none; 
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; 
+}
+
+body {
+   
+    background-color: #F9F9F9;
+}
+
