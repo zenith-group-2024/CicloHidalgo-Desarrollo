@@ -9,7 +9,7 @@ return(
    <video src={props.videoUrl} controls className="w-full m-auto ">
     Tu navegador no soporta la etiqueta de video.
     </video>
-    <div className="bg-blue p-4 mb-8">
+    <div className="bg-white p-4 mb-8 shadow-lg">
     <h1 className=" font-primary font-semibold text-xl text-black  text-right"> {props.title} </h1>
     </div>
    
