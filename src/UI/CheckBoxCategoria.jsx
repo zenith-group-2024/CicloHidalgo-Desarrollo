@@ -6,7 +6,8 @@ const CheckBoxCategoria = ({ onCategoryChange }) => {
     const [checkboxes, setCheckboxes] = useState({
         Bici: false,
         Ropa: false,
-        Repuesto: false
+        Repuesto: false,
+        Modelo: false
     });
 
     const toggleCheckboxes = () => {
@@ -78,6 +79,20 @@ const CheckBoxCategoria = ({ onCategoryChange }) => {
                         <label htmlFor="Repuesto" className="text-gray-700 ml-2">
                             Repuesto
                         </label>
+                        
+                    </div>
+                    <div>
+                        <input
+                            type="checkbox"
+                            name="Modelo"
+                            checked={checkboxes.Modelo}
+                            onChange={handleCheckboxChange}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label htmlFor="Repuesto" className="text-gray-700 ml-2">
+                            Modelo
+                        </label>
+                        
                     </div>
                 </div>
             )}
