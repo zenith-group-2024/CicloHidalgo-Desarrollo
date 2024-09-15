@@ -37,6 +37,37 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'marca' => 'required',
+            'especificacion' => 'required',
+            'subcategoria' => 'required',
+            'categoria' => 'required',
+            'modelo' => 'required',
+            'precio' => 'required',
+            'imagen' => 'required|file|mimes:jpg,png|max:2048',
+            'codigo_barras' => 'required',
+            'cantidad' => 'required',
+            'destacado' => 'required'
+        ]);
+
+        $file = $request->file('image');
+        $file_name = 'producto_'. time(). '.'.$file->getClientOriginalExtension();
+        $path = public_path('images/');
+        $file -> move($path, $file_name);
+
+        $producto = Producto::create([
+            'marca' => $request->marca,
+            'especificacion' => $request->especificacion,
+            'subcategoria' => $request->subcategoria,
+            'categoria' => $request->categoria,
+            'modelo' => $request->modelo,
+            'precio' => $request->precio,
+            'imagen' => 'images/'.$file_name,
+            'codigo_barras' => $request->codigo_barras,
+            'cantidad' => $request->cantidad,
+            'destacado' => $request->destacado
+        ]);
+
     }
 
     /**
@@ -82,6 +113,31 @@ class ProductoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $file = $request->file('image');
+        $file_name = 'producto_'. time(). '.'.$file->getClientOriginalExtension();
+        $path = public_path('images/');
+        $file -> move($path, $file_name);
+
+        $query = Producto::find($id);
+
+        if ($query){
+
+            $query->update(
+                [
+                    'marca' => $request->marca,
+                    'especificacion' => $request->especificacion,
+                    'subcategoria' => $request->subcategoria,
+                    'categoria' => $request->categoria,
+                    'modelo' => $request->modelo,
+                    'precio' => $request->precio,
+                    'imagen' => 'images/'.$file_name,
+                    'codigo_barras' => $request->codigo_barras,
+                    'cantidad' => $request->cantidad,
+                    'destacado' => $request->destacado
+                ]
+            );
+
+        }
     }
 
     /**
@@ -90,5 +146,9 @@ class ProductoController extends Controller
     public function destroy(string $id)
     {
         //
+        $result = Producto::find($id);
+        $result -> delete();
+
+        
     }
 }
