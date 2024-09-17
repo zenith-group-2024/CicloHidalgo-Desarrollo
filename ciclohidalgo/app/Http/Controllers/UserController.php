@@ -144,6 +144,48 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $validator = validator($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'.$id],
+            'contacto' => ['string', 'max:255'],
+            'direccion' => ['string', 'max:255'],
+            'password' => ['nullable', 'string', 'min:8'],
+            'cumpleanos' => ['string', 'max:255'],
+            'boletin' => ['required', 'boolean', 'max:255', 'unique:users'],
+
+        ], [
+            'name.required' => 'Name field is required.',
+            'boletin.required' => 'Boletin field is required.',
+            'password.required' => 'Password field is required.',
+            'email.required' => 'Email field is required.',
+            'email.email' => 'Email must be a valid email address.'
+        ]);
+
+        if ($validator->fails()) {
+            if ($request->is('api/*') || $request->wantsJson()) {
+                return response()->json(['errors' => $validator->errors()], 400);
+            } else {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
+
+        $validated = $validator->validated();
+
+        $user = User::find($id);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->contacto = $validated['contacto'];
+        $user->cumpleanos = $validated['cumplenos'];
+        $user->boletin = $validated['boletin'];
+        if(!empty($validated['password'])){
+            $user->password = Hash::make($validated['password']);
+        }
+        $user->save();
+
+        if ($request->is('api/*') || $request->wantsJson()) {
+            return response()->json(['message' => 'User updated successfully.', 'user' => $user]);
+          }
+
     }
 
     /**
