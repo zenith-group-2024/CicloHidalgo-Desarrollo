@@ -113,7 +113,7 @@ class UserController extends Controller
 
     public function logout()
     {
-        auth()->user()->tokens()->delete();
+        //auth()->user()->tokens()->delete(); Esta línea no se necesita de momento, Auth::logout(); ya hace el trabajo de eliminar los tokens, según Codeium
         Auth::logout();
         //destroy session and variables
         session_start();
@@ -175,7 +175,7 @@ class UserController extends Controller
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->contacto = $validated['contacto'];
-        $user->cumpleanos = $validated['cumplenos'];
+        $user->cumpleanos = $validated['cumpleanos'];
         $user->boletin = $validated['boletin'];
         if(!empty($validated['password'])){
             $user->password = Hash::make($validated['password']);
