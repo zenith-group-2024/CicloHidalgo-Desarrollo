@@ -8,12 +8,9 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        //
+        
         $listaProductos = Producto::all();
 
         if($request->is('api/*') || $request->wantsJson()){
@@ -23,20 +20,14 @@ class ProductoController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        
         $request->validate([
             'marca' => 'required',
             'especificacion' => 'required',
@@ -67,15 +58,10 @@ class ProductoController extends Controller
             'cantidad' => $request->cantidad,
             'destacado' => $request->destacado
         ]);
-
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request, String $id)
     {
-        //
         $producto =Producto::select(
             'productos.id',
             'productos.marca',
@@ -91,28 +77,19 @@ class ProductoController extends Controller
         )->where('id',$id)
         ->first();
 
-        // Determinar si la solicitud espera una respuesta JSON
         if ($request->is('api/*') || $request->wantsJson()) {
-            // Retornar el evento como una respuesta JSON
             return response()->json(['event' => $producto]);
         }
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
         $file = $request->file('image');
         $file_name = 'producto_'. time(). '.'.$file->getClientOriginalExtension();
         $path = public_path('images/');
@@ -140,15 +117,9 @@ class ProductoController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
         $result = Producto::find($id);
-        $result -> delete();
-
-        
+        $result -> delete(); 
     }
 }

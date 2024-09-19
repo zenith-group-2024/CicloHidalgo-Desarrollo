@@ -12,25 +12,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = validator($request->all(), [
@@ -50,7 +40,6 @@ class UserController extends Controller
             'email.email' => 'Email must be a valid email address.'
         ]);
 
-        // Manejar errores de validación
         if ($validator->fails()) {
             if ($request->is('api/*') || $request->wantsJson()) {
                 return response()->json(['errors' => $validator->errors()], 400);
@@ -59,12 +48,10 @@ class UserController extends Controller
             }
         }
 
-        // Obtener datos validados
         $validated = $validator->validated();
         $password = Hash::make($validated['password']);
         $rand_code = random_int(100000, 999999);
 
-        // Crear usuario en la base de datos
         $user = User::create([
             'name' => $validated['name'],
             'contacto' => $validated['contacto'],
@@ -75,22 +62,19 @@ class UserController extends Controller
             'boletin' => $validated['boletin']
         ]);
 
-        // Enviar correo electrónico
         Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
 
-        // Retornar respuesta JSON si es una solicitud API
         if ($request->is('api/*') || $request->wantsJson()) {
             return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
         }
 
         return response()->json(['message' => 'registered successfully'], 200);
-        // Retornar respuesta JSON si es una solicitud API
+
         if ($request->is('api/*') || $request->wantsJson()) {
           //  return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
         }
 
         return response()->json(['message' => 'registered successfully'], 200);
-        // Redirigir a la vista de administración
         //return redirect()->route('admin.index')->with('success', 'User created successfully.');
     }
 
@@ -115,35 +99,25 @@ class UserController extends Controller
     {
         //auth()->user()->tokens()->delete(); Esta línea no se necesita de momento, Auth::logout(); ya hace el trabajo de eliminar los tokens, según Codeium
         Auth::logout();
-        //destroy session and variables
         session_start();
         session_destroy();
         return response()->json(['message' => 'Logged out successfully']);
         //return redirect()->route('admin.login');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        
         $validator = validator($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'.$id],
@@ -188,11 +162,8 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        
     }
 }

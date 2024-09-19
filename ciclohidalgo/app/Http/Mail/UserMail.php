@@ -15,8 +15,6 @@ class UserMail extends Mailable
     protected $isSuccess, $logo;
 
     /**
-     * Create a new message instance.
-     *
      * @return void
      */
     public function __construct($user, $id, $code)
@@ -27,8 +25,6 @@ class UserMail extends Mailable
     }
 
     /**
-     * Build the message.
-     *
      * @return $this
      */
   
