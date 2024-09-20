@@ -8,6 +8,7 @@ import Footer from '../UI/Footer';
 import DasboardAdmin from '../UI/DashboardAdmin';
 import Producto from '../pages/Producto';
 import Servicios from './Servicios';
+import PerfilCliente from '../pages/PerfilCliente';
 
 
 
@@ -16,14 +17,15 @@ const HomePage = () => {
     return (
         <div>
         <Navbar />
-            <Hero />
+            {/*<Hero />
             <ProductosDestacados />
             <Info />
             <RedesSociales />
             <Footer />
-           {/* <Navbar />
+            <Navbar />
             <Servicios />
             <Footer />*/}
+             <PerfilCliente />
 
 
 
