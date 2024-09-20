@@ -49,7 +49,9 @@ const Navbar = () => {
       </div>
 
       <div className="flex space-x-4 m-4 md:ml-4">
-        <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
+      <Link to="/Carrito">
+    <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
+      </Link>
         <UserRound
           size={28}
           className="transform transition-transform duration-300 hover:scale-110 cursor-pointer"
