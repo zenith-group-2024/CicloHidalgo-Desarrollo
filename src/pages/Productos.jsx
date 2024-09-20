@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import Card from "../UI/CardProductos";
 import BiciImagen from "../assets/images/Bici_ejemplo.svg";
 import Navbar from "../UI/Navbar";

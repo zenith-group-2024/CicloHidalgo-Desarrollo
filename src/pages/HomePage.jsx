@@ -9,17 +9,16 @@ import DasboardAdmin from '../UI/DashboardAdmin';
 
 
 
+
 const HomePage = () => {
     return (
         <div>
-            ´{/*<Navbar />
+            /*<Navbar />
             <Hero />
             <ProductosDestacados />
             <Info />
             <RedesSociales />
-            <Footer />*/}
-            <DasboardAdmin />
-            <Navbar />
+            <Footer />
 
 
         </div>

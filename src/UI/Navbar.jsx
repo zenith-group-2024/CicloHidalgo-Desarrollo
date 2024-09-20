@@ -3,9 +3,11 @@ import { ShoppingCart, UserRound, AlignJustify } from 'lucide-react';
 import { Link } from "react-router-dom";
 import Logo from '../assets/images/logo.svg';
 import AuthForm from './Forms.jsx'; 
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); 
+  const [cartCount, setCartCount] = useState(0); // Contador del carrito
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -29,6 +31,11 @@ const Navbar = () => {
     setIsAuthModalOpen(false);
   };
 
+  const addToCart = () => {
+    // Esta función se llamaría donde realmente se agrega un producto al carrito
+    setCartCount(prevCount => prevCount + 1); // Incrementa el contador
+  };
+
   return (
     <nav className="bg-white p-4 w-full flex flex-col md:flex-row justify-between items-center border-b-2 border-border-gray-opacity z-50">
       <div className="flex items-center justify-between w-full md:w-auto">
@@ -48,10 +55,15 @@ const Navbar = () => {
         <Link to="/Servicios" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link>
       </div>
 
-      <div className="flex space-x-4 m-4 md:ml-4">
-      <Link to="/Carrito">
-    <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
-      </Link>
+      <div className="flex space-x-4 m-4 md:ml-4 relative">
+        <Link to="/Carrito" onClick={addToCart}>
+          <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
+          {cartCount > 0 && (
+            <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
+              {cartCount}
+            </span>
+          )}
+        </Link>
         <UserRound
           size={28}
           className="transform transition-transform duration-300 hover:scale-110 cursor-pointer"
@@ -59,7 +71,6 @@ const Navbar = () => {
         />
       </div>
 
-      
       {isAuthModalOpen && <AuthForm isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
     </nav>
   );
