@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ContenidoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
+Route::get('/contenidos/all', [ContenidoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::post('/user/login', [UserController::class, 'check']);
 Route::post('/user/singin', [UserController::class, 'store']);
