@@ -32,8 +32,8 @@ const Navbar = () => {
   };
 
   const addToCart = () => {
-    // Esta función se llamaría donde realmente se agrega un producto al carrito
-    setCartCount(prevCount => prevCount + 1); // Incrementa el contador
+ 
+    setCartCount(prevCount => prevCount + 1); 
   };
 
   return (

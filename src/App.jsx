@@ -7,7 +7,7 @@ import AdminDashboard from './UI/DashboardAdmin';
 import AdminCRUD from './UI/AdminCRUD'; 
 import { Carrito } from './pages/Carrito';
 import { CartProvider } from './UI/Prueba_Carrito';
-
+import DetalleProducto from './UI/DetalleProducto'
 function App() {
  
 
@@ -23,9 +23,11 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/Contenido" element={<Contenido />} />
         <Route path="/Productos" element={<Productos />} />
+        <Route path="/producto/:id" element={<DetalleProducto />}/>
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/crud/:resource" element={<AdminCRUD />} />
         <Route path="*" element={<Navigate to="/" />} />
+        
       
       </Routes>
       </CartProvider>

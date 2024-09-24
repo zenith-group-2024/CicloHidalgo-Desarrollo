@@ -14,12 +14,12 @@ export const Carrito = () => {
   };
 
   const handleEmptyCart = () => {
-    setCart([]); // Vaciar el carrito
+    setCart([]);
   };
 
   const handleRemoveProduct = (index) => {
     const updatedCart = cart.filter((_, i) => i !== index);
-    setCart(updatedCart); // Eliminar producto individualmente
+    setCart(updatedCart);
   };
 
   return (
