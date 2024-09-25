@@ -25,7 +25,7 @@ const HomePage = () => {
             <Navbar />
             <Servicios />
             <Footer />*/}
-             <PerfilCliente />
+             <DasboardAdmin />
 
 
 
