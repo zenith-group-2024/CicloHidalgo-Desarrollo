@@ -10,7 +10,7 @@ const Footer = () => {
                         <h2 className="text-lg font-bold mb-2">Contacto</h2>
                         <p className="mb-2">San Pedro de Poás, Alajuela, Costa Rica</p>
                         <p className="mb-2">Teléfono: (506) 2448-4946</p>
-                        <p className="mb-2">Email: info@tusitio.com</p>
+                        <p className="mb-2">Email: ciclohidalgo@hotmail.com</p>
                     </div>
 
                     
