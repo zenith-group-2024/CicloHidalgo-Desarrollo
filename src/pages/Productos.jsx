@@ -70,7 +70,7 @@ export function Productos() {
                     )}
                 </div>
             </div>
-
+<H1>COMMIT</H1>
             <Footer />
         </div>
     );
