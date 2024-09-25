@@ -41,9 +41,9 @@ class ProductoController extends Controller
             'destacado' => 'required'
         ]);
 
-        $file = $request->file('image');
-        $file_name = 'producto_'. time(). '.'.$file->getClientOriginalExtension();
-        $path = public_path('images/');
+        $file = $request->file('imagen');
+        $file_name = 'producto_'. $file->getClientOriginalName().'.'.$file->getClientOriginalExtension();
+        $path = public_path('images/productos/');
         $file -> move($path, $file_name);
 
         $producto = Producto::create([
@@ -53,7 +53,7 @@ class ProductoController extends Controller
             'categoria' => $request->categoria,
             'modelo' => $request->modelo,
             'precio' => $request->precio,
-            'imagen' => 'images/'.$file_name,
+            'imagen' => 'images/productos/'.$file_name,
             'codigo_barras' => $request->codigo_barras,
             'cantidad' => $request->cantidad,
             'destacado' => $request->destacado
@@ -90,9 +90,9 @@ class ProductoController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $file = $request->file('image');
-        $file_name = 'producto_'. time(). '.'.$file->getClientOriginalExtension();
-        $path = public_path('images/');
+        $file = $request->file('imagen');
+        $file_name = 'producto_'. $file->getClientOriginalName().'.'.$file->getClientOriginalExtension();
+        $path = public_path('images/productos/');
         $file -> move($path, $file_name);
 
         $query = Producto::find($id);
@@ -107,7 +107,7 @@ class ProductoController extends Controller
                     'categoria' => $request->categoria,
                     'modelo' => $request->modelo,
                     'precio' => $request->precio,
-                    'imagen' => 'images/'.$file_name,
+                    'imagen' => 'images/productos/'.$file_name,
                     'codigo_barras' => $request->codigo_barras,
                     'cantidad' => $request->cantidad,
                     'destacado' => $request->destacado
