@@ -6,6 +6,9 @@ import Info from '../UI/Info';
 import RedesSociales from '../UI/RedesSociales';
 import Footer from '../UI/Footer';
 import DasboardAdmin from '../UI/DashboardAdmin';
+import Producto from '../pages/Producto';
+import Servicios from './Servicios';
+import PerfilCliente from '../pages/PerfilCliente';
 
 
 
@@ -13,12 +16,17 @@ import DasboardAdmin from '../UI/DashboardAdmin';
 const HomePage = () => {
     return (
         <div>
-            <Navbar />
-            <Hero />
+        <Navbar />
+            {/*<Hero />
             <ProductosDestacados />
             <Info />
             <RedesSociales />
             <Footer />
+            <Navbar />
+            <Servicios />
+            <Footer />*/}
+             <PerfilCliente />
+
 
 
         </div>
