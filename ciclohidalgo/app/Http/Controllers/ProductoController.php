@@ -78,7 +78,7 @@ class ProductoController extends Controller
         ->first();
 
         if ($request->is('api/*') || $request->wantsJson()) {
-            return response()->json(['event' => $producto]);
+            return response()->json(['producto' => $producto]);
         }
 
     }
