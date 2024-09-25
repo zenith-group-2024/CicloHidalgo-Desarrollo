@@ -16,4 +16,7 @@ Route::get('/contenidos/all', [ContenidoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::post('/user/login', [UserController::class, 'check']);
 Route::post('/user/singin', [UserController::class, 'store']);
-Route::get('/user/update/{id}', [UserController::class, 'update']);
+Route::post('/user/update/{id}', [UserController::class, 'update']);
+Route::post('/productos/crear', [ProductoController::class, 'store']);
+Route::post('/productios/update/{id}', [ProductoController::class, 'update']);
+Route::get('/productos/delete/{id}', [ProductoController::class, 'destroy']);

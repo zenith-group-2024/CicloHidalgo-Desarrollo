@@ -68,7 +68,7 @@ class UserController extends Controller
             return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
         }
 
-        return response()->json(['message' => 'registered successfully'], 200);
+        return response()->json(data: ['message' => 'registered successfully'], 200);
 
         if ($request->is('api/*') || $request->wantsJson()) {
           //  return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
