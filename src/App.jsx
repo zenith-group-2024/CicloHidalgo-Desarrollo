@@ -19,7 +19,7 @@ function App() {
           <Route path="/Productos" element={<Productos />} />
           <Route path="/Servicios" element={<Servicios />} /> {/* Ruta de servicios */}
           <Route path="/Carrito" element={<Carrito />} />
-        <Route path="/producto/:id" element={<DetalleProducto />}/>
+         <Route path="/producto/:id" element={<DetalleProducto />}/>
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/crud/:resource" element={<AdminCRUD />} />
           <Route path="*" element={<Navigate to="/" />} />
