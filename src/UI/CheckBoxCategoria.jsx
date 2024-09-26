@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { useFetchProductosFiltro } from "../../hooks/FetchFiltros"; 
+import { ChevronDown } from 'lucide-react';
 
 const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChange }) => {
+    const { categorias, isLoading } = useFetchProductosFiltro();
     const [showCategories, setShowCategories] = useState(false);
     const [showSubCategories, setShowSubCategories] = useState(false);
     const [showBrands, setShowBrands] = useState(false);
@@ -10,81 +12,97 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
     const [selectedSubCategories, setSelectedSubCategories] = useState({});
     const [selectedBrands, setSelectedBrands] = useState({});
 
-    const categories = {
-        Bici: { label: "Bici", subcategories: ["Bici de Montaña", "Bici de Niño"], brands: ["Cannondale", "SCOTT"] },
-        Ropa: { label: "Ropa", subcategories: ["Guantes", "Camisas", "Pantalonetas"], brands: ["Nike", "Adidas", "Tommy"] },
-        Repuesto: { label: "Repuesto", subcategories: ["TOTEM"], brands: ["TOTEM"] }
-    };
-
     const toggleCheckboxes = (type) => {
-        if (type === "category") setShowCategories(!showCategories);
-        if (type === "subCategory") setShowSubCategories(!showSubCategories);
-        if (type === "brand") setShowBrands(!showBrands);
+        if (type === "category") setShowCategories(prev => !prev);
+        if (type === "subCategory") setShowSubCategories(prev => !prev);
+        if (type === "brand") setShowBrands(prev => !prev);
     };
 
+    // Maneja cambios en las categorías
     const handleCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedCategories(prev => ({
             ...prev,
             [name]: checked
         }));
-
-        const updatedCategories = Object.keys(selectedCategories).filter(key => selectedCategories[key]);
-        onCategoryChange(updatedCategories);
     };
 
+    // Maneja cambios en las subcategorías
     const handleSubCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedSubCategories(prev => ({
             ...prev,
             [name]: checked
         }));
-
-        const updatedSubCategories = Object.keys(selectedSubCategories).filter(key => selectedSubCategories[key]);
-        onSubCategoryChange(updatedSubCategories);
     };
 
+    // Maneja cambios en las marcas
     const handleBrandChange = (event) => {
         const { name, checked } = event.target;
         setSelectedBrands(prev => ({
             ...prev,
             [name]: checked
         }));
-
-        const updatedBrands = Object.keys(selectedBrands).filter(key => selectedBrands[key]);
-        onBrandChange(updatedBrands);
     };
 
+    const updateCategories = useCallback(() => {
+        const updatedCategories = Object.keys(selectedCategories).filter(key => selectedCategories[key]);
+        onCategoryChange(updatedCategories);
+    }, [selectedCategories, onCategoryChange]);
+
+    const updateSubCategories = useCallback(() => {
+        const updatedSubCategories = Object.keys(selectedSubCategories).filter(key => selectedSubCategories[key]);
+        onSubCategoryChange(updatedSubCategories);
+    }, [selectedSubCategories, onSubCategoryChange]);
+
+    const updateBrands = useCallback(() => {
+        const updatedBrands = Object.keys(selectedBrands).filter(key => selectedBrands[key]);
+        onBrandChange(updatedBrands);
+    }, [selectedBrands, onBrandChange]);
+
+    // Usar useEffect para actualizar los filtros al cambiar los checkboxes
+    useEffect(() => {
+        updateCategories();
+    }, [selectedCategories, updateCategories]);
+
+    useEffect(() => {
+        updateSubCategories();
+    }, [selectedSubCategories, updateSubCategories]);
+
+    useEffect(() => {
+        updateBrands();
+    }, [selectedBrands, updateBrands]);
+
     const getSubCategoriesForSelected = () => {
-        let combinedSubCategories = [];
-        Object.keys(selectedCategories).forEach(category => {
-            if (selectedCategories[category] && categories[category]) {
-                combinedSubCategories = [...combinedSubCategories, ...categories[category].subcategories];
-            }
-        });
+        const combinedSubCategories = Object.keys(selectedCategories)
+            .filter(category => selectedCategories[category] && categorias[category])
+            .flatMap(category => categorias[category].subcategories);
+
         return Array.from(new Set(combinedSubCategories));
     };
 
     const getBrandsForSelected = () => {
-        let combinedBrands = [];
-        Object.keys(selectedCategories).forEach(category => {
-            if (selectedCategories[category] && categories[category]) {
-                combinedBrands = [...combinedBrands, ...categories[category].brands];
-            }
-        });
+        const combinedBrands = Object.keys(selectedCategories)
+            .filter(category => selectedCategories[category] && categorias[category])
+            .flatMap(category => categorias[category].brands);
+
         return Array.from(new Set(combinedBrands));
     };
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="space-y-4">
             {/* Categorías */}
-            <div className="text-black w-full mb-4 font-secondary font-bold flex items-center gap-48 bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("category")}>
+            <div className="text-black w-full mb-4 font-secondary font-bold flex items-center justify-between  bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("category")}>
                 Categoría
                 <ChevronDown className={`transition-transform duration-300 ${showCategories ? "rotate-180" : ""}`} />
             </div>
             {showCategories && (
                 <div className="space-y-2">
-                    {Object.keys(categories).map((category) => (
+                    {Object.keys(categorias).map((category) => (
                         <div key={category}>
                             <input
                                 type="checkbox"
@@ -94,7 +112,7 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                             />
                             <label htmlFor={category} className="text-gray-700 ml-2">
-                                {categories[category].label}
+                                {categorias[category].label}
                             </label>
                         </div>
                     ))}
@@ -102,8 +120,8 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
             )}
 
             {/* Subcategorías */}
-            <div className="text-black w-full mb-4 font-secondary font-bold flex items-center gap-48 bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("subCategory")}>
-                Subcategoría
+            <div className="text-black w-full mb-4 font-secondary font-bold flex items-center  justify-between  bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("subCategory")}>
+              Subcategoria
                 <ChevronDown className={`transition-transform duration-300 ${showSubCategories ? "rotate-180" : ""}`} />
             </div>
             {showSubCategories && (
@@ -126,7 +144,7 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
             )}
 
             {/* Marcas */}
-            <div className="text-black w-full mb-4 font-secondary font-bold flex items-center gap-48 bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("brand")}>
+            <div className="text-black w-full mb-4 font-secondary font-bold flex items-center justify-between bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("brand")}>
                 Marca
                 <ChevronDown className={`transition-transform duration-300 ${showBrands ? "rotate-180" : ""}`} />
             </div>
