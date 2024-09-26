@@ -48,18 +48,19 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className="hidden md:flex flex-grow justify-center space-x-8">
-        <Link to="/" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</Link>
-        <Link to="/Productos" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</Link>
-        <Link to="/Contenido" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</Link>
-        <Link to="/Servicios" className="text-black font-primary font-bold hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link>
-      </div>
+      <div className="hidden md:flex flex-grow justify-center space-x-10"> {/* Aumentar el espaciado horizontal */}
+    <Link to="/" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</Link> {/* Aumentar tamaño de la fuente */}
+    <Link to="/Productos" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</Link> {/* Aumentar tamaño de la fuente */}
+    <Link to="/Contenido" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</Link> {/* Aumentar tamaño de la fuente */}
+    <Link to="/Servicios" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link> {/* Aumentar tamaño de la fuente */}
+</div>
+
 
       <div className="flex space-x-4 m-4 md:ml-4 relative">
         <Link to="/Carrito" onClick={addToCart}>
           <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
           {cartCount > 0 && (
-            <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
+            <span className="absolute top-0 right-0  text-white text-xs rounded-full px-1">
               {cartCount}
             </span>
           )}
