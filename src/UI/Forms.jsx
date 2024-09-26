@@ -1,58 +1,98 @@
 import React, { useState } from 'react';
+import { useLogin } from '../../hooks/UseLogin';
+import { X } from 'lucide-react';
+import Registro from '../UI/Registro'; // Asegúrate de que la ruta es correcta
 
-const AuthForm = ({ isOpen, onClose }) => {
-  const [isLogin, setIsLogin] = useState(true);
+const LoginForm = ({ onLogin }) => { // Asegúrate de recibir la prop onLogin
+  const { login } = useLogin();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isOpen, setIsOpen] = useState(true);
+  const [showRegistro, setShowRegistro] = useState(false);
 
-  const handleCloseModal = (e) => {
-    if (e.target.id === 'modal-overlay') {
-      onClose();
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      await login(email, password);
+      setPassword('');
+      setIsOpen(false); // Cerrar el modal después del login exitoso
+      onLogin(); // Llama a onLogin para cambiar el estado de autenticación
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleRegisterClick = () => {
+    setShowRegistro(true);
+  };
+
   return (
-    isOpen && (
-      <div
-        id="modal-overlay"
-        onClick={handleCloseModal}
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-      >
-        <div
-          onClick={(e) => e.stopPropagation()} 
-          className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-4 sm:mx-6 lg:mx-8"
-        >
-          <h2 className="text-2xl font-bold mb-6 text-center">
-            {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
-          </h2>
+    <>
+      {isOpen && !showRegistro && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
+            {/* Botón de cerrar con icono de Lucide */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
+            >
+              <X className="w-6 h-6" />
+              <span className="sr-only">Cerrar</span>
+            </button>
 
-          <form className="space-y-4">
-            {!isLogin && (
+            <h2 className="text-2xl font-bold text-center mb-8 text-black">Login</h2>
+            <form onSubmit={handleLogin} className="space-y-6">
               <div>
-                <label className="block text-black mb-2">Nombre Completo</label>
-                <input type="text" className="w-full px-3 py-2 rounded-lg text-black border" placeholder="Ingresa tu nombre" />
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="mt-2 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                />
               </div>
-            )}
-            <div>
-              <label className="block text-black mb-2">Correo Electrónico</label>
-              <input type="email" className="w-full px-3 py-2 border rounded-lg text-black" placeholder="Ingresa tu correo" />
-            </div>
-            <div>
-              <label className="block text-black mb-2">Contraseña</label>
-              <input type="password" className="w-full px-3 py-2 border rounded-lg text-black" placeholder="Ingresa tu contraseña" />
-            </div>
-            <button type="submit" className={`w-full py-2 rounded-lg text-white mt-5 ${isLogin ? 'bg-red hover:bg-red' : 'bg-red hover:bg-red'}`}>
-              {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
-            </button>
-          </form>
 
-          <div className="mt-4 text-center">
-            <button onClick={() => setIsLogin(!isLogin)} className="text-gray hover:underline">
-              {isLogin ? '¿No tienes cuenta? Registrarse' : '¿Ya tienes cuenta? Inicia sesión'}
-            </button>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="mt-2 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 px-4 bg-red text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Login
+              </button>
+            </form>
+            <p className="mt-4 text-center text-gray-600">
+              No tienes una cuenta?{' '}
+              <button onClick={handleRegisterClick} className="text-red underline">
+                Regístrate aquí
+              </button>
+            </p>
           </div>
         </div>
-      </div>
-    )
+      )}
+      {showRegistro && <Registro />} {/* Mostrar el componente Registro */}
+    </>
   );
 };
 
-export default AuthForm;
+export default LoginForm;

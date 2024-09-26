@@ -15,7 +15,7 @@ const ProductoIndividual = ({ product, addToCart }) => {
           <p className="text-lg font-semibold mt-4">Precio: ₡{product.precio}</p>
           <p className="text-sm text-gray-500">Código ID: {product.id}</p>
           <button
-            onClick={() => addToCart(product)} // Llama a la función para añadir al carrito
+            onClick={() => addToCart(product)} 
             className="mt-6 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition duration-200"
           >
             Añadir al Carrito

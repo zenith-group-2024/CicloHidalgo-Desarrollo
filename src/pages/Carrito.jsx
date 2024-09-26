@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Navbar from "../UI/Navbar.jsx";
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
 import { Link } from "react-router-dom";
-import { Trash } from 'lucide-react'; // Asegúrate de tener Lucide instalada
+import { Trash } from 'lucide-react'; 
 
 export const Carrito = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -47,19 +47,19 @@ export const Carrito = () => {
         {cart.length === 0 ? (
           <p className="text-center text-gray-500 font-medium">No has agregado productos al carrito.</p>
         ) : (
-          cart.map((product, index) => (
+          cart.map((producto, index) => (
             <div 
               key={index} 
               className="container mx-auto p-5 border border-gray-300 shadow-md rounded-md bg-white grid grid-cols-3 items-center mb-4 transition-opacity duration-300 ease-in"
             >
               <div className="flex items-center">
-                <img className="w-20 h-20 object-cover rounded-lg" src={product.img} alt={product.title} />
-                <h3 className="font-primary font-semibold text-lg text-black ml-4">{product.title}</h3>
+                <img className="w-20 h-20 object-cover rounded-lg" img={`../src/assets/${producto.imagen}`} alt={producto.title} />
+                <h3 className="font-primary font-semibold text-lg text-black ml-4">{producto.title}</h3>
               </div>
-              <p className="font-primary font-semibold text-lg text-black text-center">{product.quantity}</p>
+              <p className="font-primary font-semibold text-lg text-black text-center">{producto.quantity}</p>
               <div className="flex items-center justify-between">
-                <p className="font-primary font-semibold text-lg text-black text-center">{`₡${product.precio * product.quantity}`}</p>
-                <button onClick={() => handleRemoveProduct(index)} className="ml-4"> {/* Cambia ml-4 por el margen adecuado */}
+                <p className="font-primary font-semibold text-lg text-black text-center">{`₡${producto.precio * producto.quantity}`}</p>
+                <button onClick={() => handleRemoveProduct(index)} className="ml-4"> 
                   <Trash className="text-red-600 hover:text-red-500 transition duration-200" />
                 </button>
               </div>
