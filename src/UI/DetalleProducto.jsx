@@ -9,6 +9,7 @@ import BiciImagen from '../assets/images/Bici_ejemplo.svg';
 export default function DetalleProducto() {
   const { id } = useParams();  
   const { producto, isLoading, error} = useFetchProductoDetallado(id);  
+  console.log("Producto Detallado:", producto);
   const { addToCart } = useContext(CartContext);  
 
   if (isLoading) return <p>Cargando...</p>;
@@ -32,7 +33,7 @@ export default function DetalleProducto() {
       id: producto.id, 
       title: producto.marca,
       precio: numericPrice,
-      img: BiciImagen
+      img: producto.imagen,
     });
   };
 
@@ -41,7 +42,7 @@ export default function DetalleProducto() {
       <Navbar />
       <div className="container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-[#F9F9F9] mt-8">
         <div className="grid grid-cols-2 m-auto my-8">
-          <img className="w-3/5 m-auto container mx-auto border-black rounded-md bg-[#F9F9F9]" src={BiciImagen} alt={producto.marca} />
+          <img className="w-3/5 m-auto container mx-auto border-black rounded-md bg-[#F9F9F9]" src={`../assets/${producto.imagen}`} alt={producto.marca} />
           <div>
             <h1 className="font-primary font-bold text-xl text-black">{producto.marca}</h1>
             <p className="font-primary font-regular text-xl text-black">{producto.especificacion}</p>

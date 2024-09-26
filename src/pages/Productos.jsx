@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Card from "../UI/CardProductos";
-import BiciImagen from "../assets/images/Bici_ejemplo.svg";
+import BiciImagen from "../assets/images/productos/producto_WD-40.png";
 import Navbar from "../UI/Navbar";
 import Footer from "../UI/Footer";
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
@@ -29,7 +29,7 @@ export function Productos() {
                                 id={producto.id}
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio} (IVAI)`}
-                                img={BiciImagen}
+                                img={`../assets/${producto.imagen}`}
                             />
                         ))
                     )}
