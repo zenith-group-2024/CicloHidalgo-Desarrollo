@@ -17,15 +17,15 @@ const HomePage = () => {
     return (
         <div>
         <Navbar />
-            {/*<Hero />
+            <Hero />
             <ProductosDestacados />
             <Info />
             <RedesSociales />
             <Footer />
-            <Navbar />
-            <Servicios />
-            <Footer />*/}
-             <DasboardAdmin />
+            
+           {/* <Servicios />
+            <Footer />
+             <DasboardAdmin />*/}
 
 
 

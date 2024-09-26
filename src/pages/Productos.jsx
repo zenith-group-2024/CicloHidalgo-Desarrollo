@@ -29,7 +29,7 @@ export function Productos() {
                                 id={producto.id}
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio} (IVAI)`}
-                                img={`../assets/${producto.imagen}`}
+                                img={`../src/assets/${producto.imagen}`}
                             />
                         ))
                     )}

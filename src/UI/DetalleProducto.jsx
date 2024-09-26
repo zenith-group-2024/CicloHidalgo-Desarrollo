@@ -42,7 +42,7 @@ export default function DetalleProducto() {
       <Navbar />
       <div className="container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-[#F9F9F9] mt-8">
         <div className="grid grid-cols-2 m-auto my-8">
-          <img className="w-3/5 m-auto container mx-auto border-black rounded-md bg-[#F9F9F9]" src={`../assets/${producto.imagen}`} alt={producto.marca} />
+          <img className="w-3/5 m-auto container mx-auto border-black rounded-md bg-[#F9F9F9]" src={`../src/assets/${producto.imagen}`} alt={producto.marca} />
           <div>
             <h1 className="font-primary font-bold text-xl text-black">{producto.marca}</h1>
             <p className="font-primary font-regular text-xl text-black">{producto.especificacion}</p>
