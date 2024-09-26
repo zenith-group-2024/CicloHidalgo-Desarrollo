@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+
+class ProfileController extends Controller
+{
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request) {
+
+    }
+
+    public function getUserData(Request $request)
+    {
+        //DEBE HABER INICIADO SESION(por eso no se busca con id
+        $user = $request->user();
+
+        return response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'contacto' => $user->contacto,
+            'direccion' => $user->direccion,
+            'cumpleanos' => $user->cumpleanos,
+            'boletin' => $user->boletin,
+        ]);
+    }
+
+    public function updateUserInfo(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'contacto' => 'sometimes|required|string|max:255',
+            'direccion' => 'sometimes|required|string|max:255',
+            'cumpleanos' => 'sometimes|nullable|date',
+            'email' => 'sometimes|required|email|max:255|unique:users,email,' . $request->user()->id,
+            'boletin' => 'sometimes|required|boolean',
+        ]);
+
+        $user = $request->user();
+        $user->update($validatedData);
+
+        return response()->json(['message' => 'Profile updated successfully'], 200);
+    }
+
+
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        Auth::logout();
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json(['message' => 'Account deleted!'], 200);
+    }
+}

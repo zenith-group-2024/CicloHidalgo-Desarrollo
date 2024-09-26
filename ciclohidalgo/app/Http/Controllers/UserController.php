@@ -27,6 +27,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'contacto' => ['string', 'max:255'],
+            'role_id' => ['integer', 'max:255'],
             'direccion' => ['string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
             'cumpleanos' => ['string', 'max:255'],
@@ -67,8 +68,6 @@ class UserController extends Controller
         if ($request->is('api/*') || $request->wantsJson()) {
             return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
         }
-
-        return response()->json(data: ['message' => 'registered successfully'], 200);
 
         if ($request->is('api/*') || $request->wantsJson()) {
           //  return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
