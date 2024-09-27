@@ -6,7 +6,7 @@ import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js
 
 const CardDestacado = ({ title, precio, img, id }) => {
     const { addToCart } = useContext(CartContext); // Obtener la función addToCart del contexto
-    const { producto, isLoading, error} = useFetchProductoDetallado(id);
+    const { producto, isLoading, error } = useFetchProductoDetallado(id);
 
     const handleAddToCart = (e) => {
         e.stopPropagation();
@@ -24,7 +24,6 @@ const CardDestacado = ({ title, precio, img, id }) => {
             title: producto.marca,
             precio: numericPrice,
             img: producto.imagen,
-
         });
     };
 
@@ -40,15 +39,15 @@ const CardDestacado = ({ title, precio, img, id }) => {
                         className="w-full h-[200px] object-cover"
                     />
                     <div className="p-3 flex flex-col h-full">
-                        <h2 className="text-lg font-bold mb-1 text-gray-800 flex-grow">{title}</h2>
+                        <h2 className="text-lg font-bold mb-1 text-black flex-grow">{title}</h2>
                         <p className="text-2xl text-gray">{precio}</p>
                     </div>
                 </div>
             </Link>
-            <div className="flex justify-center mb-4"> {/* Contenedor para centrar el botón */}
+            <div className="flex justify-center mt-auto mb-8"> {/* Ajustar margen inferior con mb-8 */}
                 <button
                     onClick={handleAddToCart}
-                    className="mt-4 px-6 py-3 bg-red text-white rounded-lg shadow-md transition duration-200 ease-in-out hover:scale-105"
+                    className="px-4 py-2 bg-red text-white rounded-lg shadow-md transition duration-200 ease-in-out hover:scale-105" // Tamaño del botón reducido
                 >
                     Agregar al Carrito
                 </button>
