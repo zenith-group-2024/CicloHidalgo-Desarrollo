@@ -16,35 +16,35 @@ const PerfilCliente = () => {
     const [isAuthenticated, setAuthenticated] = useState(false);
     const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/user')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
-                }
-                return response.json(); // Procesa JSON
-            })
-            .then(data => {
-                const { name, contacto, email, direccion, cumpleanos } = data;
-                setFormData({
-                    name: name || '',
-                    contacto: contacto || '',
-                    email: email || '',
-                    direccion: direccion || '',
-                    cumpleanos: cumpleanos || '',
-                });
-                setAuthenticated(true);
-            })
-            .catch(error => {
-                console.error('Error al obtener los datos del usuario:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    // useEffect(() => {
+    //     fetch('http://127.0.0.1:8000/api/user')
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('Error en la respuesta del servidor');
+    //             }
+    //             return response.json(); // Procesa JSON
+    //         })
+    //         .then(data => {
+    //             const { name, contacto, email, direccion, cumpleanos } = data;
+    //             setFormData({
+    //                 name: name || '',
+    //                 contacto: contacto || '',
+    //                 email: email || '',
+    //                 direccion: direccion || '',
+    //                 cumpleanos: cumpleanos || '',
+    //             });
+    //             setAuthenticated(true);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error al obtener los datos del usuario:', error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
     
-        // Llama a la función pasando el token
-        fetchUserData(token);
-    }, [token]);
+    //     // Llama a la función pasando el token
+    //     fetchUserData(token);
+    // }, [token]);
     
 
     if (loading) {
