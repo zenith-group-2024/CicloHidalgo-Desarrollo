@@ -70,11 +70,11 @@ class UserController extends Controller
         }
 
         if ($request->is('api/*') || $request->wantsJson()) {
-          //  return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
+          
         }
 
         return response()->json(['message' => 'registered successfully'], 200);
-        //return redirect()->route('admin.index')->with('success', 'User created successfully.');
+        
     }
 
     public function check(Request $request)
@@ -85,9 +85,6 @@ class UserController extends Controller
         }
 
         $user = User::where('email', $request['email'])->firstOrFail();
-        
-        //$token = $user->createToken('auth_token')->plainTextToken;
-
         $uid =  $user->id;
         session_start();
 
@@ -96,12 +93,11 @@ class UserController extends Controller
 
     public function logout()
     {
-        //auth()->user()->tokens()->delete(); Esta línea no se necesita de momento, Auth::logout(); ya hace el trabajo de eliminar los tokens, según Codeium
+
         Auth::logout();
         session_start();
         session_destroy();
         return response()->json(['message' => 'Logged out successfully']);
-        //return redirect()->route('admin.login');
     }
 
     public function show(string $id)
