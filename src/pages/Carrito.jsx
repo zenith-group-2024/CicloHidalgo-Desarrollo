@@ -7,7 +7,6 @@ import { Trash } from 'lucide-react';
 
 export const Carrito = () => {
   const { cart, setCart } = useContext(CartContext);
-  const { productos } = useFetchProductos();
 
   const getTotalProducts = () => {
     return cart.reduce((total, item) => {
@@ -50,7 +49,7 @@ export const Carrito = () => {
           <h1 className="text-black font-primary font-bold text-2xl">Tus compras</h1>
           <Link 
             to="/Productos" 
-            className="inline-block px-4 py-2 bg-blue text-white font-primary font-bold rounded-lg hover:bg-red transition duration-200"
+            className="inline-block px-4 py-2 bg-red text-white font-primary font-bold rounded-lg hover:bg-red transition duration-200"
           >
             Continúa tu compra
           </Link>
@@ -63,7 +62,7 @@ export const Carrito = () => {
         </div>
 
         {cart.length === 0 ? (
-          <p className="text-center text-gray-500 font-medium">No has agregado productos al carrito.</p>
+          <p className="text-center text-gray font-medium">No has agregado productos al carrito.</p>
         ) : (
           cart.map((producto, index) => (
             <div 
@@ -71,7 +70,7 @@ export const Carrito = () => {
               className="container mx-auto p-5 border border-gray-300 shadow-md rounded-md bg-white grid grid-cols-3 items-center mb-4 transition-opacity duration-300 ease-in"
             >
               <div className="flex items-center">
-                <img className="w-20 h-20 object-cover rounded-lg" src={`../src/assets/${producto.imagen}`} alt={producto.title} />
+                <img className="w-20 h-20 object-cover rounded-lg" src={`../src/assets/${producto.img}`} alt={producto.title} />
                 <h3 className="font-primary font-semibold text-lg text-black ml-4">{producto.title}</h3>
               </div>
               <div className="flex items-center justify-center">
@@ -97,7 +96,7 @@ export const Carrito = () => {
             </div>
             <button 
               onClick={handleEmptyCart} 
-              className="mt-4 px-4 py-2 bg-red-600 text-black rounded-lg hover:bg-red-500 transition duration-200"
+              className="mt-4 px-4 py-2 bg-blue text-white rounded-lg hover:bg-red-500 transition duration-200"
             >
               Vaciar Carrito
             </button>
