@@ -14,10 +14,10 @@ const PerfilCliente = () => {
     const [editing, setEditing] = useState(false);
     //
     const [loading, setLoading] = useState(true);
-    const [authenticated, setAuthenticated] = useState(false);
+    const [isAuthenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/user/data')
+        fetch('http://127.0.0.1:8000/api/user')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error en la respuesta del servidor');
@@ -33,11 +33,9 @@ const PerfilCliente = () => {
                     direccion: direccion || '',
                     cumpleanos: cumpleanos || '',
                 });
-                setAuthenticated(true);
             })
             .catch(error => {
                 console.error('Error al obtener los datos del usuario:', error);
-                setAuthenticated(false);
             })
             .finally(() => {setLoading(false)}
         );
@@ -48,7 +46,7 @@ const PerfilCliente = () => {
         return <p>Cargando datos...</p>; 
     }
 
-    if (!authenticated) {
+    if (!isAuthenticated) {
         return <p>No has iniciado sesión. Por favor, inicia sesión para ver tu perfil.</p>;
     }
     const openModal = () => {
