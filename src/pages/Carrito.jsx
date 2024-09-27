@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import Navbar from "../UI/Navbar.jsx";
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
-import { useFetchProductos } from '../../hooks/FetchProductos.js'; 
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 import { Trash } from 'lucide-react'; 
 
 export const Carrito = () => {
@@ -15,7 +14,7 @@ export const Carrito = () => {
   };
 
   const handleEmptyCart = () => {
-    setCart([]);
+    setCart([]); // Vacía el carrito
   };
 
   const handleRemoveProduct = (index) => {
@@ -75,12 +74,18 @@ export const Carrito = () => {
               </div>
               <div className="flex items-center justify-center">
                 <p className="font-primary font-semibold text-lg text-black text-center">{producto.quantity}</p>
-                <button 
+                {/*<button 
                   onClick={() => handleIncreaseQuantity(index)} 
-                  className="px-2 py-1 bg-blue-500 text-black rounded-lg hover:bg-blue-400 text-2xl transition duration-200 mr-2"
+                  className="px-2 py-1 bg-blue text-black rounded-lg text-2xl transition duration-200 mr-2"
                 >
                   +
                 </button> 
+                <button 
+                  onClick={() => handleRemoveProduct(index)} 
+                  className="px-2 py-1 bg-red text-white rounded-lg transition duration-200"
+                >
+                  <Trash />
+                </button>*/}
               </div>
               <p className="font-primary font-semibold text-lg text-black text-center">{`₡${producto.precio * producto.quantity}`}</p>
             </div>
@@ -94,12 +99,12 @@ export const Carrito = () => {
                 Total: <span className="text-indigo">{`₡${getTotalProducts()}`}</span>
               </h3>
             </div>
-            <button 
+          {/*<button 
               onClick={handleEmptyCart} 
               className="mt-4 px-4 py-2 bg-blue text-white rounded-lg hover:bg-red-500 transition duration-200"
             >
               Vaciar Carrito
-            </button>
+            </button>*/}
           </>
         )}
       </div>
