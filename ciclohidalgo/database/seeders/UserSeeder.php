@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Juan Pérez',
+                'nombre' => 'Juan Pérez',
                 'contacto' => '555-1234',
                 'direccion' => 'Calle Falsa 123',
                 'email' => 'juan.perez@example.com',
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Ana Gómez',
+                'nombre' => 'Ana Gómez',
                 'contacto' => '555-5678',
                 'direccion' => 'Avenida Siempre Viva 456',
                 'email' => 'ana.gomez@example.com',
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Luis Martínez',
+                'nombre' => 'Luis Martínez',
                 'contacto' => '555-8765',
                 'direccion' => 'Boulevard de los Sueños 789',
                 'email' => 'luis.martinez@example.com',

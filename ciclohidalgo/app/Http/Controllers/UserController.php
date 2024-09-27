@@ -24,18 +24,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = validator($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
+            'nombre' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'contacto' => ['string', 'max:255'],
             'role_id' => ['integer', 'max:255'],
             'direccion' => ['string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
             'cumpleanos' => ['string', 'max:255'],
-            'boletin' => ['required', 'boolean', 'max:255', 'unique:users'],
+            'boletin' => ['required', 'boolean', 'max:255',],
 
         ], [
-            'name.required' => 'Name field is required.',
-            'boletin.required' => 'Boletin field is required.',
+            'nombre.required' => 'Nombre field is required.',
             'password.required' => 'Password field is required.',
             'email.required' => 'Email field is required.',
             'email.email' => 'Email must be a valid email address.'
@@ -54,7 +53,7 @@ class UserController extends Controller
         $rand_code = random_int(100000, 999999);
 
         $user = User::create([
-            'name' => $validated['name'],
+            'nombre' => $validated['nombre'],
             'contacto' => $validated['contacto'],
             'email' => $validated['email'],
             'password' => $password,
@@ -63,7 +62,7 @@ class UserController extends Controller
             'boletin' => $validated['boletin']
         ]);
 
-        Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
+        // Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
 
         if ($request->is('api/*') || $request->wantsJson()) {
             return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
