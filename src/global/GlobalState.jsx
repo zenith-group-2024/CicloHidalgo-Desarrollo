@@ -10,7 +10,7 @@ export const GlobalProvider = ({ children }) => {
   });
 
   const setUser = (user) => setState((prevState) => ({ ...prevState, user }));
-
+  const setToken = (token) => setState((prevState) => ({ ...prevState, token })); 
   return (
     <GlobalContext.Provider value={{ state, setUser }}>
       {children}

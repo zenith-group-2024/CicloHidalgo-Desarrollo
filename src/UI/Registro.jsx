@@ -1,34 +1,40 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
+import { useRegistro } from '../../hooks/UseRegistro'; // Asegúrate de cambiar esta ruta
 
 const Registro = () => {
-  const [name, setName] = useState('');
-  const [contact, setContact] = useState('');
-  const [address, setAddress] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [contacto, setContacto] = useState('');
+  const [dirrecion, setDireccion] = useState('');
   const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [cumpleanos, setCumpleanos] = useState('');
   const [password, setPassword] = useState('');
-  const [newsletter, setNewsletter] = useState(false);
-  const [isOpen, setIsOpen] = useState(true); // Estado para controlar si el modal está abierto
-
+  const [boletin, setBoletin] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); 
   const navigate = useNavigate();
+  const { isLoading, register } = useRegistro(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({ name, contact, address, email, birthday, password, newsletter });
-    setName('');
-    setContact('');
-    setAddress('');
+    
+    await register(email, password, nombre, dirrecion, cumpleanos, contacto, boletin);
+    
+  
+    setNombre('');
+    setContacto('');
+    setDireccion('');
     setEmail('');
-    setBirthday('');
+    setCumpleanos('');
     setPassword('');
-    setNewsletter(false);
+    setBoletin(false);
+    
+   
   };
 
   const closeModal = () => {
     setIsOpen(false);
-    navigate('/'); // Navega a la página principal cuando se cierra el modal
+    navigate('/');
   };
 
   return (
@@ -36,7 +42,6 @@ const Registro = () => {
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
-            {/* Botón de cerrar con icono de Lucide */}
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray focus:outline-none"
@@ -53,9 +58,9 @@ const Registro = () => {
                 </label>
                 <input
                   type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  id="nombre"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
                   required
                   className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
@@ -67,9 +72,9 @@ const Registro = () => {
                 </label>
                 <input
                   type="text"
-                  id="contact"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
+                  id="contacto"
+                  value={contacto}
+                  onChange={(e) => setContacto(e.target.value)}
                   required
                   className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
@@ -81,9 +86,9 @@ const Registro = () => {
                 </label>
                 <input
                   type="text"
-                  id="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  id="dirrecion"
+                  value={dirrecion}
+                  onChange={(e) => setDireccion(e.target.value)}
                   required
                   className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
@@ -109,9 +114,9 @@ const Registro = () => {
                 </label>
                 <input
                   type="date"
-                  id="birthday"
-                  value={birthday}
-                  onChange={(e) => setBirthday(e.target.value)}
+                  id="cumpleanos"
+                  value={cumpleanos}
+                  onChange={(e) => setCumpleanos(e.target.value)}
                   required
                   className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
@@ -134,9 +139,9 @@ const Registro = () => {
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  id="newsletter"
-                  checked={newsletter}
-                  onChange={(e) => setNewsletter(e.target.checked)}
+                  id="boletin"
+                  checked={boletin}
+                  onChange={(e) => setBoletin(e.target.checked)}
                   className="h-4 w-4 text-blue focus:ring-blue border-gray rounded"
                 />
                 <label htmlFor="newsletter" className="ml-2 block text-sm text-gray">
@@ -148,7 +153,7 @@ const Registro = () => {
                 type="submit"
                 className="w-full py-3 px-4 bg-red text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"
               >
-                Registrarse
+                {isLoading ? 'Cargando...' : 'Registrarse'}
               </button>
             </form>
           </div>
