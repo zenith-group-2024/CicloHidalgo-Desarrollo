@@ -1,12 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Card from '../UI/CardProductos'; 
+import React, { useRef, useEffect } from 'react';
+import Card from '../UI/CardDestacado'; 
 import { useFetchProductos } from '../../hooks/FetchProductos';
 
 const ProductosDestacados = () => {
     const carouselRef = useRef(null);
     const { productos } = useFetchProductos();
 
-   
+    useEffect(() => {
+        const carousel = carouselRef.current;
+        const scrollStep = 1; // Desplazamiento por cada intervalo
+        const intervalTime = 15; // Intervalo de tiempo en ms entre desplazamientos
+
+        const scrollInterval = setInterval(() => {
+            if (carousel) {
+                carousel.scrollLeft += scrollStep;
+
+                // Resetea el scroll si ha llegado al final de los productos
+                if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth) {
+                    carousel.scrollLeft = 0; // Reinicia el desplazamiento
+                }
+            }
+        }, intervalTime);
+
+        return () => clearInterval(scrollInterval);
+    }, [productos.length]);
 
     return (
         <section className="bg-white p-8">
@@ -14,11 +31,15 @@ const ProductosDestacados = () => {
             <div className="relative">
                 <div 
                     ref={carouselRef}
-                    className="flex hide-scrollbar whitespace-nowrap scroll-smooth"
+                    className="flex hide-scrollbar whitespace-nowrap overflow-hidden"
                 >
                     {productos.map((producto) => (
-                        <div key={producto.id} className="inline-block w-72 sm:w-80 md:w-96 lg:w-[24rem] p-4 sm:p-6">
-                            <Card title={producto.nombre} precio={producto.precio} img={`../src/assets/${producto.imagen}`} />
+                        <div key={producto.id} className="inline-block p-4">
+                            <Card 
+                                title={producto.marca} 
+                                precio={`₡ ${producto.precio}`} 
+                                img={`../src/assets/${producto.imagen}`} 
+                            />
                         </div>
                     ))}
                 </div>

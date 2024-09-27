@@ -9,7 +9,7 @@ const SocialMediaSection = () => {
                    
                     <a href="https://wa.me/your-number" target="_blank" rel="noopener noreferrer">
                         <MessageCircle
-                            size={40} 
+                            size={50} 
                             className="text-blue transition-transform transform hover:scale-125" 
                             aria-label="WhatsApp"
                         />
@@ -18,7 +18,7 @@ const SocialMediaSection = () => {
                     
                     <a href="https://facebook.com/your-page" target="_blank" rel="noopener noreferrer">
                         <Facebook 
-                            size={40} 
+                            size={50} 
                             className="text-blue transition-transform transform hover:scale-125" 
                             aria-label="Facebook"
                         />
@@ -30,7 +30,7 @@ const SocialMediaSection = () => {
                     
                     <a href="https://instagram.com/your-profile" target="_blank" rel="noopener noreferrer">
                         <Instagram 
-                            size={40} 
+                            size={50} 
                             className="text-blue transition-transform transform hover:scale-125" 
                             aria-label="Instagram"
                         />
