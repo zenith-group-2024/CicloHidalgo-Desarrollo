@@ -8,24 +8,29 @@ import AdminDashboard from './UI/DashboardAdmin';
 import AdminCRUD from './UI/AdminCRUD'; 
 import { Carrito } from './pages/Carrito';
 import { CartProvider } from './UI/Prueba_Carrito';
-import DetalleProducto from './UI/DetalleProducto'
+import DetalleProducto from './UI/DetalleProducto';
+import PerfilCliente from './pages/PerfilCliente.jsx'
+import { GlobalProvider } from './GlobalState.jsx'; 
+
 function App() {
   return (
     <BrowserRouter>
-      <CartProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Contenido" element={<Contenido />} />
-          <Route path="/Productos" element={<Productos />} />
-          <Route path="/Servicios" element={<Servicios />} /> {/* Ruta de servicios */}
-          <Route path="/Carrito" element={<Carrito />} />
-         <Route path="/producto/:id" element={<DetalleProducto />}/>
-          <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/crud/:resource" element={<AdminCRUD />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        
-        </Routes>
-      </CartProvider>
+      <GlobalProvider> 
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Contenido" element={<Contenido />} />
+            <Route path="/Productos" element={<Productos />} />
+            <Route path="/Servicios" element={<Servicios />} />
+            <Route path="/Carrito" element={<Carrito />} />
+            <Route path="/producto/:id" element={<DetalleProducto />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/crud/:resource" element={<AdminCRUD />} /> 
+            <Route path="/PerfilCliente" element={<PerfilCliente />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </CartProvider>
+      </GlobalProvider>
     </BrowserRouter>
   );
 }

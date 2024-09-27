@@ -25,8 +25,14 @@ export const useLogin = () => {
         );
         const result = await response.json();
         console.log(result);
-        //setUser(result);
-         // Aquí aseguramos que setData establece el evento correctamente
+       
+    if (response.ok) {
+      // Si el inicio de sesión fue exitoso, almacena el token en localStorage
+      localStorage.setItem('authToken', result.token); // Asumiendo que el token está en result.token
+      console.log('Token guardado en localStorage:', result.token); // Verifica el token guardado
+    } else {
+      console.error('Error de inicio de sesión:', result.message); // Muestra el mensaje de error si hay
+    }
       } catch (error) {
         console.log(error);
       } finally {

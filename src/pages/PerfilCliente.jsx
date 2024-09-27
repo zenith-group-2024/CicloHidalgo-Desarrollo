@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import axios from 'axios';
 
-const App = () => {
+const PerfilCliente = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [formData, setFormData] = useState({
-        name: 'Juan Pérez',
-        username: 'juanp',
-        email: 'juan.perez@example.com',
-        address: 'Calle Falsa 123',
-        birthday: '1990-01-01',
+        name: '',
+        username: '',
+        email: '',
+        address: '',
+        birthday: '',
     });
     const [message, setMessage] = useState('');
     const [editing, setEditing] = useState(false);
+
+    useEffect(() => {
+        axios.get('/user')
+            .then(response => {
+                const { name, username, email, address, birthday } = response.data;
+                setFormData({
+                    name: name || '',
+                    username: username || '',
+                    email: email || '',
+                    address: address || '',
+                    birthday: birthday || '',
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener los datos del usuario:', error);
+            });
+    }, []);
 
     const openModal = () => {
         setModalOpen(true);
@@ -123,4 +141,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default PerfilCliente;
