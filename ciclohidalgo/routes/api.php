@@ -28,10 +28,10 @@ Route::put('/admin/users/{id}/role', [AdminUsersController::class, 'updateRole']
 Route::get('/user', function (Request $request) {return $request->user();}); //user() pero sin el middleware
 
 Route::get('/user/getprofile/{id}', [ProfileController::class, 'getEditData']);//Añadir sanctum o middleware
-Route::put('/user/updateprofile/{id}', [ProfileController::class, 'updateEditData']);//Añadir sanctum o middleware
+Route::put('/user/update/{id}', [ProfileController::class, 'updateEditData']);//Añadir sanctum o middleware
 //Route::get('/user/data', [ProfileController::class, 'getUserData']);
 //Route::get('/user/infoupdate', [ProfileController::class, 'updateUserInfo']);
 //Route::get('/user/emailupdate', [ProfileController::class, 'updateUserEmail']);
-Route::get('/user/deleteacc', [ProfileController::class, 'destroy']);
+Route::get('/user/delete{id}', [ProfileController::class, 'deleteUser']);
 
 Route::get('/roles', function() {return App\Models\Role::all();});

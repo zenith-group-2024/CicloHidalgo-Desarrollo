@@ -20,7 +20,7 @@ class ProfileController extends Controller
 
     public function getEditData($id)
     {
-        
+
         $user = User::find($id);
 
         if (!$user) {
@@ -34,6 +34,16 @@ class ProfileController extends Controller
             'email' => $user->email,
             'cumpleanos' => $user->cumpleanos,
         ], 200);
+    }
+
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+        $user->delete();
+        return response()->json(['message' => 'Usuario eliminado exitosamente'], 200);
     }
 
     public function edit(Request $request) {}
@@ -71,35 +81,35 @@ class ProfileController extends Controller
     } */
 
     public function updateEditData(Request $request, $id)
-{
-    // Validación de los datos recibidos
-    $validatedData = $request->validate([
-        'name' => 'sometimes|required|string|max:255',
-        'contacto' => 'sometimes|required|string|max:255',
-        'direccion' => 'sometimes|required|string|max:255',
-        'cumpleanos' => 'sometimes|nullable|date',
-        'email' => 'sometimes|required|email|max:255|unique:users,email,' . $id,
-        'boletin' => 'sometimes|required|boolean',
-    ]);
+    {
+        // Validación de los datos recibidos
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'contacto' => 'sometimes|required|string|max:255',
+            'direccion' => 'sometimes|required|string|max:255',
+            'cumpleanos' => 'sometimes|nullable|date',
+            'email' => 'sometimes|required|email|max:255|unique:users,email,' . $id,
+            'boletin' => 'sometimes|required|boolean',
+        ]);
 
-    // Encuentra al usuario por su ID
-    $user = User::find($id);
+        // Encuentra al usuario por su ID
+        $user = User::find($id);
 
-    // Si no se encuentra el usuario, devuelve un error 404
-    if (!$user) {
-        return response()->json(['message' => 'Usuario no encontrado'], 404);
+        // Si no se encuentra el usuario, devuelve un error 404
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        // Actualiza el usuario con los datos validados
+        $user->update($validatedData);
+
+        return response()->json(['message' => 'Perfil actualizado exitosamente'], 200);
     }
-
-    // Actualiza el usuario con los datos validados
-    $user->update($validatedData);
-
-    return response()->json(['message' => 'Perfil actualizado exitosamente'], 200);
-}
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request)
+    /* public function destroy(Request $request)
     {
         $request->validate([
             'password' => ['required', 'current_password'],
@@ -114,5 +124,5 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return response()->json(['message' => 'Account deleted!'], 200);
-    }
+    } */
 }
