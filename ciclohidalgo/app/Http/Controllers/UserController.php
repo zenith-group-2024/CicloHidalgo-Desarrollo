@@ -124,7 +124,7 @@ class UserController extends Controller
             'direccion' => ['string', 'max:255'],
             'password' => ['nullable', 'string', 'min:8'],
             'cumpleanos' => ['string', 'max:255'],
-            'boletin' => ['required', 'boolean', 'max:255', 'unique:users'],
+            'boletin' => ['required', 'boolean', 'max:255'],
 
         ], [
             'name.required' => 'Name field is required.',
