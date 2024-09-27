@@ -2,18 +2,35 @@ import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { CartContext } from './Prueba_Carrito'; // Asegúrate de que esta ruta sea correcta
+import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js';
 
 const CardDestacado = ({ title, precio, img, id }) => {
     const { addToCart } = useContext(CartContext); // Obtener la función addToCart del contexto
+    const { producto, isLoading, error} = useFetchProductoDetallado(id);
 
     const handleAddToCart = (e) => {
-        e.stopPropagation(); // Evitar que el clic en el botón active el Link
-        addToCart(id); // Lógica para añadir el producto al carrito
+        e.stopPropagation();
+        const numericPrice = typeof producto.precio === 'number'
+            ? producto.precio
+            : parseFloat(producto.precio.replace(/[^\d.-]/g, ''));
+
+        if (isNaN(numericPrice)) {
+            console.error("Precio inválido");
+            return;
+        }
+
+        addToCart({
+            id: producto.id,
+            title: producto.marca,
+            precio: numericPrice,
+            img: producto.imagen,
+
+        });
     };
 
     return (
         <motion.div
-            className="rounded-lg shadow-lg overflow-hidden h-[350px] w-[300px] transition-transform transform hover:scale-105 m-2 bg-[#F9F9F9] flex flex-col justify-between" // Cambiado a flex y justify-between
+            className="rounded-lg shadow-lg overflow-hidden h-[350px] w-[300px] transition-transform transform hover:scale-105 m-2 bg-white flex flex-col justify-between"
         >
             <Link to={`/producto/${id}`}>
                 <div>
@@ -31,7 +48,7 @@ const CardDestacado = ({ title, precio, img, id }) => {
             <div className="flex justify-center mb-4"> {/* Contenedor para centrar el botón */}
                 <button
                     onClick={handleAddToCart}
-                    className="px-4 py-2 bg-blue text-white rounded-lg hover:bg-red hover:scale-105 transition duration-200 ease-in-out"
+                    className="mt-4 px-6 py-3 bg-red text-white rounded-lg shadow-md transition duration-200 ease-in-out hover:scale-105"
                 >
                     Agregar al Carrito
                 </button>

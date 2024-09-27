@@ -12,7 +12,7 @@ export const Card = (props) => {
   return (
     <motion.div
       ref={ref}
-      className="container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-[#F9F9F9]"
+      className="container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-white"
     >
       <Link to={`/producto/${props.id}`}>
         <div className="flex-grow flex flex-col">

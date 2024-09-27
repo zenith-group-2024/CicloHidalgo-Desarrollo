@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Card from '../UI/CardDestacado'; 
+import Card from '../UI/CardDestacado';
 import { useFetchProductos } from '../../hooks/FetchProductos';
 
 const ProductosDestacados = () => {
@@ -29,16 +29,17 @@ const ProductosDestacados = () => {
         <section className="bg-white p-8">
             <h1 className="text-3xl font-bold mb-6 mt-20 text-center font-primary">Productos Destacados</h1>
             <div className="relative">
-                <div 
+                <div
                     ref={carouselRef}
                     className="flex hide-scrollbar whitespace-nowrap overflow-hidden"
                 >
                     {productos.map((producto) => (
                         <div key={producto.id} className="inline-block p-4">
-                            <Card 
-                                title={producto.marca} 
-                                precio={`₡ ${producto.precio}`} 
-                                img={`../src/assets/${producto.imagen}`} 
+                            <Card
+                                id={producto.id}
+                                title={producto.marca}
+                                precio={`₡ ${producto.precio}`}
+                                img={`../src/assets/${producto.imagen}`}
                             />
                         </div>
                     ))}
