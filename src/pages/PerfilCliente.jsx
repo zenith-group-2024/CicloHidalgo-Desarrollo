@@ -1,35 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
 const PerfilCliente = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
-        username: '',
+        contacto: '',
         email: '',
-        address: '',
-        birthday: '',
+        direccion: '',
+        cumpleanos: '',
     });
     const [message, setMessage] = useState('');
     const [editing, setEditing] = useState(false);
+    //
+    const [loading, setLoading] = useState(true);
+    const [authenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
-        axios.get('/user')
+        fetch('http://127.0.0.1:8000/api/user/data')
             .then(response => {
-                const { name, username, email, address, birthday } = response.data;
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json(); // Procesa JSON
+            })
+            .then(data => {
+                const { name, contacto, email, direccion, cumpleanos } = data;
                 setFormData({
                     name: name || '',
-                    username: username || '',
+                    contacto: contacto || '',
                     email: email || '',
-                    address: address || '',
-                    birthday: birthday || '',
+                    direccion: direccion || '',
+                    cumpleanos: cumpleanos || '',
                 });
+                setAuthenticated(true);
             })
             .catch(error => {
                 console.error('Error al obtener los datos del usuario:', error);
-            });
+                setAuthenticated(false);
+            })
+            .finally(() => {setLoading(false)}
+        );
     }, []);
 
+
+    if (loading) {
+        return <p>Cargando datos...</p>; 
+    }
+
+    if (!authenticated) {
+        return <p>No has iniciado sesión. Por favor, inicia sesión para ver tu perfil.</p>;
+    }
     const openModal = () => {
         setModalOpen(true);
     };
@@ -44,8 +65,8 @@ const PerfilCliente = () => {
     };
 
     const handleSave = () => {
-        const { name, username, email, address, birthday } = formData;
-        if (!name || !username || !email || !address || !birthday) {
+        const { name, contacto, email, direccion, cumpleanos } = formData;
+        if (!name || !contacto || !email || !direccion || !cumpleanos) {
             setMessage('Por favor, completa todos los campos.');
             return;
         }
@@ -85,8 +106,8 @@ const PerfilCliente = () => {
                                 />
                                 <input
                                     type="text"
-                                    name="username"
-                                    value={formData.username}
+                                    name="contacto"
+                                    value={formData.contacto}
                                     onChange={handleChange}
                                     className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
                                     placeholder="Usuario"
@@ -101,16 +122,16 @@ const PerfilCliente = () => {
                                 />
                                 <input
                                     type="text"
-                                    name="address"
-                                    value={formData.address}
+                                    name="direccion"
+                                    value={formData.direccion}
                                     onChange={handleChange}
                                     className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
                                     placeholder="Dirección"
                                 />
                                 <input
                                     type="date"
-                                    name="birthday"
-                                    value={formData.birthday}
+                                    name="cumpleanos"
+                                    value={formData.cumpleanos}
                                     onChange={handleChange}
                                     className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
                                 />
@@ -124,10 +145,10 @@ const PerfilCliente = () => {
                         ) : (
                             <div className="p-4 rounded-lg shadow-md mb-4">
                                 <p className="mb-4"><strong>Nombre:</strong> {formData.name}</p>
-                                <p className="mb-4"><strong>Usuario:</strong> {formData.username}</p>
+                                <p className="mb-4"><strong>Usuario:</strong> {formData.contacto}</p>
                                 <p className="mb-4"><strong>Email:</strong> {formData.email}</p>
-                                <p className="mb-4"><strong>Dirección:</strong> {formData.address}</p>
-                                <p className="mb-4"><strong>Cumpleaños:</strong> {formData.birthday}</p>
+                                <p className="mb-4"><strong>Dirección:</strong> {formData.direccion}</p>
+                                <p className="mb-4"><strong>Cumpleaños:</strong> {formData.cumpleanos}</p>
                                 <button onClick={() => setEditing(true)} className="bg-blue text-white px-4 py-2 rounded-lg h transition">
                                     Editar
                                 </button>
