@@ -60,6 +60,7 @@ class UserController extends Controller
             'direccion' => $validated['direccion'],
             'cumpleanos' => $validated['cumpleanos'],
             'boletin' => $validated['boletin']
+            //Commit
         ]);
 
         // Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
