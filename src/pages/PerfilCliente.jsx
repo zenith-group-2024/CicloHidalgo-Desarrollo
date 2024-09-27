@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import axios from 'axios';
 
 const PerfilCliente = () => {
     const [modalOpen, setModalOpen] = useState(false);
