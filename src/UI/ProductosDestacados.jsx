@@ -8,16 +8,15 @@ const ProductosDestacados = () => {
 
     useEffect(() => {
         const carousel = carouselRef.current;
-        const scrollStep = 1; // Desplazamiento por cada intervalo
-        const intervalTime = 15; // Intervalo de tiempo en ms entre desplazamientos
+        const scrollStep = 1;
+        const intervalTime = 15;
 
         const scrollInterval = setInterval(() => {
             if (carousel) {
                 carousel.scrollLeft += scrollStep;
 
-                // Resetea el scroll si ha llegado al final de los productos
                 if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth) {
-                    carousel.scrollLeft = 0; // Reinicia el desplazamiento
+                    carousel.scrollLeft = 0;
                 }
             }
         }, intervalTime);

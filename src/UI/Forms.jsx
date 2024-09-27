@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const { login } = useLogin();
-  const { isAuthenticated, setIsAuthenticated, logout } = useContext(GlobalContext); // Usa el contexto
+  const { isAuthenticated, setIsAuthenticated, logout } = useContext(GlobalContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isOpen, setIsOpen] = useState(true);
@@ -42,7 +42,7 @@ const LoginForm = () => {
   };
 
   const handleLogout = () => {
-    logout(); // Llama a la función logout del contexto
+    logout();
   };
 
   return (
@@ -60,7 +60,6 @@ const LoginForm = () => {
 
             <h2 className="text-2xl font-bold text-center mb-8 text-black">Login</h2>
 
-            {/* Mostrar el formulario de login si no está autenticado */}
             {!isAuthenticated ? (
               <form onSubmit={handleLogin} className="space-y-6">
                 <div>
@@ -121,7 +120,7 @@ const LoginForm = () => {
           </div>
         </div>
       )}
-      {showRegistro && <Registro />} {/* Mostrar el componente Registro */}
+      {showRegistro && <Registro />}
     </>
   );
 };

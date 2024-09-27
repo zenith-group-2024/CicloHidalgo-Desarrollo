@@ -22,7 +22,7 @@ const PerfilCliente = () => {
                 if (!response.ok) {
                     throw new Error('Error en la respuesta del servidor');
                 }
-                return response.json(); // Procesa JSON
+                return response.json();
             })
             .then(data => {
                 const { name, contacto, email, direccion, cumpleanos } = data;
@@ -55,7 +55,7 @@ const PerfilCliente = () => {
 
     const closeModal = () => {
         setModalOpen(false);
-        setEditing(false); // Reset editing state when closing modal
+        setEditing(false);
     };
 
     const handleChange = (e) => {
@@ -69,12 +69,11 @@ const PerfilCliente = () => {
             return;
         }
         setMessage('Cambios guardados correctamente.');
-        setEditing(false); // Reset editing state after saving
+        setEditing(false);
     };
 
     return (
         <div className="flex flex-col items-center">
-            {/* Navbar */}
             <nav className="bg-gray p-4 flex items-center shadow-md w-full">
                 <button onClick={openModal} className="text-white focus:outline-none">
                     ☰
@@ -82,7 +81,6 @@ const PerfilCliente = () => {
                 <span className="text-white ml-4 text-lg font-semibold">Perfil de Usuario</span>
             </nav>
 
-            {/* Modal */}
             {modalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="fixed inset-0 bg-black opacity-50" onClick={closeModal}></div>
