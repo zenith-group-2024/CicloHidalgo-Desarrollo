@@ -7,7 +7,7 @@ import AuthForm from './Forms.jsx';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); 
-  const [cartCount, setCartCount] = useState(0); // Contador del carrito
+  const [cartCount, setCartCount] = useState(0);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -48,11 +48,11 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className="hidden md:flex flex-grow justify-center space-x-10"> {/* Aumentar el espaciado horizontal */}
-    <Link to="/" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</Link> {/* Aumentar tamaño de la fuente */}
-    <Link to="/Productos" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</Link> {/* Aumentar tamaño de la fuente */}
-    <Link to="/Contenido" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</Link> {/* Aumentar tamaño de la fuente */}
-    <Link to="/Servicios" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link> {/* Aumentar tamaño de la fuente */}
+      <div className="hidden md:flex flex-grow justify-center space-x-10">
+    <Link to="/" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</Link>
+    <Link to="/Productos" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</Link>
+    <Link to="/Contenido" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</Link>
+    <Link to="/Servicios" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link>
 </div>
 
 

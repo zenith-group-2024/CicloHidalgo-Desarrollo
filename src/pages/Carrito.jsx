@@ -14,7 +14,7 @@ export const Carrito = () => {
   };
 
   const handleEmptyCart = () => {
-    setCart([]); // Vacía el carrito
+    setCart([]);
   };
 
   const handleRemoveProduct = (index) => {

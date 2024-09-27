@@ -27,11 +27,10 @@ export const useLogin = () => {
         console.log(result);
        
     if (response.ok) {
-      // Si el inicio de sesión fue exitoso, almacena el token en localStorage
-      localStorage.setItem('authToken', result.token); // Asumiendo que el token está en result.token
-      console.log('Token guardado en localStorage:', result.token); // Verifica el token guardado
+      localStorage.setItem('authToken', result.token);
+      console.log('Token guardado en localStorage:', result.token);
     } else {
-      console.error('Error de inicio de sesión:', result.message); // Muestra el mensaje de error si hay
+      console.error('Error de inicio de sesión:', result.message);
     }
       } catch (error) {
         console.log(error);

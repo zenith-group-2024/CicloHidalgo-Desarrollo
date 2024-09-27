@@ -10,7 +10,7 @@ const Registro = () => {
   const [birthday, setBirthday] = useState('');
   const [password, setPassword] = useState('');
   const [newsletter, setNewsletter] = useState(false);
-  const [isOpen, setIsOpen] = useState(true); // Estado para controlar si el modal está abierto
+  const [isOpen, setIsOpen] = useState(true);
 
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const Registro = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    navigate('/'); // Navega a la página principal cuando se cierra el modal
+    navigate('/');
   };
 
   return (
@@ -36,7 +36,6 @@ const Registro = () => {
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
-            {/* Botón de cerrar con icono de Lucide */}
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray focus:outline-none"
