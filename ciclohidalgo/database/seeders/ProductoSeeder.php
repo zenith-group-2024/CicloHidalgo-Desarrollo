@@ -29,7 +29,7 @@ class ProductoSeeder extends Seeder
                 'precio' => 2700,
                 'imagen' => 'images/productos/producto_SISFruitSalad.png',
                 'codigo_barras' => '',
-                'destacado' => false,
+                'destacado' => True,
                 'cantidad' => 10,
             ],[
                 'marca' => 'SIS',
@@ -51,7 +51,7 @@ class ProductoSeeder extends Seeder
                 'precio' => 388000,
                 'imagen' => 'images/productos/producto_CannondaleRojo.png',
                 'codigo_barras' => '',
-                'destacado' => false,
+                'destacado' => True,
                 'cantidad' => 1,
             ],[
                 'marca' => 'Scott',
@@ -73,7 +73,7 @@ class ProductoSeeder extends Seeder
                 'precio' => 71900,
                 'imagen' => 'images/productos/producto_BicicletaEuroFlypony.png',
                 'codigo_barras' => '',
-                'destacado' => false,
+                'destacado' => True,
                 'cantidad' => 2,
             ],[
                 'marca' => 'Garneu',
@@ -87,17 +87,6 @@ class ProductoSeeder extends Seeder
                 'destacado' => false,
                 'cantidad' => 5,
             ],[
-                'marca' => 'Nite Rider',
-                'especificacion' => 'Luz recargable delantera de 300 lumens para acoplar en la bicicleta, especial para esos rides nocturnos, además de ser resistente al agua posee diversos modos de iluminación',
-                'subcategoria' => 'Luz',
-                'categoria' => 'Accesorios',
-                'modelo' => 'Swift 300',
-                'precio' => 15750,
-                'imagen' => 'images/productos/Falta.png',
-                'codigo_barras' => '',
-                'destacado' => false,
-                'cantidad' => 3,
-            ],[
                 'marca' => 'Maxxis',
                 'especificacion' => 'Llanta crossmark para bicicleta 29" especial para agarre en los terrenos con suelo suelto y seco',
                 'subcategoria' => 'Llanta',
@@ -106,7 +95,7 @@ class ProductoSeeder extends Seeder
                 'precio' => 9300,
                 'imagen' => 'images/productos/producto_LlantaMaxxisCrossMark.png',
                 'codigo_barras' => '',
-                'destacado' => false,
+                'destacado' => true,
                 'cantidad' => 3,
             ],[
                 'marca' => 'WD-40',
@@ -172,7 +161,7 @@ class ProductoSeeder extends Seeder
                 'precio' => 138700,
                 'imagen' => 'images/productos/producto_SuspensionRockShox.png',
                 'codigo_barras' => '',
-                'destacado' => false,
+                'destacado' => true,
                 'cantidad' => 2,
             ],[
                 'marca' => 'Scott',
@@ -249,7 +238,7 @@ class ProductoSeeder extends Seeder
                 'precio' => 60800,
                 'imagen' => 'images/productos/producto_SxSram.png',
                 'codigo_barras' => '',
-                'destacado' => false,
+                'destacado' => True,
                 'cantidad' => 2,
             ],
         ]);
