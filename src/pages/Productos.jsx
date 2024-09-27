@@ -77,7 +77,7 @@ export function Productos() {
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio} (IVAI)`}
                                 img={`../src/assets/${producto.imagen}`}
-                                onAddToCart={() => addToCart(producto)} // Agregar al carrito
+                               
                             />
                         ))
                     )}

@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import Navbar from "../UI/Navbar.jsx";
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
+import { useFetchProductos } from '../../hooks/FetchProductos.js'; 
 import { Link } from "react-router-dom";
 import { Trash } from 'lucide-react'; 
 
 export const Carrito = () => {
   const { cart, setCart } = useContext(CartContext);
+  const { productos } = useFetchProductos();
 
   const getTotalProducts = () => {
     return cart.reduce((total, item) => {
@@ -22,6 +24,23 @@ export const Carrito = () => {
     setCart(updatedCart);
   };
 
+  const handleIncreaseQuantity = (index) => {
+    const producto = cart[index];
+    const maxQuantity = productos.find(p => p.id === producto.id)?.cantidad;
+
+    if (producto.quantity < maxQuantity) {
+      const updatedCart = cart.map((item, i) => {
+        if (i === index) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+      setCart(updatedCart);
+    } else {
+      alert(`No puedes agregar más de ${maxQuantity} unidades de ${producto.title}.`);
+    }
+  };
+
   return (
     <div className="bg-white min-h-screen">
       <Navbar />
@@ -30,12 +49,11 @@ export const Carrito = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-black font-primary font-bold text-2xl">Tus compras</h1>
           <Link 
-  to="/Productos" 
-  className="inline-block px-4 py-2 bg-blue text-white font-primary font-bold rounded-lg hover:bg-red transition duration-200"
->
-  Continúa tu compra
-</Link>
-
+            to="/Productos" 
+            className="inline-block px-4 py-2 bg-blue text-white font-primary font-bold rounded-lg hover:bg-red transition duration-200"
+          >
+            Continúa tu compra
+          </Link>
         </div>
 
         <div className="grid grid-cols-3 text-center mb-4 bg-gray p-4 rounded-lg">
@@ -53,16 +71,19 @@ export const Carrito = () => {
               className="container mx-auto p-5 border border-gray-300 shadow-md rounded-md bg-white grid grid-cols-3 items-center mb-4 transition-opacity duration-300 ease-in"
             >
               <div className="flex items-center">
-                <img className="w-20 h-20 object-cover rounded-lg" img={`../src/assets/${producto.imagen}`} alt={producto.title} />
+                <img className="w-20 h-20 object-cover rounded-lg" src={`../src/assets/${producto.imagen}`} alt={producto.title} />
                 <h3 className="font-primary font-semibold text-lg text-black ml-4">{producto.title}</h3>
               </div>
-              <p className="font-primary font-semibold text-lg text-black text-center">{producto.quantity}</p>
-              <div className="flex items-center justify-between">
-                <p className="font-primary font-semibold text-lg text-black text-center">{`₡${producto.precio * producto.quantity}`}</p>
-                <button onClick={() => handleRemoveProduct(index)} className="ml-4"> 
-                  <Trash className="text-red-600 hover:text-red-500 transition duration-200" />
-                </button>
+              <div className="flex items-center justify-center">
+                <p className="font-primary font-semibold text-lg text-black text-center">{producto.quantity}</p>
+                <button 
+                  onClick={() => handleIncreaseQuantity(index)} 
+                  className="px-2 py-1 bg-blue-500 text-black rounded-lg hover:bg-blue-400 text-2xl transition duration-200 mr-2"
+                >
+                  +
+                </button> 
               </div>
+              <p className="font-primary font-semibold text-lg text-black text-center">{`₡${producto.precio * producto.quantity}`}</p>
             </div>
           ))
         )}
@@ -76,7 +97,7 @@ export const Carrito = () => {
             </div>
             <button 
               onClick={handleEmptyCart} 
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition duration-200"
+              className="mt-4 px-4 py-2 bg-red-600 text-black rounded-lg hover:bg-red-500 transition duration-200"
             >
               Vaciar Carrito
             </button>
