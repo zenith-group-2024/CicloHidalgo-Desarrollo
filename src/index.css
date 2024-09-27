@@ -23,7 +23,6 @@ body {
     background-color: #F9F9F9;
 }
 
-/* Asegúrate de tener algo como esto en tu CSS */
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }

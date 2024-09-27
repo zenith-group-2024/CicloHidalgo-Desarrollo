@@ -15,7 +15,6 @@ export function Productos() {
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [filteredProductos, setFilteredProductos] = useState(productos);
 
-    // Funciones de cambio para los filtros
     const handleCategoryChange = useCallback((selected) => {
         setSelectedCategories(selected);
     }, []);
@@ -55,7 +54,6 @@ export function Productos() {
             <Navbar />
 
             <div className="grid grid-cols-4 gap-8 mt-8 mx-6 max-w-fit">
-                {/* Sidebar con filtros */}
                 <div className="col-span-1 p-4 rounded-md">
                     <h1 className="font-secondary font-bold text-xl text-black mb-4">Filtros</h1>
                     <CheckBoxCategoria
@@ -65,7 +63,6 @@ export function Productos() {
                     />
                 </div>
 
-                {/* Productos */}
                 <div className="col-span-3 grid xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-8 mb-8">
                     {filteredProductos.length === 0 ? (
                         <p>No hay productos disponibles.</p>

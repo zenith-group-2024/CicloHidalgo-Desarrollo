@@ -5,11 +5,10 @@ import CRUDForm from './CRUDForm';
 const AdminCRUD = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const resource = location.pathname.split('/').pop(); // Obtener el recurso de la URL
+  const resource = location.pathname.split('/').pop();
 
   const handleSubmit = (data) => {
     console.log('Datos enviados:', data);
-    // Aquí podrías añadir lógica para enviar los datos a un servidor o API
   };
 
   const resourceFields = {
@@ -47,7 +46,6 @@ const AdminCRUD = () => {
     contenido: 'https://via.placeholder.com/150?text=Contenido',
   };
 
-  // Si no hay un recurso válido, redirigir a la página principal
   if (!resourceFields[resource]) {
     return <Navigate to="/" />;
   }

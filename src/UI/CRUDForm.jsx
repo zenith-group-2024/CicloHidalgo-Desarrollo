@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../assets/images/logo.svg';
 
-// Componente para el campo del formulario
 const InputField = ({ label, type = 'text', name, value, onChange, accept }) => {
   return (
     <div className="mb-4">
@@ -20,7 +19,6 @@ const InputField = ({ label, type = 'text', name, value, onChange, accept }) => 
   );
 };
 
-// Componente reutilizable para el formulario CRUD
 const CRUDForm = ({ resourceName, fields, onSubmit, imageUrl }) => {
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {})
@@ -59,7 +57,6 @@ const CRUDForm = ({ resourceName, fields, onSubmit, imageUrl }) => {
           />
         ))}
 
-        {/* Campo para subir imágenes o videos */}
         <InputField
           label="Archivo"
           type="file"

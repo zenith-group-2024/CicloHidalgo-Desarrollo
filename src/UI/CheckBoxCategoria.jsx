@@ -18,7 +18,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
         if (type === "brand") setShowBrands(prev => !prev);
     };
 
-    // Maneja cambios en las categorías
     const handleCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedCategories(prev => ({
@@ -27,7 +26,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
         }));
     };
 
-    // Maneja cambios en las subcategorías
     const handleSubCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedSubCategories(prev => ({
@@ -36,7 +34,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
         }));
     };
 
-    // Maneja cambios en las marcas
     const handleBrandChange = (event) => {
         const { name, checked } = event.target;
         setSelectedBrands(prev => ({
@@ -60,7 +57,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
         onBrandChange(updatedBrands);
     }, [selectedBrands, onBrandChange]);
 
-    // Usar useEffect para actualizar los filtros al cambiar los checkboxes
     useEffect(() => {
         updateCategories();
     }, [selectedCategories, updateCategories]);
@@ -95,7 +91,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
 
     return (
         <div className="space-y-4">
-            {/* Categorías */}
             <div className="text-black w-full mb-4 font-secondary font-bold flex items-center justify-between  bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("category")}>
                 Categoría
                 <ChevronDown className={`transition-transform duration-300 ${showCategories ? "rotate-180" : ""}`} />
@@ -119,7 +114,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                 </div>
             )}
 
-            {/* Subcategorías */}
             <div className="text-black w-full mb-4 font-secondary font-bold flex items-center  justify-between  bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("subCategory")}>
               Subcategoria
                 <ChevronDown className={`transition-transform duration-300 ${showSubCategories ? "rotate-180" : ""}`} />
@@ -143,7 +137,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                 </div>
             )}
 
-            {/* Marcas */}
             <div className="text-black w-full mb-4 font-secondary font-bold flex items-center justify-between bg-transparent border-b-2 border-gray p-2" onClick={() => toggleCheckboxes("brand")}>
                 Marca
                 <ChevronDown className={`transition-transform duration-300 ${showBrands ? "rotate-180" : ""}`} />

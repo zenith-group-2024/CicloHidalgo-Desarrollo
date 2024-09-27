@@ -1,7 +1,5 @@
-// src/GlobalState.js
 import React, { createContext, useState } from 'react';
 
-// Create a context with default value
 export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {

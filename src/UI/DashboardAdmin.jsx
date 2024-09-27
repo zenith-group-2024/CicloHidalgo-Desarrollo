@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Componente para los botones del dashboard
 const DashboardButton = ({ label, resource }) => {
   const navigate = useNavigate();
   
@@ -9,7 +8,6 @@ const DashboardButton = ({ label, resource }) => {
     if (label.startsWith('Añadir')) {
       navigate(`/crud/${resource}`);
     }
-    // Puedes agregar lógica adicional para "Eliminar" y "Editar" aquí si es necesario
   };
 
   return (
@@ -19,9 +17,7 @@ const DashboardButton = ({ label, resource }) => {
   );
 };
 
-// Componente para las tarjetas del dashboard
 const DashboardCard = ({ title, buttons }) => {
-  // Mapeo de los títulos de las tarjetas a los recursos de URL
   const resourceMap = {
     Productos: 'productos',
     Servicios: 'servicios',
@@ -42,7 +38,6 @@ const DashboardCard = ({ title, buttons }) => {
   );
 };
 
-// Componente principal del dashboard
 const AdminDashboard = () => {
   const cardsData = [
     {
