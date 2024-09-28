@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLogin } from '../../hooks/UseLogin';
 import { X } from 'lucide-react';
-import Registro from '../UI/Registro';
+import Registro from './Registro.jsx';
 import { GlobalContext } from '../GlobalState.jsx'; 
 import { Link } from "react-router-dom";
 

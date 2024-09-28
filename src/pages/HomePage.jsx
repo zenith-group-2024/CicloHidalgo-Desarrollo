@@ -9,24 +9,24 @@ import DasboardAdmin from '../UI/DashboardAdmin';
 import Producto from '../pages/Producto';
 import Servicios from './Servicios';
 import PerfilCliente from '../pages/PerfilCliente';
-
+import AñadirProducto from '../forms/AñadirProducto';
 
 
 
 const HomePage = () => {
     return (
         <div>
-        <Navbar />
+       {/* <Navbar />
             <Hero />
             <ProductosDestacados />
             <Info />
             <RedesSociales />
             <Footer />
             
-           {/* <Servicios />
+            <Servicios />
             <Footer />
              <DasboardAdmin />*/}
-
+            <DasboardAdmin />
 
 
         </div>
