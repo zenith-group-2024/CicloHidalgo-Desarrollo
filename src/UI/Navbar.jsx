@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, UserRound, AlignJustify } from 'lucide-react';
 import { Link } from "react-router-dom";
 import Logo from '../assets/images/logo.svg';
-import AuthForm from '../forms/Forms'; 
+import AuthForm from '../forms/Login'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); 

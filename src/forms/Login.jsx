@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLogin } from '../../hooks/UseLogin';
+import { useLogin } from '../../hooks/UseLogin.js';
 import { X } from 'lucide-react';
 import Registro from './Registro.jsx';
 import { GlobalContext } from '../GlobalState.jsx'; 
