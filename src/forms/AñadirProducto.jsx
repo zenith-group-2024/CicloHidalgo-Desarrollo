@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react'; 
+import { useCrearProducto } from '../../hooks/useCrearProducto.js';
 
 const FormProducto = ({ onClose }) => {
+  const { crear,message } = useCrearProducto();
+
+  const [imagen, setImagen] = useState();
+
   const [producto, setProducto] = useState({
     nombre: '',
     marca: '',
@@ -16,16 +21,46 @@ const FormProducto = ({ onClose }) => {
   });
 
   const handleChange = (e) => {
+
+    console.log(e.target.files)
     const { name, value, type, checked, files } = e.target;
     setProducto({
       ...producto,
       [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
     });
+
+    const datos = new FileReader();
+
+    if(e.target.files != null || e.target.files != undefined){
+      datos.addEventListener('load',() => {
+        setImagen(datos.result);
+      })
+      datos.readAsDataURL(e.target.files[0]);
+    }
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Datos del producto:', producto);
+
+    console.log(imagen);
+
+    crear(
+      producto.nombre,
+      producto.marca,
+      producto.especificacion,
+      producto.subcategoria,
+      producto.categoria,
+      producto.modelo,
+      producto.precio,
+      imagen,
+      '1111',
+      producto.cantidad,
+      producto.destacado,
+    );
+
+    //console.log('Datos del producto:', producto);
+    //console.log(message);
     
   };
 
