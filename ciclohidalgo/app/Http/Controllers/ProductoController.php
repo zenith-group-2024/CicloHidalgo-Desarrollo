@@ -129,11 +129,14 @@ class ProductoController extends Controller
         }
 
         $validated = $validator->validated();
-
-        $file = $request->file('imagen');
-        $file_name = 'producto_'. $file->getClientOriginalName().'.'.$file->getClientOriginalExtension();
+        $imagen_64 = $request->input('imagen');
+        $extension = explode('/',explode(':',substr($imagen_64, 0, strpos($imagen_64, ';')))[1])[1];
+        $imagen_Replace = substr($imagen_64, 0, strpos($imagen_64,',')+1);
+        $imagen = str_replace($imagen_Replace, '', $imagen_64);
+        $imagen = str_replace(' ', '+',$imagen);
+        $imagenNombre = 'producto_'.time().'.'.$extension;
         $path = public_path('images/productos/');
-        $file -> move($path, $file_name);
+        file_put_contents($path. $imagenNombre, base64_decode($imagen));
 
         $query = Producto::find($id);
 
@@ -147,7 +150,7 @@ class ProductoController extends Controller
                     'categoria' => $validated['categoria'],
                     'modelo' => $validated['modelo'],
                     'precio' => $validated['precio'],
-                    'imagen' => 'images/productos/'.$file_name,
+                    'imagen' => 'images/productos/'.$imagenNombre,
                     'codigo_barras' => $validated['codigo_barras'],
                     'cantidad' => $validated['cantidad'],
                     'destacado' => $validated['destacado']
