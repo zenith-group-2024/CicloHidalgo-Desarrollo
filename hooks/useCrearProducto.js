@@ -25,13 +25,15 @@ export const useCrearProducto = () => {
             destacado,
           }),
         });
-        setMessage(await response.json().message);
-        console.log(message);
+        const result = await response.json();
+        setMessage(result.message);
+        
        
       } catch (error) {
         console.log(error);
       } finally {
         setIsLoading(false);
+        console.log(message);
       }
     };
   

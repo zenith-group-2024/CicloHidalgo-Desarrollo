@@ -42,9 +42,6 @@ const FormProducto = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(imagen);
-
     crear(
       producto.nombre,
       producto.marca,
@@ -59,6 +56,21 @@ const FormProducto = ({ onClose }) => {
       producto.destacado,
     );
 
+    setProducto(
+      {
+        nombre: '',
+        marca: '',
+        especificacion: '',
+        subcategoria: '',
+        categoria: '',
+        modelo: '',
+        precio: '',
+        imagen: null,
+        cantidad: '',
+        destacado: false,
+      }
+    );
+    
     //console.log('Datos del producto:', producto);
     //console.log(message);
     
