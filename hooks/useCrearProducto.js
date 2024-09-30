@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const useCrearProducto = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState('');
   
     const crear = async (nombre,marca,especificacion,subcategoria,categoria,modelo,precio,imagen,codigo_barras,cantidad,destacado) => {
       try {
@@ -25,15 +25,14 @@ export const useCrearProducto = () => {
             destacado,
           }),
         });
-        const result = await response.json();
-        setMessage(result.message);
-        
-       
+        if (response.ok){
+          setMessage('Producto creado correctamente');
+        }
       } catch (error) {
         console.log(error);
       } finally {
         setIsLoading(false);
-        console.log(message);
+        //console.log(message);
       }
     };
   

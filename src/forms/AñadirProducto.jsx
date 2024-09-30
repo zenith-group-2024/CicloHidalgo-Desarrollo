@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { X } from 'lucide-react'; 
 import { useCrearProducto } from '../../hooks/useCrearProducto.js';
 
@@ -6,6 +6,7 @@ const FormProducto = ({ onClose }) => {
   const { crear,message } = useCrearProducto();
 
   const [imagen, setImagen] = useState();
+  const inputFile = useRef(null);
 
   const [producto, setProducto] = useState({
     nombre: '',
@@ -22,7 +23,7 @@ const FormProducto = ({ onClose }) => {
 
   const handleChange = (e) => {
 
-    console.log(e.target.files)
+    //console.log(e.target.files)
     const { name, value, type, checked, files } = e.target;
     setProducto({
       ...producto,
@@ -68,11 +69,14 @@ const FormProducto = ({ onClose }) => {
         imagen: null,
         cantidad: '',
         destacado: false,
-      }
+      } 
     );
-    
-    //console.log('Datos del producto:', producto);
-    //console.log(message);
+
+    if(inputFile.current){
+      inputFile.current.value = '';
+      inputFile.current.type = 'text';
+      inputFile.current.type = 'file';
+    }
     
   };
 
@@ -177,6 +181,7 @@ const FormProducto = ({ onClose }) => {
                 type="file"
                 name="imagen"
                 accept="image/*"
+                ref={inputFile}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
