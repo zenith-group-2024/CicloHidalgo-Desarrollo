@@ -15,6 +15,18 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
+                'nombre' => 'Admin',
+                'contacto' => '1111-1111',
+                'direccion' => 'Calle Admin',
+                'email' => 'admin@example.com',
+                'password' => Hash::make('administrator'),
+                'cumpleanos' => '1985-07-12',
+                'boletin' => false,
+                'admin' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'nombre' => 'Juan Pérez',
                 'contacto' => '555-1234',
                 'direccion' => 'Calle Falsa 123',
@@ -22,6 +34,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password123'),
                 'cumpleanos' => '1985-07-12',
                 'boletin' => true,
+                'admin' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -33,6 +46,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password456'),
                 'cumpleanos' => '1990-11-20',
                 'boletin' => false,
+                'admin' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -44,6 +58,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password789'),
                 'cumpleanos' => null,
                 'boletin' => true,
+                'admin' => false,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

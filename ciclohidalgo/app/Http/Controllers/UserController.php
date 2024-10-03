@@ -27,17 +27,16 @@ class UserController extends Controller
             'nombre' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'contacto' => ['string', 'max:255'],
-            'role_id' => ['integer', 'max:255'],
             'direccion' => ['string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
             'cumpleanos' => ['string', 'max:255'],
-            'boletin' => ['required', 'boolean', 'max:255',],
-
+            'boletin' => ['required', 'boolean'],
+            'admin' => ['required', 'boolean']
         ], [
-            'nombre.required' => 'Nombre field is required.',
-            'password.required' => 'Password field is required.',
-            'email.required' => 'Email field is required.',
-            'email.email' => 'Email must be a valid email address.'
+            'nombre.required' => 'El campo nombre es requerido.',
+            'password.required' => 'El campo contraseña es requerido.',
+            'email.required' => 'El campo email es requerido.',
+            'email.email' => 'El email debe ser una dirección de correo válida.'
         ]);
 
         if ($validator->fails()) {
@@ -59,21 +58,21 @@ class UserController extends Controller
             'password' => $password,
             'direccion' => $validated['direccion'],
             'cumpleanos' => $validated['cumpleanos'],
-            'boletin' => $validated['boletin']
-            //Commit
+            'boletin' => $validated['boletin'],
+            'admin' => $validated['admin']
         ]);
 
         // Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
 
         if ($request->is('api/*') || $request->wantsJson()) {
-            return response()->json(['message' => 'User created successfully.', 'user' => $user], 201);
+            return response()->json(['message' => 'Usuario creado exitosamente.', 'user' => $user], 201);
         }
 
         if ($request->is('api/*') || $request->wantsJson()) {
           
         }
 
-        return response()->json(['message' => 'registered successfully'], 200);
+        return response()->json(['message' => 'Usuario Registrado'], 200);
         
     }
 
@@ -81,11 +80,12 @@ class UserController extends Controller
     {
         if(!Auth::attempt($request->only('email', 'password')))
         {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'No autorizado'], 401);
         }
 
         $user = User::where('email', $request['email'])->firstOrFail();
         $uid =  $user->id;
+        $user = Auth::user();
         session_start();
 
         return response()->json($user);
@@ -97,7 +97,7 @@ class UserController extends Controller
         Auth::logout();
         session_start();
         session_destroy();
-        return response()->json(['message' => 'Logged out successfully']);
+        return response()->json(['message' => 'Cierre de sesión exitoso']);
     }
 
     public function show(string $id)
@@ -120,14 +120,14 @@ class UserController extends Controller
             'direccion' => ['string', 'max:255'],
             'password' => ['nullable', 'string', 'min:8'],
             'cumpleanos' => ['string', 'max:255'],
-            'boletin' => ['required', 'boolean', 'max:255'],
+            'boletin' => ['required', 'boolean'],
 
         ], [
-            'name.required' => 'Name field is required.',
-            'boletin.required' => 'Boletin field is required.',
-            'password.required' => 'Password field is required.',
-            'email.required' => 'Email field is required.',
-            'email.email' => 'Email must be a valid email address.'
+            'nombre.required' => 'El campo nombre es requerido.',
+            'boletin.required' => 'El campo boletín es requerido.',
+            'password.required' => 'El campo contraseña es requerido.',
+            'email.required' => 'El campo email es requerido.',
+            'email.email' => 'El email debe ser una dirección de correo válida.'
         ]);
 
         if ($validator->fails()) {
@@ -141,9 +141,10 @@ class UserController extends Controller
         $validated = $validator->validated();
 
         $user = User::find($id);
-        $user->name = $validated['name'];
+        $user->nombre = $validated['nombre'];
         $user->email = $validated['email'];
         $user->contacto = $validated['contacto'];
+        $user->direccion = $validated['direccion'];
         $user->cumpleanos = $validated['cumpleanos'];
         $user->boletin = $validated['boletin'];
         if(!empty($validated['password'])){
@@ -152,13 +153,16 @@ class UserController extends Controller
         $user->save();
 
         if ($request->is('api/*') || $request->wantsJson()) {
-            return response()->json(['message' => 'User updated successfully.', 'user' => $user]);
+            return response()->json(['message' => 'Usuario actualizado exitosamente.', 'user' => $user]);
           }
 
     }
 
     public function destroy(string $id)
     {
-        
+        $user = User::find($id);
+        $user->delete();
+
+        return response()->json(['message' => 'Usuario eliminado exitosamente.']);
     }
 }

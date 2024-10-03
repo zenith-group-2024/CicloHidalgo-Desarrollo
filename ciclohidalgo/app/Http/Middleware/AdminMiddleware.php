@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role_id === 1) { //EL NÚMERO DE AQUÍ CORRESPONDE CON EL ID DEL ROL ADMIN, ASUMÍ QUE ES EL 1
+        if (Auth::check() && Auth::user()->admin) {
 
             return $next($request);
         }

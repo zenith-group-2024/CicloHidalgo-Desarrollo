@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'cumpleanos',
         'boletin',
+        'admin',
     ];
 
     /**
@@ -32,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'admin',
     ];
 
     /**
@@ -42,6 +44,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'boletin' => 'boolean',
+            'admin' => 'boolean',
         ];
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            if ($user->admin === null) {
+                $user->admin = false;
+            }
+        });
     }
 }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->date('cumpleanos')->nullable();
             $table->boolean('boletin');
+            $table->boolean('admin')->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
