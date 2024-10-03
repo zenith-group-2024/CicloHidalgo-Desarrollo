@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import FormProducto from '../forms/AñadirProducto';
+import FormEditarProducto from '../forms/EditarProducto';
+import FormEliminarProducto from '../forms/EliminarProducto';
 import CrudCard from '../UI/CRUDCard';
 import Navbar from '../UI/Navbar';
 
 const AdminDashboard = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeliting, setIsDeliting] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [formType, setFormType] = useState('');
 
   const handleAddProduct = () => {
     setIsAdding(true);
     setIsEditing(false);
+    setIsDeliting(false);
     setSelectedProduct(null);
     setFormType('producto');
   };
@@ -19,17 +23,22 @@ const AdminDashboard = () => {
   const handleEditProduct = (productData) => {
     setSelectedProduct(productData);
     setIsEditing(true);
+    setIsDeliting(false);
     setIsAdding(false);
-    setFormType('producto');
+    setFormType('productoEdit');
   };
 
   const handleDeleteProduct = () => {
-    console.log("Producto eliminado");
+    setIsDeliting(true);
+    setIsEditing(false);
+    setIsAdding(false);
+    setFormType('productoDelete');
   };
 
   const handleCloseForms = () => {
     setIsAdding(false);
     setIsEditing(false);
+    setIsDeliting(false);
   };
 
   const handleAddUser = () => {
@@ -110,7 +119,8 @@ const AdminDashboard = () => {
       </div>
 
       {isAdding && (formType === 'producto' ? <FormProducto onClose={handleCloseForms} /> : <FormEditarProducto productoData={selectedProduct} onClose={handleCloseForms} />)}
-      {isEditing && (formType === 'producto' ? <FormEditarProducto productoData={selectedProduct} onClose={handleCloseForms} /> : null)}
+      {isEditing && (formType === 'productoEdit' ? <FormEditarProducto productoData={selectedProduct} onClose={handleCloseForms} /> : null)}
+      {isDeliting && (formType === 'productoDelete' ? <FormEliminarProducto onClose={handleCloseForms} /> : null)}
     </div>
   );
 };

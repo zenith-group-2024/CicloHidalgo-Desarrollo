@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-export const useCrearProducto = () => {
+export const useUpdateProducto = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState('');
   
-    const crear = async (nombre,marca,especificacion,subcategoria,categoria,modelo,precio,imagen,codigo_barras,cantidad,destacado) => {
+    const update = async (id,nombre,marca,especificacion,subcategoria,categoria,modelo,precio,imagen,codigo_barras,cantidad,destacado) => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/productos/crear', {
+        const response = await fetch(`http://127.0.0.1:8000/api/productos/update/${id}`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -26,7 +26,7 @@ export const useCrearProducto = () => {
           }),
         });
         if (response.ok){
-          setMessage('Producto creado correctamente');
+          setMessage('Producto actualizado correctamente');
         }
       } catch (error) {
         console.log(error);
@@ -38,7 +38,7 @@ export const useCrearProducto = () => {
     
     return {
       isLoading,
-      crear,
+      update,
       message,
     };
   };
