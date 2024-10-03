@@ -116,7 +116,7 @@ class ProductoController extends Controller
             'categoria' => 'required',
             'modelo' => 'required',
             'precio' => 'required',
-            'imagen' => 'required|file|mimes:jpg,png|max:2048',
+            'imagen' => 'required',
             'codigo_barras' => 'required',
             'cantidad' => 'required',
             'destacado' => 'required'
