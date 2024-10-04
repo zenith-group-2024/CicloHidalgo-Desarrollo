@@ -21,6 +21,12 @@ class UserController extends Controller
         
     }
 
+    public function listAdmins()
+    {
+        $admins = User::where('admin', true)->get();
+
+        return response()->json($admins);
+    }
     public function store(Request $request)
     {
         $validator = validator($request->all(), [
@@ -86,9 +92,13 @@ class UserController extends Controller
         $user = User::where('email', $request['email'])->firstOrFail();
         $uid =  $user->id;
         $user = Auth::user();
+        $token = $user->createToken('ciclohidalgo')->plainTextToken;
         session_start();
 
-        return response()->json($user);
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
     }
 
     public function logout()
@@ -102,7 +112,13 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        
+        $user = User::findOrFail($id);
+
+    if (!Auth::user()->admin || !$user->admin) {
+        return response()->json(['message' => 'No autorizado'], 403);
+    }
+
+    return response()->json($user);
     }
 
     public function edit(string $id)

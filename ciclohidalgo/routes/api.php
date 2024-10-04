@@ -7,18 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ProfileController;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::put('/users/{id}', [UserController::class, 'update']);
-    Route::delete('/users/{id}', [UserController::class, 'destroy']);
-    Route::get('/admin/users', [AdminUsersController::class, 'index']);
-    Route::put('/admin/users/{id}/role', [AdminUsersController::class, 'updateRole']);
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('/admin/users', [UserController::class, 'listAdmins']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
 });
 
+Route::middleware('admin')->get('/test-admin', function () {
+    return response()->json(['message' => 'Acceso concedido']);
+});
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
 Route::get('/contenidos/all', [ContenidoController::class, 'index']);
