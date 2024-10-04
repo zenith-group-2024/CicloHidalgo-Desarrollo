@@ -30,6 +30,8 @@ Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::get('/productos/delete/{id}', [ProductoController::class, 'destroy']);
 
+Route::put('/productos/discount/{id}', [ProductoController::class, 'discount']);
+
 Route::get('/user', function (Request $request) {return $request->user();});
 
 Route::middleware('auth:sanctum')->group(function () {

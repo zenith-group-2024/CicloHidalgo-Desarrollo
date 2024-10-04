@@ -18,6 +18,7 @@ return new class extends Migration
             $table->double('precio');
             $table->string('imagen')->nullable();
             $table->string('codigo_barras');
+            $table->double('descuento')->nullable();
             $table->integer('cantidad');
             $table->boolean('destacado')->default(false);
             $table->timestamps();
