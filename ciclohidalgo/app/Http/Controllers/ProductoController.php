@@ -39,7 +39,7 @@ class ProductoController extends Controller
             'imagen' => ['required'],
             'codigo_barras' => ['required'],
             'cantidad' => ['required'],
-            'descuento' => ['required'],
+            'descuento',
             'destacado' => ['required'],
         ]);
 
