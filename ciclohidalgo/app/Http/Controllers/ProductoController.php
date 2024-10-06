@@ -39,6 +39,7 @@ class ProductoController extends Controller
             'imagen' => ['required'],
             'codigo_barras' => ['required'],
             'cantidad' => ['required'],
+            'descuento',
             'destacado' => ['required'],
         ]);
 
@@ -92,6 +93,7 @@ class ProductoController extends Controller
             'productos.imagen',
             'productos.codigo_barras',
             'productos.cantidad',
+            'productos.descuento',
             'productos.destacado',   
         )->where('id',$id)
         ->first();
@@ -162,6 +164,20 @@ class ProductoController extends Controller
         if($request->is('api/*')||$request->wantsJson()){
             return response()->json(['message' => 'producto actualizado correctamente'], 200);
         }
+    }
+
+    public function discount(Request $request, $id)
+    {
+        $producto = Producto::find($id);
+    
+        if (!$producto) {
+            return response()->json(['message' => 'Producto no encontrado'], 404);
+        }
+    
+        $producto->descuento = $request->input('descuento');
+        $producto->save();
+    
+        return response()->json(['message' => 'Descuento actualizado correctamente', 'producto' => $producto]);
     }
 
     public function destroy(string $id)
