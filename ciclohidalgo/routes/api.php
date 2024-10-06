@@ -39,3 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/roles', function() {return App\Models\Role::all();});
+
+Route::post('/contenido/crear', [ContenidoController::class, 'store']);
+Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
+Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
