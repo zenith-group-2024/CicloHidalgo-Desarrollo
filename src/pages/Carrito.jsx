@@ -1,21 +1,44 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../UI/Navbar.jsx";
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
 import { Link } from "react-router-dom"; 
-import { Trash, SquarePlus } from 'lucide-react'; 
+import { Trash, SquarePlus, SquareMinus } from 'lucide-react'; 
 import Footer from '../UI/Footer.jsx';
 
 export const Carrito = () => {
-  const { cart, setCart, productos } = useContext(CartContext); // Asegúrate de que 'productos' esté disponible en el contexto
+  const { cart, setCart } = useContext(CartContext);
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+          const response = await fetch('URL_DE_TU_API');
+
+          if (!response.ok) {
+              throw new Error(`Error en la solicitud: ${response.status}`);
+          }
+
+          const data = await response.json();
+          setProductos(data); // Asegúrate de que este es el formato correcto
+      } catch (error) {
+          console.error('Error al obtener productos:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const getTotalProducts = () => {
-    return cart.reduce((total, item) => {
-      return total + (item.precio * item.quantity);
-    }, 0);
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  // Función para calcular el total del carrito
+  const getTotal = () => {
+    return cart.reduce((total, item) => total + item.precio * item.quantity, 0);
   };
 
   const handleEmptyCart = () => {
-    setCart([]);
+    setCart([]); // Vaciar el carrito
   };
 
   const handleRemoveProduct = (index) => {
@@ -24,20 +47,24 @@ export const Carrito = () => {
   };
 
   const handleIncreaseQuantity = (index) => {
-    const producto = cart[index];
-    const maxQuantity = productos.find(p => p.id === producto.id)?.cantidad;
+    const updatedCart = cart.map((item, i) => {
+      if (i === index) {
+        return { ...item, quantity: item.quantity + 1 }; // Aumentar la cantidad
+      }
+      return item;
+    });
+    setCart(updatedCart);
+  };
 
-    if (producto.quantity < maxQuantity) {
-      const updatedCart = cart.map((item, i) => {
-        if (i === index) {
-          return { ...item, quantity: item.quantity + 1 }; // Aumenta la cantidad
-        }
-        return item;
-      });
-      setCart(updatedCart);
-    } else {
-      alert(`No puedes agregar más de ${maxQuantity} unidades de ${producto.title}.`);
-    }
+  const handleDecreaseQuantity = (index) => {
+    const updatedCart = cart.map((item, i) => {
+      if (i === index) {
+        const newQuantity = item.quantity > 1 ? item.quantity - 1 : 1; // Asegúrate de que la cantidad no sea menor que 1
+        return { ...item, quantity: newQuantity }; // Reducir la cantidad
+      }
+      return item;
+    });
+    setCart(updatedCart);
   };
 
   return (
@@ -74,6 +101,12 @@ export const Carrito = () => {
                 <h3 className="font-primary font-semibold text-lg text-black ml-4">{producto.title}</h3>
               </div>
               <div className="flex items-center justify-center">
+                <button 
+                  onClick={() => handleDecreaseQuantity(index)} 
+                  className="mr-2 px-2 py-1 transition duration-200 flex items-center"
+                >
+                  <SquareMinus className="mr-1 text-red" />
+                </button>
                 <p className="font-primary font-semibold text-lg text-black text-center">{producto.quantity}</p>
                 <button 
                   onClick={() => handleIncreaseQuantity(index)} 
@@ -99,7 +132,7 @@ export const Carrito = () => {
           <>
             <div className="text-right mt-8">
               <h3 className="font-primary font-semibold text-2xl text-black">
-                Total: <span className="text-indigo">{`₡${getTotalProducts()}`}</span>
+                Total: <span className="text-indigo">{`₡${getTotal()}`}</span>
               </h3>
             </div>
             <button 
