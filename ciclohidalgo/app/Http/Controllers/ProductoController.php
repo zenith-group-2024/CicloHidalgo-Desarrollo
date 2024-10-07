@@ -30,6 +30,7 @@ class ProductoController extends Controller
     {
         
         $validator = validator($request->all(),[
+            'nombre' => ['required'],
             'marca' => ['required'],
             'especificacion' => ['required'],
             'subcategoria' => ['required'],
@@ -61,6 +62,7 @@ class ProductoController extends Controller
         
 
         $producto = Producto::create([
+            'nombre' => $validated['nombre'],
             'marca' => $validated['marca'],
             'especificacion' => $validated['especificacion'],
             'subcategoria' => $validated['subcategoria'],
@@ -84,6 +86,7 @@ class ProductoController extends Controller
     {
         $producto =Producto::select(
             'productos.id',
+            'productos.nombre',
             'productos.marca',
             'productos.especificacion',
             'productos.subcategoria',
@@ -112,6 +115,7 @@ class ProductoController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = validator($request->all(),[
+            'nombre' => 'required',
             'marca' => 'required',
             'especificacion' => 'required',
             'subcategoria' => 'required',
@@ -146,6 +150,7 @@ class ProductoController extends Controller
 
             $query->update(
                 [
+                    'nombre' => $validated['nombre'],
                     'marca' => $validated['marca'],
                     'especificacion' => $validated['especificacion'],
                     'subcategoria' => $validated['subcategoria'],
