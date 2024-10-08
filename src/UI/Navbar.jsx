@@ -32,7 +32,6 @@ const Navbar = () => {
   };
 
   const addToCart = () => {
- 
     setCartCount(prevCount => prevCount + 1); 
   };
 
@@ -49,12 +48,11 @@ const Navbar = () => {
       </div>
 
       <div className="hidden md:flex flex-grow justify-center space-x-10">
-    <Link to="/" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</Link>
-    <Link to="/Productos" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</Link>
-    <Link to="/Contenido" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</Link>
-    <Link to="/Servicios" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link>
-</div>
-
+        <Link to="/" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</Link>
+        <Link to="/Productos" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</Link>
+        <Link to="/Contenido" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</Link>
+        <Link to="/Servicios" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link>
+      </div>
 
       <div className="flex space-x-4 m-4 md:ml-4 relative">
         <Link to="/Carrito" onClick={addToCart}>
