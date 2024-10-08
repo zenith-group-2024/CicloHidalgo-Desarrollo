@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, UserRound, AlignJustify } from 'lucide-react';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from '../assets/images/logo.svg';
 import AuthForm from '../forms/Login'; 
 
@@ -9,6 +9,8 @@ const Navbar = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); 
   const [cartCount, setCartCount] = useState(0);
   const menuRef = useRef(null);
+  
+  const location = useLocation(); // Hook para obtener la ubicación actual
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -48,10 +50,30 @@ const Navbar = () => {
       </div>
 
       <div className="hidden md:flex flex-grow justify-center space-x-10">
-        <Link to="/" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Inicio</Link>
-        <Link to="/Productos" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Productos</Link>
-        <Link to="/Contenido" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Contenido</Link>
-        <Link to="/Servicios" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Servicios</Link>
+        <Link
+          to="/"
+          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}
+        >
+          Inicio
+        </Link>
+        <Link
+          to="/Productos"
+          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Productos' ? 'text-red' : ''}`}
+        >
+          Productos
+        </Link>
+        <Link
+          to="/Contenido"
+          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}
+        >
+          Contenido
+        </Link>
+        <Link
+          to="/Servicios"
+          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}
+        >
+          Servicios
+        </Link>
       </div>
 
       <div className="flex space-x-4 m-4 md:ml-4 relative">
