@@ -181,4 +181,82 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Usuario eliminado exitosamente.']);
     }
+
+    public function createAdmin(Request $request)
+    {
+    $validator = validator($request->all(), [
+        'nombre' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8'],
+        'contacto' => ['nullable', 'string', 'max:255'],
+        'direccion' => ['nullable', 'string', 'max:255'],
+        'cumpleanos' => ['nullable', 'string', 'max:255']
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 400);
+    }
+
+    $validated = $validator->validated();
+    $user = User::create([
+        'nombre' => $validated['nombre'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+        'contacto' => $validated['contacto'] ?? null,
+        'direccion' => $validated['direccion'] ?? null,
+        'cumpleanos' => $validated['cumpleanos'] ?? null,
+        'boletin' => false,
+        'admin' => true
+    ]);
+
+    return response()->json(['message' => 'Administrador creado exitosamente.', 'user' => $user], 201);
+    }
+
+    public function updateAdmin(Request $request, $id)
+    {
+    $user = User::findOrFail($id);
+
+    if (!$user->admin) {
+        return response()->json(['message' => 'No autorizado para editar este usuario.'], 403);
+    }
+
+    $validator = validator($request->all(), [
+        'nombre' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
+        'password' => ['nullable', 'string', 'min:8'],
+        'contacto' => ['nullable', 'string', 'max:255'],
+        'direccion' => ['nullable', 'string', 'max:255'],
+        'cumpleanos' => ['nullable', 'string', 'max:255']
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 400);
+    }
+
+    $validated = $validator->validated();
+    $user->update([
+        'nombre' => $validated['nombre'],
+        'email' => $validated['email'],
+        'password' => !empty($validated['password']) ? Hash::make($validated['password']) : $user->password,
+        'contacto' => $validated['contacto'] ?? $user->contacto,
+        'direccion' => $validated['direccion'] ?? $user->direccion,
+        'cumpleanos' => $validated['cumpleanos'] ?? $user->cumpleanos,
+        'boletin' => false,
+    ]);
+
+    return response()->json(['message' => 'Administrador actualizado exitosamente.', 'user' => $user]);
+    }
+
+    public function deleteAdmin($id)
+    {
+    $user = User::findOrFail($id);
+
+    if (!$user->admin) {
+        return response()->json(['message' => 'No autorizado para eliminar este usuario.'], 403);
+    }
+
+    $user->delete();
+
+    return response()->json(['message' => 'Administrador eliminado exitosamente.']);
+    }
 }
