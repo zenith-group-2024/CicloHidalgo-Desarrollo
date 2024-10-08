@@ -10,7 +10,7 @@ const Navbar = () => {
   const [cartCount, setCartCount] = useState(0);
   const menuRef = useRef(null);
   
-  const location = useLocation(); // Hook para obtener la ubicación actual
+  const location = useLocation(); 
 
   useEffect(() => {
     const handleClickOutside = (event) => {
