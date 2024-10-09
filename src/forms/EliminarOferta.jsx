@@ -25,7 +25,7 @@ export default function EliminarOferta() {
     }, []);
 
     if (loading) {
-        return <p className="m-auto">Cargando productos...</p>;
+        return <p className="text-center m-auto">Cargando productos...</p>;
     }
 
     const handleCheckboxChange = (id) => {

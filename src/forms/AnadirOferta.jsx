@@ -26,7 +26,7 @@ export default function AnadirOferta() {
     }, []);
 
     if (loading) {
-        return <p className="m-auto">Cargando productos...</p>;
+        return <p className="text-center m-auto">Cargando productos...</p>;
     }
 
     const handleCheckboxChange = (id) => {
@@ -52,19 +52,13 @@ export default function AnadirOferta() {
                 },
                 body: JSON.stringify({ ids: idsToUpdate, descuento }),
             });
-            console.log('Descuento:', descuento);
 
             if (!response.ok) {
                 console.error('Error response:', response.status, response.statusText);
                 throw new Error('Error al añadir el descuento');
             }
 
-            const updatedProducts = productos.map((producto) => {
-                if (idsToUpdate.includes(producto.id.toString())) {
-                    return { ...producto, descuento: descuento };
-                }
-                return producto;
-            });
+            const updatedProducts = productos.filter((producto) => !idsToUpdate.includes(producto.id.toString()));
 
             setProductos(updatedProducts);
             const result = await response.json();
@@ -110,7 +104,7 @@ export default function AnadirOferta() {
                         )}
 
                         <div className="flex flex-col items-center mb-4">
-                            <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar</label>
+                            <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar:</label>
                             <input className="px-4 py-2 border rounded-lg text-center" type="number" min="0" max="100" name="descuento"
                                 value={descuento}
                                 onChange={(e) => setDescuento(e.target.value)}

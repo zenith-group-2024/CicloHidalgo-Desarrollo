@@ -3,6 +3,11 @@ import FormProducto from '../forms/AñadirProducto';
 import FormEditarProducto from '../forms/EditarProducto';
 import FormEliminarProducto from '../forms/EliminarProducto';
 import FormContenido from '../forms/AñadirContenido';
+
+import AnadirOferta from '../forms/AnadirOferta';
+import EditarOferta from '../forms/EditarOferta';
+import EliminarOferta from '../forms/EliminarOferta';
+
 import CrudCard from '../UI/CRUDCard';
 import Navbar from '../UI/Navbar';
 
@@ -40,6 +45,9 @@ const AdminDashboard = () => {
     setIsAdding(false);
     setIsEditing(false);
     setIsDeleting(false);
+    setIsAnadirOferta(false);
+    setIsEditarOferta(false);
+    setIsEliminarOferta(false);
   };
 
   const handleAddUser = () => {
@@ -75,6 +83,11 @@ const AdminDashboard = () => {
     setIsAdding(false);
     setFormType('contenidoEdit');
   };
+
+  //Ofertas
+  const handleAnadirOferta = () => {setIsAdding(true);setIsEditing(false);setIsDeleting(false);setFormType('ofertaAdd');}
+  const handleEditarOferta = () => {setIsAdding(false);setIsEditing(true);setIsDeleting(false);setFormType('ofertaEdit');}
+  const handleEliminarOferta = () => {setIsAdding(false);setIsEditing(false);setIsDeleting(true);setFormType('ofertaDelete');}
 
   // Simulando un producto para la edición
   const sampleProduct = {
@@ -129,9 +142,9 @@ const AdminDashboard = () => {
         />
         <CrudCard
           title="Ofertas"
-          onAdd={() => console.log('Añadir Oferta')}
-          onEdit={() => console.log('Editar Oferta')}
-          onDelete={() => console.log('Eliminar Oferta')}
+          onAdd={(handleAnadirOferta)}
+          onEdit={(handleEditarOferta)}
+          onDelete={(handleEliminarOferta)}
         />
       </div>
 
@@ -142,6 +155,10 @@ const AdminDashboard = () => {
 {isAdding && formType === 'contenido' && <FormContenido onClose={handleCloseForms} />}
 {isEditing && formType === 'contenidoEdit' && <FormEditarContenido contenidoData={selectedContenido} onClose={handleCloseForms} />}
 {isDeleting && formType === 'contenidoDelete' && <FormEliminarContenido onClose={handleCloseForms} />}
+
+{isAdding && formType === 'ofertaAdd' && <AnadirOferta onClose={handleCloseForms} />}
+{isEditing && formType === 'ofertaEdit' && <EditarOferta onClose={handleCloseForms} />}
+{isDeleting && formType === 'ofertaDelete' && <EliminarOferta onClose={handleCloseForms} />}
 
     </div>
   );
