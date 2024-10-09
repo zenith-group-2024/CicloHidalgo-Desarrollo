@@ -31,11 +31,12 @@ Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
 
-Route::get('sin-descuento/all', [ProductoController::class, 'nodiscountlist']);
 Route::post('/anadir-descuento', [ProductoController::class, 'anadirDescuento']);
-Route::patch('/actualizar-descuento/{id}', [ProductoController::class, 'updateDiscount']);
-Route::delete('/borrar-descuento/{id}', [ProductoController::class, 'deleteDiscount']);
+Route::get('/sin-descuentos/all', [ProductoController::class, 'nodiscountlist']);
 
+Route::post('/contenido/crear', [ContenidoController::class, 'store']);
+Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
+Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/getprofile/{id}', [ProfileController::class, 'getEditData']);
@@ -44,7 +45,3 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/roles', function() {return App\Models\Role::all();});
-
-Route::post('/contenido/crear', [ContenidoController::class, 'store']);
-Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
-Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
