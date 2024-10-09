@@ -13,13 +13,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/admin/users', [UserController::class, 'listAdmins']);
-    Route::get('/users/{id}', [UserController::class, 'show']);
-});
-
-Route::middleware('admin')->get('/test-admin', function () {
-    return response()->json(['message' => 'Acceso concedido']);
+    Route::post('/admin/create', [UserController::class, 'createAdmin']);
+    Route::put('/admin/update/{id}', [UserController::class, 'updateAdmin']);
+    Route::delete('/admin/delete/{id}', [UserController::class, 'deleteAdmin']);
 });
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
@@ -30,13 +28,11 @@ Route::post('/user/signin', [UserController::class, 'store']);
 Route::post('/user/update/{id}', [UserController::class, 'update']);
 Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
-Route::get('/productos/delete/{id}', [ProductoController::class, 'destroy']);
+Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
 Route::put('/productos/discount/{id}', [ProductoController::class, 'discount']);
 Route::post('/contenido/crear', [ContenidoController::class, 'store']);
 Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
 Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
-
-Route::get('/user', function (Request $request) {return $request->user();});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/getprofile/{id}', [ProfileController::class, 'getEditData']);
