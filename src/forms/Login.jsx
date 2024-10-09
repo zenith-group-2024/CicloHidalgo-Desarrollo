@@ -2,27 +2,30 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLogin } from '../../hooks/UseLogin.js';
 import { X } from 'lucide-react';
 import Registro from './Registro.jsx';
-import { GlobalContext } from '../GlobalState.jsx'; 
+import { GlobalContext } from '../global/GlobalState.jsx'; 
 import { Link } from "react-router-dom";
 
 const LoginForm = ({ isOpen, onClose }) => {
   const { login } = useLogin();
-  const { isAuthenticated, setIsAuthenticated, logout } = useContext(GlobalContext);
+  const { state = {}, setToken, logout } = useContext(GlobalContext);
+  const { isAuthenticated = false } = state;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showRegistro, setShowRegistro] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
-    if (token) {
-      setIsAuthenticated(true);
+    if (token && !isAuthenticated) { 
+      setToken(token);
     }
-  }, [setIsAuthenticated]);
+  }, [setToken, isAuthenticated]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      await login(email, password);
+      const token = await login(email, password);
+      localStorage.setItem('authToken', token); 
+      setToken(token); 
       setEmail(''); 
       setPassword('');
       onClose();

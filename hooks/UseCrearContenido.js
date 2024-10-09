@@ -3,7 +3,7 @@ export const useCrearContenido = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState('');
   
-    const crear = async (id, titulo,descripcion, video_incrustado) => {
+    const crear = async (titulo,descripcion, video_incrustado) => {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/contenido/crear', {
           method: 'POST',

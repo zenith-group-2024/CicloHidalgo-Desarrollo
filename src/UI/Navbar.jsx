@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, UserRound, AlignJustify } from 'lucide-react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { ShoppingCart, UserRound, AlignJustify, UserCheck } from 'lucide-react';
 import { Link, useLocation } from "react-router-dom";
 import Logo from '../assets/images/logo.svg';
 import AuthForm from '../forms/Login'; 
+import { GlobalContext } from '../global/GlobalState';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); 
@@ -11,6 +12,10 @@ const Navbar = () => {
   const menuRef = useRef(null);
   
   const location = useLocation(); 
+  const { state, login, logout } = useContext(GlobalContext);
+  
+ 
+  const isAuthenticated = state.user !== null;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -50,28 +55,16 @@ const Navbar = () => {
       </div>
 
       <div className="hidden md:flex flex-grow justify-center space-x-10">
-        <Link
-          to="/"
-          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}
-        >
+        <Link to="/" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
           Inicio
         </Link>
-        <Link
-          to="/Productos"
-          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Productos' ? 'text-red' : ''}`}
-        >
+        <Link to="/Productos" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Productos' ? 'text-red' : ''}`}>
           Productos
         </Link>
-        <Link
-          to="/Contenido"
-          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}
-        >
+        <Link to="/Contenido" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}>
           Contenido
         </Link>
-        <Link
-          to="/Servicios"
-          className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}
-        >
+        <Link to="/Servicios" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
           Servicios
         </Link>
       </div>
@@ -80,16 +73,21 @@ const Navbar = () => {
         <Link to="/Carrito" onClick={addToCart}>
           <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
           {cartCount > 0 && (
-            <span className="absolute top-0 right-0  text-white text-xs rounded-full px-1">
+            <span className="absolute top-0 right-0 text-white text-xs rounded-full px-1">
               {cartCount}
             </span>
           )}
         </Link>
-        <UserRound
-          size={28}
+        <div
+          onClick={handleOpenAuthModal}
           className="transform transition-transform duration-300 hover:scale-110 cursor-pointer"
-          onClick={handleOpenAuthModal} 
-        />
+        >
+          {isAuthenticated ? (
+            <UserCheck size={28} /> // Ícono de usuario autenticado
+          ) : (
+            <UserRound size={28} /> // Ícono de usuario no autenticado
+          )}
+        </div>
       </div>
 
       {isAuthModalOpen && <AuthForm isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
@@ -98,3 +96,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
