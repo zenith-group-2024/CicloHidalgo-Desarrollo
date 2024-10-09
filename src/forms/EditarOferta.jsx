@@ -2,16 +2,13 @@ import React from 'react';
 import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-
-
-
 export default function EditarOferta() {
-
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProducts, setSelectedProducts] = useState({});
     const [descuento, setDescuento] = useState(0);
     const [backendMessage, setBackendMessage] = useState('');
+    const [searchTerm, setSearchTerm] = useState(''); // Nuevo estado para la búsqueda
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -55,7 +52,6 @@ export default function EditarOferta() {
                 },
                 body: JSON.stringify({ ids: idsToUpdate, descuento }),
             });
-            console.log('Descuento:', descuento);
 
             if (!response.ok) {
                 console.error('Error response:', response.status, response.statusText);
@@ -69,18 +65,20 @@ export default function EditarOferta() {
                 return producto;
             });
 
-
             setProductos(updatedProducts);
             const result = await response.json();
             setBackendMessage(result.message);
-
-
 
         } catch (error) {
             console.error('Error al enviar los datos:', error);
         }
     };
 
+    // Filtrar productos en función del término de búsqueda
+    const filteredProducts = productos.filter((producto) =>
+        producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <>
@@ -96,8 +94,17 @@ export default function EditarOferta() {
 
                         <div className="flex justify-center mb-4">
                             <label className="block m-2 text-gray-700 text-lg font-bold" htmlFor="search">Buscar:</label>
-                            <input className="border m-2 p-[.25rem]" type="search" id="search" name="search" />
+                            <input
+                                className="border m-2 p-[.25rem]"
+                                type="search"
+                                id="search"
+                                name="search"
+                                value={searchTerm} // Estado de búsqueda
+                                onChange={(e) => setSearchTerm(e.target.value)} // Actualiza el estado
+                                placeholder="Buscar producto o marca"
+                            />
                         </div>
+
                         <div className="grid grid-cols-4">
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Producto</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Marca</label>
@@ -105,29 +112,41 @@ export default function EditarOferta() {
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Elegir Producto</label>
                         </div>
 
-                        {productos.length > 0 ? (
-                            productos.map((producto) => (
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((producto) => (
                                 <div className="grid grid-cols-4 " key={producto.id}>
                                     <p className="mx-auto">{producto.nombre}</p>
                                     <p className="mx-auto">{producto.marca}</p>
                                     <p className="mx-auto">{producto.descuento}%</p>
-                                    <input className="mx-auto" type="checkbox" checked={!!selectedProducts[producto.id]} onChange={() => handleCheckboxChange(producto.id)} value={producto.id} />
+                                    <input
+                                        className="mx-auto"
+                                        type="checkbox"
+                                        checked={!!selectedProducts[producto.id]}
+                                        onChange={() => handleCheckboxChange(producto.id)}
+                                        value={producto.id}
+                                    />
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center">No hay productos con descuento.</p>
+                            <p className="text-center">No hay productos en este momento!</p>
                         )}
 
                         <div className="flex flex-col items-center mb-4">
                             <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar:</label>
-                            <input className="px-4 py-2 border rounded-lg text-center" type="number" min="0" max="100" name="descuento"
+                            <input
+                                className="px-4 py-2 border rounded-lg text-center"
+                                type="number"
+                                min="0"
+                                max="100"
+                                name="descuento"
                                 value={descuento}
                                 onChange={(e) => setDescuento(e.target.value)}
                                 onInput={(e) => {
                                     if (e.target.value < 0) { e.target.value = 0; }
                                     else if (e.target.value > 100) { e.target.value = 100; }
                                 }}
-                                required />
+                                required
+                            />
                         </div>
 
                         <button type="submit" className="bg-blue text-white px-4 py-2 rounded-full hover:bg-red transition w-full">
@@ -137,7 +156,6 @@ export default function EditarOferta() {
                         {backendMessage && (
                             <p className="text-center text-white bg-green-600 w-fit mx-auto p-2">{backendMessage}</p>
                         )}
-
                     </form>
                 </div>
             </div>

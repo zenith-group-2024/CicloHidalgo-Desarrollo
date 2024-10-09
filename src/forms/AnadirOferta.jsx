@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { X } from 'lucide-react';
-import { pre } from "framer-motion/client";
 
 export default function AnadirOferta() {
-
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProducts, setSelectedProducts] = useState({});
     const [descuento, setDescuento] = useState(0);
     const [backendMessage, setBackendMessage] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -59,66 +58,82 @@ export default function AnadirOferta() {
             }
 
             const updatedProducts = productos.filter((producto) => !idsToUpdate.includes(producto.id.toString()));
-
             setProductos(updatedProducts);
             const result = await response.json();
             setBackendMessage(result.message);
-
         } catch (error) {
             console.error('Error al enviar los datos:', error);
         }
     };
 
+    const filteredProducts = productos.filter((producto) =>
+        producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <>
             <div className="min-h-screen bg-gray-100 flex justify-center py-10">
                 <div className="relative w-full max-w-4xl mx-4">
-
                     <button className="absolute top-2 right-2">
                         <X className="w-6 h-6 text-gray-700 hover:text-gray-900" />
                     </button>
-
                     <form className="bg-white p-8 shadow-md rounded-lg space-y-6" onSubmit={handleSubmit}>
                         <h2 className="text-3xl font-semibold mb-6 text-center">Añadir Oferta</h2>
-
                         <div className="flex justify-center mb-4">
                             <label className="block m-2 text-gray-700 text-lg font-bold" htmlFor="search">Buscar:</label>
-                            <input className="border m-2 p-[.25rem]" type="search" id="search" name="search" />
+                            <input
+                                className="border m-2 p-[.25rem]"
+                                type="search"
+                                id="search"
+                                name="search"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder="Buscar producto o marca"
+                            />
                         </div>
                         <div className="grid grid-cols-3">
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Producto</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Marca</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Elegir Producto</label>
                         </div>
-
-                        {productos.length > 0 ? (
-                            productos.map((producto) => (
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((producto) => (
                                 <div className="grid grid-cols-3 " key={producto.id}>
                                     <p className="mx-auto">{producto.nombre}</p>
                                     <p className="mx-auto">{producto.marca}</p>
-                                    <input className="mx-auto" type="checkbox" checked={!!selectedProducts[producto.id]} onChange={() => handleCheckboxChange(producto.id)} value={producto.id} />
+                                    <input
+                                        className="mx-auto"
+                                        type="checkbox"
+                                        checked={!!selectedProducts[producto.id]}
+                                        onChange={() => handleCheckboxChange(producto.id)}
+                                        value={producto.id}
+                                    />
                                 </div>
                             ))
                         ) : (
                             <p className="text-center">No hay productos sin descuento.</p>
                         )}
-
                         <div className="flex flex-col items-center mb-4">
                             <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar:</label>
-                            <input className="px-4 py-2 border rounded-lg text-center" type="number" min="0" max="100" name="descuento"
+                            <input
+                                className="px-4 py-2 border rounded-lg text-center"
+                                type="number"
+                                min="0"
+                                max="100"
+                                name="descuento"
                                 value={descuento}
                                 onChange={(e) => setDescuento(e.target.value)}
                                 onInput={(e) => {
                                     if (e.target.value < 0) { e.target.value = 0; }
                                     else if (e.target.value > 100) { e.target.value = 100; }
                                 }}
-                                required />
+                                required
+                            />
                         </div>
-
                         <button type="submit" className="bg-blue text-white px-4 py-2 rounded-full hover:bg-red transition w-full">
                             Guardar
                         </button>
-
                         {backendMessage && (
                             <p className="text-center text-white bg-green-600 w-fit mx-auto p-2">{backendMessage}</p>
                         )}

@@ -8,6 +8,7 @@ export default function EliminarOferta() {
     const [loading, setLoading] = useState(true);
     const [selectedProducts, setSelectedProducts] = useState({});
     const [backendMessage, setBackendMessage] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -49,7 +50,7 @@ export default function EliminarOferta() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ids: idsToUpdate, descuento: 0 }), // Descuento a 0 para eliminar ofertas
+                body: JSON.stringify({ ids: idsToUpdate, descuento: 0 }),
             });
 
             if (!response.ok) {
@@ -57,7 +58,6 @@ export default function EliminarOferta() {
                 throw new Error('Error al eliminar las ofertas');
             }
 
-            // Actualizar productos en el frontend con descuento 0
             const updatedProducts = productos.map((producto) => {
                 if (idsToUpdate.includes(producto.id.toString())) {
                     return { ...producto, descuento: 0 };
@@ -73,6 +73,10 @@ export default function EliminarOferta() {
             console.error('Error al enviar los datos:', error);
         }
     };
+    const filteredProducts = productos.filter((producto) =>
+        producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <>
@@ -86,6 +90,19 @@ export default function EliminarOferta() {
                     <form className="bg-white p-8 shadow-md rounded-lg space-y-6" onSubmit={handleSubmit}>
                         <h2 className="text-3xl font-semibold mb-6 text-center">Eliminar Ofertas</h2>
 
+                        <div className="flex justify-center mb-4">
+                            <label className="block m-2 text-gray-700 text-lg font-bold" htmlFor="search">Buscar:</label>
+                            <input
+                                className="border m-2 p-[.25rem]"
+                                type="search"
+                                id="search"
+                                name="search"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                placeholder="Buscar producto o marca"
+                            />
+                        </div>
+
                         <div className="grid grid-cols-4">
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Producto</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Marca</label>
@@ -93,8 +110,8 @@ export default function EliminarOferta() {
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Eliminar Oferta</label>
                         </div>
 
-                        {productos.length > 0 ? (
-                            productos.map((producto) => (
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((producto) => (
                                 <div className="grid grid-cols-4 " key={producto.id}>
                                     <p className="mx-auto">{producto.nombre}</p>
                                     <p className="mx-auto">{producto.marca}</p>
@@ -109,7 +126,7 @@ export default function EliminarOferta() {
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center">No hay productos con descuento.</p>
+                            <p className="text-center">No hay productos en este momento!</p>
                         )}
 
                         <button type="submit" className="bg-blue text-white px-4 py-2 rounded-full hover:bg-red transition w-full">
