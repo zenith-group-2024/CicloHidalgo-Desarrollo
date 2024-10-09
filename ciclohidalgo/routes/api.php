@@ -31,8 +31,9 @@ Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
 
-Route::post('/anadir-descuento', [ProductoController::class, 'anadirDescuento']);
-Route::get('/sin-descuentos/all', [ProductoController::class, 'nodiscountlist']);
+Route::post('/actualizar-descuento', [ProductoController::class, 'actualizarDescuento']);
+Route::get('/sin-descuento/all', [ProductoController::class, 'noDiscountlist']);
+Route::get('/con-descuento/all', [ProductoController::class, 'discountList']);
 
 Route::post('/contenido/crear', [ContenidoController::class, 'store']);
 Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
