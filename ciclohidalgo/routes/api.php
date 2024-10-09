@@ -31,8 +31,10 @@ Route::post('/user/update/{id}', [UserController::class, 'update']);
 Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::get('/productos/delete/{id}', [ProductoController::class, 'destroy']);
-
 Route::put('/productos/discount/{id}', [ProductoController::class, 'discount']);
+Route::post('/contenido/crear', [ContenidoController::class, 'store']);
+Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
+Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
 
 Route::get('/user', function (Request $request) {return $request->user();});
 
@@ -44,6 +46,3 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/roles', function() {return App\Models\Role::all();});
 
-Route::post('/contenido/crear', [ContenidoController::class, 'store']);
-Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
-Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
