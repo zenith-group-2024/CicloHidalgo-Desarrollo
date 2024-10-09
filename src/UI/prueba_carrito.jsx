@@ -1,13 +1,18 @@
-import React, { createContext, useState, useEffect} from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
+// Crear el contexto
 export const CartContext = createContext();
 
+// Componente proveedor del contexto
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
 
+    // Efecto para loguear los cambios en el carrito
     useEffect(() => {
         console.log('Carrito actualizado:', cart);
     }, [cart]);
+
+    // Función para añadir productos al carrito
     const addToCart = (product) => {
         setCart((prevCart) => {
             const existingProduct = prevCart.find(item => item.id === product.id);
@@ -21,22 +26,10 @@ export const CartProvider = ({ children }) => {
             }
         });
     };
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    const getTotalPrice = () => {
-        return cart.reduce((total, item) => {
-          return total + item.precio * item.quantity;
-        }, 0);
-      };
-    
-
-      const getTotalProducts = () => {
-        return cart.reduce((total, item) => {
-          return total + item.quantity;
-        }, 0);
-      };
+    // Retornar el proveedor de contexto con valores
     return (
-        <CartContext.Provider value={{ cart, addToCart }}>
+        <CartContext.Provider value={{ cart, setCart, addToCart }}>
             {children}
         </CartContext.Provider>
     );

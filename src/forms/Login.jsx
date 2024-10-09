@@ -2,39 +2,36 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLogin } from '../../hooks/UseLogin.js';
 import { X } from 'lucide-react';
 import Registro from './Registro.jsx';
-import { GlobalContext } from '../GlobalState.jsx'; 
+import { GlobalContext } from '../global/GlobalState.jsx'; 
 import { Link } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({ isOpen, onClose }) => {
   const { login } = useLogin();
-  const { isAuthenticated, setIsAuthenticated, logout } = useContext(GlobalContext);
+  const { state = {}, setToken, logout } = useContext(GlobalContext);
+  const { isAuthenticated = false } = state;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isOpen, setIsOpen] = useState(true);
   const [showRegistro, setShowRegistro] = useState(false);
-
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
-    if (token) {
-      setIsAuthenticated(true);
+    if (token && !isAuthenticated) { 
+      setToken(token);
     }
-  }, [setIsAuthenticated]);
+  }, [setToken, isAuthenticated]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      await login(email, password);
+      const token = await login(email, password);
+      localStorage.setItem('authToken', token); 
+      setToken(token); 
       setEmail(''); 
       setPassword('');
-      setIsOpen(false); 
+      onClose();
     } catch (e) {
       console.log(e.message);
     }
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
   };
 
   const handleRegisterClick = () => {
@@ -43,15 +40,16 @@ const LoginForm = () => {
 
   const handleLogout = () => {
     logout();
+    onClose(); 
   };
 
   return (
     <>
-      {isOpen && !showRegistro && (
+      {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
             <button
-              onClick={closeModal}
+              onClick={onClose}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
             >
               <X className="w-6 h-6" />
@@ -106,7 +104,6 @@ const LoginForm = () => {
                   className="w-full py-3 px-4 bg-red text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Cerrar sesión
-                
                 </button>
               </div>
             )}

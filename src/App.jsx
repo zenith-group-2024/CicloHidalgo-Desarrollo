@@ -10,7 +10,7 @@ import { Carrito } from './pages/Carrito';
 import { CartProvider } from './UI/Prueba_Carrito';
 import DetalleProducto from './UI/DetalleProducto';
 import PerfilCliente from './pages/PerfilCliente.jsx'
-import { GlobalProvider } from './GlobalState.jsx'; 
+import { GlobalProvider } from '../src/global/GlobalState.jsx'; 
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../src/global/GlobalState';
+import { GlobalContext } from '../src/global/GlobalState.jsx';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(true);

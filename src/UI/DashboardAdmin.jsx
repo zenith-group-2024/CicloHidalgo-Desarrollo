@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import FormProducto from '../forms/AñadirProducto';
 import FormEditarProducto from '../forms/EditarProducto';
 import FormEliminarProducto from '../forms/EliminarProducto';
+import FormContenido from '../forms/AñadirContenido';
 import CrudCard from '../UI/CRUDCard';
 import Navbar from '../UI/Navbar';
 
 const AdminDashboard = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeliting, setIsDeliting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [formType, setFormType] = useState('');
 
   const handleAddProduct = () => {
     setIsAdding(true);
     setIsEditing(false);
-    setIsDeliting(false);
+    setIsDeleting(false);
     setSelectedProduct(null);
     setFormType('producto');
   };
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
   const handleEditProduct = (productData) => {
     setSelectedProduct(productData);
     setIsEditing(true);
-    setIsDeliting(false);
+    setIsDeleting(false);
     setIsAdding(false);
     setFormType('productoEdit');
   };
@@ -38,7 +39,7 @@ const AdminDashboard = () => {
   const handleCloseForms = () => {
     setIsAdding(false);
     setIsEditing(false);
-    setIsDeliting(false);
+    setIsDeleting(false);
   };
 
   const handleAddUser = () => {
@@ -57,6 +58,22 @@ const AdminDashboard = () => {
 
   const handleDeleteUser = () => {
     console.log("Usuario eliminado");
+  };
+
+  const handleAddContenido= () => {
+    setIsAdding(true);
+    setIsEditing(false);
+    setIsDeleting(false);
+    setSelectedProduct(null);
+    setFormType('contenido');
+  };
+
+  const handleEditContenido = (contenidoData) => {
+    setSelectedContenido(contenidoData);
+    setIsEditing(true);
+    setIsDeleting(false);
+    setIsAdding(false);
+    setFormType('contenidoEdit');
   };
 
   // Simulando un producto para la edición
@@ -100,7 +117,7 @@ const AdminDashboard = () => {
         />
         <CrudCard
           title="Contenido"
-          onAdd={() => console.log('Añadir Contenido')}
+          onAdd={handleAddContenido}
           onEdit={() => console.log('Editar Contenido')}
           onDelete={() => console.log('Eliminar Contenido')}
         />
@@ -118,9 +135,14 @@ const AdminDashboard = () => {
         />
       </div>
 
-      {isAdding && (formType === 'producto' ? <FormProducto onClose={handleCloseForms} /> : <FormEditarProducto productoData={selectedProduct} onClose={handleCloseForms} />)}
-      {isEditing && (formType === 'productoEdit' ? <FormEditarProducto productoData={selectedProduct} onClose={handleCloseForms} /> : null)}
-      {isDeliting && (formType === 'productoDelete' ? <FormEliminarProducto onClose={handleCloseForms} /> : null)}
+      {isAdding && formType === 'producto' && <FormProducto onClose={handleCloseForms} />}
+{isEditing && formType === 'productoEdit' && <FormEditarProducto productoData={selectedProduct} onClose={handleCloseForms} />}
+{isDeleting && formType === 'productoDelete' && <FormEliminarProducto onClose={handleCloseForms} />}
+
+{isAdding && formType === 'contenido' && <FormContenido onClose={handleCloseForms} />}
+{isEditing && formType === 'contenidoEdit' && <FormEditarContenido contenidoData={selectedContenido} onClose={handleCloseForms} />}
+{isDeleting && formType === 'contenidoDelete' && <FormEliminarContenido onClose={handleCloseForms} />}
+
     </div>
   );
 };
