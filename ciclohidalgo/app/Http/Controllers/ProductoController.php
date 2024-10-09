@@ -192,4 +192,37 @@ class ProductoController extends Controller
 
         return response()->json(['message' => 'producto borrado correctamente'], 200);
     }
+
+
+    /////DESCUENTOS
+
+    public function nodiscountlist(Request $request)
+    {
+        $listaProductos = Producto::where('descuento', 0)
+        ->get();
+        if ($listaProductos->isNotEmpty()) {
+            if ($request->is('api/*') || $request->wantsJson()) {
+                return response()->json(['productos' => $listaProductos], 200);
+            }
+        }
+        return response()->json(['message' => 'No se encontraron productos con descuento.'], 404);
+    }
+
+    public function anadirDescuento(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'descuento' => 'required|numeric|min:0|max:100',
+        ]);
+
+        foreach ($validated['ids'] as $id) {
+            $producto = Producto::find($id);
+            if ($producto) {
+                $producto->descuento = $validated['descuento'];
+                $producto->save();
+            }
+        }
+
+        return response()->json(['message' => 'Descuentos actualizados!']);
+    }
 }

@@ -20,6 +20,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/admin/delete/{id}', [UserController::class, 'deleteAdmin']);
 });
 
+
 Route::get('/productos/all', [ProductoController::class, 'index']);
 Route::get('/contenidos/all', [ContenidoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
@@ -30,7 +31,11 @@ Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
 
-Route::put('/productos/discount/{id}', [ProductoController::class, 'discount']);
+Route::get('sin-descuento/all', [ProductoController::class, 'nodiscountlist']);
+Route::post('/anadir-descuento', [ProductoController::class, 'anadirDescuento']);
+Route::patch('/actualizar-descuento/{id}', [ProductoController::class, 'updateDiscount']);
+Route::delete('/borrar-descuento/{id}', [ProductoController::class, 'deleteDiscount']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/getprofile/{id}', [ProfileController::class, 'getEditData']);
