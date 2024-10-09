@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 import { X } from 'lucide-react';
-import { pre } from "framer-motion/client";
+import { useEffect, useState } from 'react';
 
-export default function AnadirOferta() {
+
+
+
+export default function EditarOferta() {
 
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,7 +16,7 @@ export default function AnadirOferta() {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/sin-descuento/all');
+                const response = await fetch('http://localhost:8000/api/con-descuento/all');
                 const data = await response.json();
                 setProductos(data.productos);
             } catch (error) {
@@ -66,14 +69,18 @@ export default function AnadirOferta() {
                 return producto;
             });
 
+
             setProductos(updatedProducts);
             const result = await response.json();
             setBackendMessage(result.message);
+
+
 
         } catch (error) {
             console.error('Error al enviar los datos:', error);
         }
     };
+
 
     return (
         <>
@@ -85,32 +92,34 @@ export default function AnadirOferta() {
                     </button>
 
                     <form className="bg-white p-8 shadow-md rounded-lg space-y-6" onSubmit={handleSubmit}>
-                        <h2 className="text-3xl font-semibold mb-6 text-center">Añadir Oferta</h2>
+                        <h2 className="text-3xl font-semibold mb-6 text-center">Editar Oferta</h2>
 
                         <div className="flex justify-center mb-4">
                             <label className="block m-2 text-gray-700 text-lg font-bold" htmlFor="search">Buscar:</label>
                             <input className="border m-2 p-[.25rem]" type="search" id="search" name="search" />
                         </div>
-                        <div className="grid grid-cols-3">
+                        <div className="grid grid-cols-4">
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Producto</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Marca</label>
+                            <label className="mx-auto block text-gray-700 text-lg font-bold">Descuento actual</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Elegir Producto</label>
                         </div>
 
                         {productos.length > 0 ? (
                             productos.map((producto) => (
-                                <div className="grid grid-cols-3 " key={producto.id}>
+                                <div className="grid grid-cols-4 " key={producto.id}>
                                     <p className="mx-auto">{producto.nombre}</p>
                                     <p className="mx-auto">{producto.marca}</p>
+                                    <p className="mx-auto">{producto.descuento}%</p>
                                     <input className="mx-auto" type="checkbox" checked={!!selectedProducts[producto.id]} onChange={() => handleCheckboxChange(producto.id)} value={producto.id} />
                                 </div>
                             ))
                         ) : (
-                            <p className="text-center">No hay productos sin descuento.</p>
+                            <p className="text-center">No hay productos con descuento.</p>
                         )}
 
                         <div className="flex flex-col items-center mb-4">
-                            <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar</label>
+                            <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar:</label>
                             <input className="px-4 py-2 border rounded-lg text-center" type="number" min="0" max="100" name="descuento"
                                 value={descuento}
                                 onChange={(e) => setDescuento(e.target.value)}
@@ -128,9 +137,10 @@ export default function AnadirOferta() {
                         {backendMessage && (
                             <p className="text-center text-white bg-green-600 w-fit mx-auto p-2">{backendMessage}</p>
                         )}
+
                     </form>
                 </div>
             </div>
         </>
-    )
+    );
 }
