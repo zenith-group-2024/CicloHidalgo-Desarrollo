@@ -16,6 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        dd(Auth::user()->admin);
         if (Auth::check() && Auth::user()->admin) {
 
             return $next($request);

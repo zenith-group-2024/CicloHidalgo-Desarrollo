@@ -12,13 +12,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
-    Route::get('/admin/users', [AdminUsersController::class, 'index']);
+    Route::get('/admin/users', [UserController::class, 'getAdmins']);
     Route::put('/admin/users/{id}/role', [AdminUsersController::class, 'updateRole']);
+    
 });
-
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
 Route::get('/contenidos/all', [ContenidoController::class, 'index']);

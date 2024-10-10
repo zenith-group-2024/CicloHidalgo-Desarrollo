@@ -12,7 +12,7 @@ class UserMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $isSuccess, $logo;
+    protected $user, $id, $code, $isSuccess, $logo;
 
     /**
      * @return void
@@ -27,5 +27,16 @@ class UserMail extends Mailable
     /**
      * @return $this
      */
+
+     public function build()
+    {
+        return $this->view('emails.user')
+                    ->with([
+                        'user' => $this->user,
+                        'id' => $this->id,
+                        'code' => $this->code,
+                    ])
+                    ->subject('Welcome to Our Application');
+    }
   
 }

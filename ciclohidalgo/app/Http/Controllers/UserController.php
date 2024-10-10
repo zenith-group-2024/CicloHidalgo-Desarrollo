@@ -77,19 +77,29 @@ class UserController extends Controller
     }
 
     public function check(Request $request)
-    {
-        if(!Auth::attempt($request->only('email', 'password')))
-        {
-            return response()->json(['message' => 'No autorizado'], 401);
-        }
+{
+    $validator = validator($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required|string|min:8',
+    ]);
 
-        $user = User::where('email', $request['email'])->firstOrFail();
-        $uid =  $user->id;
-        $user = Auth::user();
-        session_start();
-
-        return response()->json($user);
+    if (!Auth::attempt($request->only('email', 'password'))) {
+        return response()->json(['message' => 'No autorizado'], 401);
     }
+
+    $user = User::where('email', $request['email'])->firstOrFail();
+    
+    if ($user) {
+        $token = $user->createToken('TokenName')->plainTextToken;
+
+        return response()->json([
+            'token' => $token, 
+            'user' => $user
+        ]);
+    }
+
+    return response()->json(['message' => 'Autenticación fallida'], 400);
+}
 
     public function logout()
     {
@@ -164,5 +174,12 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(['message' => 'Usuario eliminado exitosamente.']);
+    }
+
+    public function getAdmins()
+    {
+        $admins = User::where('admin', true)->get();
+
+        return response()->json($admins);
     }
 }
