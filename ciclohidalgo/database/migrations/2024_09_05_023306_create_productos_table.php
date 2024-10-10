@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
             $table->string('marca');
             $table->string('especificacion')->nullable();            
             $table->string('subcategoria');
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->double('precio');
             $table->string('imagen')->nullable();
             $table->string('codigo_barras');
+            $table->double('descuento')->default(0);
             $table->integer('cantidad');
             $table->boolean('destacado')->default(false);
             $table->timestamps();

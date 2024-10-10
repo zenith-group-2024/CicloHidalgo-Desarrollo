@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 'contacto' => '555-1234',
                 'direccion' => 'Calle Falsa 123',
                 'email' => 'juan.perez@example.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('  '),
                 'cumpleanos' => '1985-07-12',
                 'boletin' => true,
                 'admin' => false,
