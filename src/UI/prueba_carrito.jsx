@@ -6,6 +6,8 @@ export const CartContext = createContext();
 // Componente proveedor del contexto
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
+    const [message, setMessage] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
 
     // Efecto para loguear los cambios en el carrito
     useEffect(() => {
@@ -25,11 +27,19 @@ export const CartProvider = ({ children }) => {
                 return [...prevCart, { ...product, quantity: 1 }];
             }
         });
+
+        setMessage('Producto agregado al carrito!');
+        setShowMessage(true);
+
+        setTimeout(() => {
+            setShowMessage(false);
+            setMessage('');
+        }, 2000);
     };
 
     // Retornar el proveedor de contexto con valores
     return (
-        <CartContext.Provider value={{ cart, setCart, addToCart }}>
+        <CartContext.Provider value={{ cart, setCart, addToCart, message, showMessage }}>
             {children}
         </CartContext.Provider>
     );

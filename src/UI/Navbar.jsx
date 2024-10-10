@@ -2,20 +2,23 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { ShoppingCart, UserRound, AlignJustify, UserCheck } from 'lucide-react';
 import { Link, useLocation } from "react-router-dom";
 import Logo from '../assets/images/logo.svg';
-import AuthForm from '../forms/Login'; 
+import AuthForm from '../forms/Login';
 import { GlobalContext } from '../global/GlobalState';
+import { CartContext } from '../UI/Prueba_Carrito.jsx';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false); 
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false); 
-  const [cartCount, setCartCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { cart, addToCart, message, showMessage } = useContext(CartContext);
   const menuRef = useRef(null);
-  
-  const location = useLocation(); 
+
+  const location = useLocation();
   const { state, login, logout } = useContext(GlobalContext);
-  
- 
+
+
   const isAuthenticated = state.user !== null;
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -36,10 +39,6 @@ const Navbar = () => {
 
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
-  };
-
-  const addToCart = () => {
-    setCartCount(prevCount => prevCount + 1); 
   };
 
   return (
@@ -70,10 +69,10 @@ const Navbar = () => {
       </div>
 
       <div className="flex space-x-4 m-4 md:ml-4 relative">
-        <Link to="/Carrito" onClick={addToCart}>
+        <Link to="/Carrito" className="relative flex items-center">
           <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
           {cartCount > 0 && (
-            <span className="absolute top-0 right-0 text-white text-xs rounded-full px-1">
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
               {cartCount}
             </span>
           )}
@@ -91,6 +90,12 @@ const Navbar = () => {
       </div>
 
       {isAuthModalOpen && <AuthForm isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
+      
+      {showMessage && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 mb-12 bg-white text-black p-2 rounded shadow-lg text-xl z-50 transition-opacity duration-300">
+        {message}
+        </div>
+      )}
     </nav>
   );
 };
