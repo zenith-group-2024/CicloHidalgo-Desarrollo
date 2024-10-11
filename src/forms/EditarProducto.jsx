@@ -135,7 +135,7 @@ const FormEditarProducto = ({ onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <div>
-                
+              <label htmlFor="producto">Seleccione el producto a editar</label>
                <Select value={selectedOption}
                 options={options}
                 inputId='id'
@@ -154,7 +154,7 @@ const FormEditarProducto = ({ onClose }) => {
                       </div>
                   </div>
                 )} />  
-                <label htmlFor="producto">Seleccione el producto a editar</label>
+                
             </div>
 
             <div className="mb-4">
