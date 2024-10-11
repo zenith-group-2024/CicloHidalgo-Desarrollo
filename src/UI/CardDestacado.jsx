@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { CartContext } from './Prueba_Carrito';
 import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js';
 
-const CardDestacado = ({ title, precio, img, id }) => {
+const CardDestacado = ({ nombre, title, precio, img, id }) => {
     const { addToCart } = useContext(CartContext);
     const { producto, isLoading, error } = useFetchProductoDetallado(id);
 
@@ -21,6 +21,7 @@ const CardDestacado = ({ title, precio, img, id }) => {
 
         addToCart({
             id: producto.id,
+            nombre: producto.nombre,
             title: producto.marca,
             precio: numericPrice,
             img: producto.imagen,
@@ -38,7 +39,7 @@ const CardDestacado = ({ title, precio, img, id }) => {
                         className="w-full h-[200px] object-cover"
                     />
                     <div className="p-3 flex flex-col h-full">
-                        <h2 className="text-lg font-bold mb-1 text-black flex-grow">{title}</h2>
+                        <h2 className="text-lg font-bold mb-1 text-black flex-grow">{nombre}</h2>
                         <p className="text-2xl text-gray">{precio}</p>
                     </div>
                 </div>

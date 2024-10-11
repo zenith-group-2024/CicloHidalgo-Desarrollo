@@ -35,6 +35,7 @@ const ProductosDestacados = () => {
                     {productos.map((producto) => (
                         <div key={producto.id} className="inline-block p-4">
                             <Card
+                                nombre={producto.nombre}
                                 id={producto.id}
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio}`}
