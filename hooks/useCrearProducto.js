@@ -26,6 +26,7 @@ export const useCrearProducto = () => {
             destacado,
           }),
         });
+        console.log(nombre)
         if (response.ok){
           setMessage('Producto creado correctamente');
         }

@@ -42,6 +42,7 @@ const FormProducto = ({ onClose }) => {
   };
 
   const handleSubmit = (e) => {
+    console.log(producto)
     e.preventDefault();
     crear(
       producto.nombre,

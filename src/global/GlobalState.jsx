@@ -1,49 +1,63 @@
-import React, { createContext, useReducer } from 'react';
+    import React, { createContext, useReducer, useEffect } from 'react';
 
-const initialState = {
-  isAuthenticated: false,
-  token: null,
-};
-
-
-export const GlobalContext = createContext(initialState);
-
-
-const globalReducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_AUTH':
-      return {
-        ...state,
-        isAuthenticated: true,
-        token: action.payload,
-      };
-    case 'LOGOUT':
-      return {
-        ...state,
+    const initialState = {
         isAuthenticated: false,
         token: null,
-      };
-    default:
-      return state;
-  }
-};
+        id: null, 
+    };
 
+    export const GlobalContext = createContext(initialState);
 
-export const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(globalReducer, initialState);
+    const globalReducer = (state, action) => {
+        switch (action.type) {
+            case 'SET_AUTH':
+                return {
+                    ...state,
+                    isAuthenticated: true,
+                    token: action.payload.token,
+                    id: action.payload.id,
+                };
+            case 'LOGOUT':
+                return {
+                    ...state,
+                    isAuthenticated: false,
+                    token: null,
+                    id: null, 
+                };
+            default:
+                return state;
+        }
+    };
 
-  const setToken = (token) => {
-    dispatch({ type: 'SET_AUTH', payload: token });
-  };
+    export const GlobalProvider = ({ children }) => {
+        const [state, dispatch] = useReducer(globalReducer, initialState);
 
-  const logout = () => {
-    dispatch({ type: 'LOGOUT' });
-    localStorage.removeItem('authToken'); 
-  };
+        useEffect(() => {
+            
+            const token = localStorage.getItem('authToken');
+            const id = localStorage.getItem('id'); 
+            if (token && id) {
+                dispatch({ type: 'SET_AUTH', payload: { token, id } });
+            }
+        }, []);
 
-  return (
-    <GlobalContext.Provider value={{ state, setToken, logout }}>
-      {children}
-    </GlobalContext.Provider>
-  );
-};
+        const setToken = (token, id) => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('id');  
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('id', id); 
+        dispatch({ type: 'SET_AUTH', payload: { token, id } });
+        };
+
+        const logout = () => {
+            dispatch({ type: 'LOGOUT' });
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('id'); 
+        };
+
+        return (
+            <GlobalContext.Provider value={{ state, setToken, logout }}>
+                {children}
+            </GlobalContext.Provider>
+        );
+    };

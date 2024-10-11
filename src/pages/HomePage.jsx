@@ -16,17 +16,15 @@ import AñadirProducto from '../forms/AñadirProducto';
 const HomePage = () => {
     return (
         <div>
-        <Navbar />
-            <Hero />
+        {/* <Navbar />
+            {/* <Hero />
             <ProductosDestacados />
             <Info />
             <RedesSociales />
-            <Footer />
+            <Footer /> */} 
             
-       {/*      <Servicios />
-            <Footer />
+            
             <DasboardAdmin />
-            <DasboardAdmin />*/}
 
 
         </div>
