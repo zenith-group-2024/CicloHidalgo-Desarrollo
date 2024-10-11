@@ -15,9 +15,19 @@ class ContenidoSeeder extends Seeder
          
         DB::table('contenidos')->insert([
             [
-                'titulo' => 'Video de perritos',
-                'descripcion' => 'video de perritos',
+                'titulo' => '5 Productos de ciclismo feos pero que funcionan',
+                'descripcion' => '5 Productos de ciclismo feos pero que funcionan   ',
+                'video_incrustado' => 'https://www.youtube.com/watch?v=YWbh2wM8cV8&t=1s',
+            ],
+            [
+                'titulo' => '7 Tendencias que No nos gustan del Ciclismo Moderno',
+                'descripcion' => '7 Tendencias que No nos gustan del Ciclismo Moderno',
                 'video_incrustado' => 'https://www.youtube.com/watch?v=H4JE6XDR6UE',
+            ],
+            [
+                'titulo' => 'Si tuviera que elegir UNA SOLA bici, ¿cuál sería?',
+                'descripcion' => 'Si tuviera que elegir UNA SOLA bici, ¿cuál sería?',
+                'video_incrustado' => 'https://www.youtube.com/watch?v=sXNA55fi_oQ',
             ],
         ]);
     
