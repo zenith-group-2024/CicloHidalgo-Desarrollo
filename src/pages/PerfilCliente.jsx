@@ -41,7 +41,7 @@ const PerfilCliente = () => {
     const openModal = () => setModalOpen(true);
     const closeModal = () => {
         setModalOpen(false);
-        navigate('/'); // Redirigir a la página de inicio
+        navigate('/'); 
     };
 
     const handleChange = (e) => {
