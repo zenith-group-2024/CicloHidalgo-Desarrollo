@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { X } from 'lucide-react'; 
+import Select from 'react-select';
 import { useDeleteProducto } from '../../hooks/useDeleteProducto.js';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
 
@@ -12,16 +13,36 @@ const FormEliminarProducto = ({ onClose }) => {
     id: '',
   });
 
-  const handleChange = (e) => {
+  const [selectedOption, setSelectedOption] = useState();
 
-    //console.log(e.target.files)
-    const { name, value, type, checked, files } = e.target;
-    setProducto({
+  const handleChange = (option) => {
+
+    setSelectedOption(option);
+    setProducto((producto) => ({
       ...producto,
-      [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
-    });
+      id: option.id,
+    }))
 
   };
+
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+
+
+  const crearOpciones = () => {
+    const opciones = productos.map(producto => ({
+      value : producto.id,
+      label : producto.nombre,
+      id : producto.id,
+      image : `../src/assets/${producto.imagen}`
+    }))
+    setOptions(opciones);
+  }
+
+  crearOpciones(); 
+  },[productos]);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,13 +67,27 @@ const FormEliminarProducto = ({ onClose }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <div>
-                <label htmlFor="producto">Seleccione el producto a eliminar</label>
-                <select name="id" id="productos" onChange={handleChange}>
-                    {productos.map((item) => (
-                        <option key={item.id} value={item.id}>{item.marca}</option>
-                    ))}
-                </select>
+          <div>
+              <label htmlFor="producto">Seleccione el producto a eliminar</label>
+               <Select value={selectedOption}
+                options={options}
+                inputId='id'
+                name = "id"
+                onChange={handleChange}
+                formatOptionLabel={option =>(
+                  <div className='container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-white'>
+                      <div className="flex-grow flex flex-col">
+                        <div className="w-full h-48 "> {option.label}
+                          <img 
+                            src={option.image} 
+                            alt={option.label} 
+                            className="w-full h-full object-cover rounded-md" 
+                          />
+                        </div>
+                      </div>
+                  </div>
+                )} />  
+                
             </div>
 
           </div>

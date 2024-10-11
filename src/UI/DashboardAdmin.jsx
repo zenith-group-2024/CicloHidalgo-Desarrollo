@@ -35,7 +35,7 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteProduct = () => {
-    setIsDeliting(true);
+    setIsDeleting(true);
     setIsEditing(false);
     setIsAdding(false);
     setFormType('productoDelete');
