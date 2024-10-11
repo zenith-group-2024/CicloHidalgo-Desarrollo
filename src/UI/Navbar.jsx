@@ -7,7 +7,7 @@ import logo from '../assets/images/logo.svg';
 
 const Navbar = () => {
   const { state } = useContext(GlobalContext);
-  const { isAuthenticated } = state;
+  const { isAuthenticated } = state; // Para saber si el usuario está autenticado
   const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
   const cartCount = 0; // Cambia esto según tu lógica para obtener el conteo del carrito
   const location = useLocation(); // Obtener la ubicación actual
@@ -45,6 +45,11 @@ const Navbar = () => {
         <Link to="/Servicios" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
           Servicios
         </Link>
+
+          <Link to="/admin-dashboard" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
+            Dashboard
+          </Link>
+
       </div>
 
       <div className="flex space-x-4 m-4 md:ml-4 relative">
