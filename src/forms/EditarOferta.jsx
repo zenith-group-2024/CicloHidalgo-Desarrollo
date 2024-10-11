@@ -105,21 +105,23 @@ export default function EditarOferta() {
                             />
                         </div>
 
-                        <div className="grid grid-cols-4">
+                        <div className="grid grid-cols-5">
+                            <label className="mx-auto block text-gray-700 text-lg font-bold">Imagen</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Producto</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Marca</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Descuento actual</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Elegir Producto</label>
                         </div>
-
+                        <div className="flex flex-col divide-y-2 divide-blue">
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((producto) => (
-                                <div className="grid grid-cols-4 " key={producto.id}>
-                                    <p className="mx-auto">{producto.nombre}</p>
-                                    <p className="mx-auto">{producto.marca}</p>
-                                    <p className="mx-auto">{producto.descuento}%</p>
+                                <div className="grid grid-cols-5 p-4" key={producto.id}>
+                                      <img className="m-auto w-20 h-20 object-cover rounded-lg" src={`../src/assets/${producto.imagen}`} alt={producto.nombre} />
+                                    <p className="m-auto">{producto.nombre}</p>
+                                    <p className="m-auto">{producto.marca}</p>
+                                    <p className="m-auto">{producto.descuento}%</p>
                                     <input
-                                        className="mx-auto"
+                                        className="m-auto size-6"
                                         type="checkbox"
                                         checked={!!selectedProducts[producto.id]}
                                         onChange={() => handleCheckboxChange(producto.id)}
@@ -130,7 +132,7 @@ export default function EditarOferta() {
                         ) : (
                             <p className="text-center">No hay productos en este momento!</p>
                         )}
-
+                        </div>
                         <div className="flex flex-col items-center mb-4">
                             <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar:</label>
                             <input
