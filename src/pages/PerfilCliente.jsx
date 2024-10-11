@@ -1,61 +1,71 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { GlobalContext } from '../global/GlobalState'; 
+import FetchUser from '../../hooks/FetchUser'; 
+import { useUpdateUser } from '../../hooks/UserUpdate';
 import { X } from 'lucide-react';
 
-
 const PerfilCliente = () => {
-    const { token } = useContext(GlobalContext);
+    const { state } = useContext(GlobalContext); 
     const [modalOpen, setModalOpen] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
+        nombre: '',
         contacto: '',
         email: '',
         direccion: '',
         cumpleanos: '',
+        boletin: false,
     });
     const [loading, setLoading] = useState(true);
-    const [isAuthenticated, setAuthenticated] = useState(false);
     const [message, setMessage] = useState('');
+    const [editing, setEditing] = useState(false);
 
-    // useEffect(() => {
-    //     fetch('http://127.0.0.1:8000/api/user')
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Error en la respuesta del servidor');
-    //             }
-    //             return response.json(); // Procesa JSON
-    //         })
-    //         .then(data => {
-    //             const { name, contacto, email, direccion, cumpleanos } = data;
-    //             setFormData({
-    //                 name: name || '',
-    //                 contacto: contacto || '',
-    //                 email: email || '',
-    //                 direccion: direccion || '',
-    //                 cumpleanos: cumpleanos || '',
-    //             });
-    //             setAuthenticated(true);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error al obtener los datos del usuario:', error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    
-    //     // Llama a la función pasando el token
-    //     fetchUserData(token);
-    // }, [token]);
-    
+    const { formData: fetchedUserData, loading: userLoading } = FetchUser(); 
+    const updateUserData = useUpdateUser();
+
+    useEffect(() => {
+        if (!userLoading) {
+            setFormData({
+                nombre: fetchedUserData.nombre || '',
+                contacto: fetchedUserData.contacto || '',
+                email: fetchedUserData.email || '',
+                direccion: fetchedUserData.direccion || '',
+                cumpleanos: fetchedUserData.cumpleanos || '',
+                boletin: fetchedUserData.boletin || false, 
+            });
+            setLoading(false);
+        }
+    }, [userLoading, fetchedUserData]);
+
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
+    const handleChange = (e) => {
+        const { name, type, checked, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value,
+        });
+        console.log(formData); // Verifica el estado de formData
+    };
+
+    const handleSave = async () => {
+        try {
+            console.log('Datos a actualizar:', formData); // Verifica los datos antes de enviar
+            await updateUserData(formData);
+            setEditing(false);
+            setMessage('Datos actualizados correctamente.'); 
+        } catch (error) {
+            setMessage('Error al actualizar los datos: ' + error.message);
+        }
+    };
 
     if (loading) {
-        return <p>Cargando datos...</p>; 
+        return <p>Cargando datos...</p>;
     }
 
-    if (!isAuthenticated) {
+    if (!state.isAuthenticated) {
         return <p>No has iniciado sesión. Por favor, inicia sesión para ver tu perfil.</p>;
     }
-
-    // Resto del componente...
 
     return (
         <div className="flex flex-col items-center">
@@ -77,60 +87,82 @@ const PerfilCliente = () => {
                         {message && <p className="text-red mb-4">{message}</p>}
                         {editing ? (
                             <>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
-                                    placeholder="Nombre"
-                                />
-                                <input
-                                    type="text"
-                                    name="contacto"
-                                    value={formData.contacto}
-                                    onChange={handleChange}
-                                    className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
-                                    placeholder="Usuario"
-                                />
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
-                                    placeholder="Email"
-                                />
-                                <input
-                                    type="text"
-                                    name="direccion"
-                                    value={formData.direccion}
-                                    onChange={handleChange}
-                                    className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
-                                    placeholder="Dirección"
-                                />
-                                <input
-                                    type="date"
-                                    name="cumpleanos"
-                                    value={formData.cumpleanos}
-                                    onChange={handleChange}
-                                    className="border border-gray rounded-lg p-2 mb-4 w-full focus:outline-none focus:ring-2 focus:ring-red"
-                                />
-                                <button 
-                                    onClick={handleSave} 
-                                    className="bg-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
-                                >
+                                <div>
+                                    <label htmlFor="nombre" className="block">Nombre:</label>
+                                    <input 
+                                        type="text" 
+                                        name="nombre" 
+                                        value={formData.nombre} 
+                                        onChange={handleChange} 
+                                        className="border rounded p-2 w-full" 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="contacto" className="block">Contacto:</label>
+                                    <input 
+                                        type="text" 
+                                        name="contacto" 
+                                        value={formData.contacto} 
+                                        onChange={handleChange} 
+                                        className="border rounded p-2 w-full" 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="email" className="block">Email:</label>
+                                    <input 
+                                        type="email" 
+                                        name="email" 
+                                        value={formData.email} 
+                                        onChange={handleChange} 
+                                        className="border rounded p-2 w-full" 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="direccion" className="block">Dirección:</label>
+                                    <input 
+                                        type="text" 
+                                        name="direccion" 
+                                        value={formData.direccion} 
+                                        onChange={handleChange} 
+                                        className="border rounded p-2 w-full" 
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="cumpleanos" className="block">Cumpleaños:</label>
+                                    <input 
+                                        type="date" 
+                                        name="cumpleanos" 
+                                        value={formData.cumpleanos} 
+                                        onChange={handleChange} 
+                                        className="border rounded p-2 w-full" 
+                                    />
+                                </div>
+                                <div className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id="boletin"
+                                        name="boletin"
+                                        checked={formData.boletin}
+                                        onChange={handleChange} 
+                                        className="h-4 w-4 text-blue focus:ring-blue border-gray rounded"
+                                    />
+                                    <label htmlFor="boletin" className="ml-2 block text-sm text-gray">
+                                        Deseo recibir ofertas especiales
+                                    </label>
+                                </div>
+                                <button onClick={handleSave} className="mt-4 bg-blue text-white rounded p-2">
                                     Guardar
                                 </button>
                             </>
                         ) : (
-                            <div className="p-4 rounded-lg shadow-md mb-4">
-                                <p className="mb-4"><strong>Nombre:</strong> {formData.name}</p>
-                                <p className="mb-4"><strong>Usuario:</strong> {formData.contacto}</p>
-                                <p className="mb-4"><strong>Email:</strong> {formData.email}</p>
-                                <p className="mb-4"><strong>Dirección:</strong> {formData.direccion}</p>
-                                <p className="mb-4"><strong>Cumpleaños:</strong> {formData.cumpleanos}</p>
-                                <button onClick={() => setEditing(true)} className="bg-blue text-white px-4 py-2 rounded-lg h transition">
+                            <div>
+                                <p><strong>Nombre:</strong> {formData.nombre}</p>
+                                <p><strong>Contacto:</strong> {formData.contacto}</p>
+                                <p><strong>Email:</strong> {formData.email}</p>
+                                <p><strong>Dirección:</strong> {formData.direccion}</p>
+                                <p><strong>Cumpleaños:</strong> {formData.cumpleanos}</p>
+                                <p><strong>boletin:</strong> {formData.boletin ? 'Sí' : 'No'}</p>
+                                <button onClick={() => setEditing(true)} className="mt-4 bg-red text-white rounded p-2">
                                     Editar
                                 </button>
                             </div>

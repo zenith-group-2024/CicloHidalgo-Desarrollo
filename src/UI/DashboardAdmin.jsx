@@ -3,6 +3,7 @@ import FormProducto from '../forms/AñadirProducto';
 import FormEditarProducto from '../forms/EditarProducto';
 import FormEliminarProducto from '../forms/EliminarProducto';
 import FormContenido from '../forms/AñadirContenido';
+import FormEditarContenido from '../forms/EditarContenido';
 
 import AnadirOferta from '../forms/AnadirOferta';
 import EditarOferta from '../forms/EditarOferta';
@@ -16,6 +17,7 @@ const AdminDashboard = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedContenido, setSelectedContenido] = useState(null);
   const [formType, setFormType] = useState('');
 
   const handleAddProduct = () => {
@@ -108,6 +110,11 @@ const AdminDashboard = () => {
     email: 'usuario@example.com',
     rol: 'Admin',
   };
+  const sampleContenido={
+    titulo:'xd',
+    descripcion:'xd',
+    video_incrustado:'xd'
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -131,7 +138,7 @@ const AdminDashboard = () => {
         <CrudCard
           title="Contenido"
           onAdd={handleAddContenido}
-          onEdit={() => console.log('Editar Contenido')}
+          onEdit={() => handleEditContenido(sampleContenido)}
           onDelete={() => console.log('Eliminar Contenido')}
         />
         <CrudCard

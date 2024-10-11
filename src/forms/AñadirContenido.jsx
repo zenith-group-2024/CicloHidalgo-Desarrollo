@@ -3,8 +3,11 @@ import { X } from 'lucide-react';
 import { useCrearContenido } from '../../hooks/UseCrearContenido.js';
 
 const FormContenido = ({ onClose }) => {
+  
   const { crear } = useCrearContenido();
+
   const inputFile = useRef(null);
+
   const [contenido, setContenido] = useState({
     titulo: '',
     descripcion: '',

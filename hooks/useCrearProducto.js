@@ -13,6 +13,7 @@ export const useCrearProducto = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            nombre,
             marca,
             especificacion,
             subcategoria,
@@ -25,6 +26,7 @@ export const useCrearProducto = () => {
             destacado,
           }),
         });
+        console.log(nombre)
         if (response.ok){
           setMessage('Producto creado correctamente');
         }

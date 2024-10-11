@@ -1,5 +1,4 @@
   import { useEffect, useState } from "react";
-  import Productos from "../src/pages/Productos";
   export const useFetchProductos = () => {
           const [productos, setProductos] = useState([]);
           const [isLoading, setIsLoading] = useState(true);
@@ -24,5 +23,5 @@
             return {
               productos
             };
-          console.log( getProductos.data);
+          console.log( getProductos.result);
       };
