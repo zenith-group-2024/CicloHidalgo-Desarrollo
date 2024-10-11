@@ -1,37 +1,16 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import { ShoppingCart, UserRound, AlignJustify, UserCheck } from 'lucide-react';
-import { Link, useLocation } from "react-router-dom";
-import Logo from '../assets/images/logo.svg';
-import AuthForm from '../forms/Login';
-import { GlobalContext } from '../global/GlobalState';
-import { CartContext } from '../UI/Prueba_Carrito.jsx';
+import React, { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ShoppingCart, UserCheck, UserRound, AlignJustify } from 'lucide-react';
+import { GlobalContext } from '../global/GlobalState.jsx'; 
+import AuthForm from '../forms/Login.jsx'; // Asegúrate de que la ruta sea correcta
+import logo from '../assets/images/logo.svg'; 
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { cart, addToCart, message, showMessage } = useContext(CartContext);
-  const menuRef = useRef(null);
-
-  const location = useLocation();
-  const { state, login, logout } = useContext(GlobalContext);
-
-
-  const isAuthenticated = state.user !== null;
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const { state } = useContext(GlobalContext);
+  const { isAuthenticated } = state;
+  const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
+  const cartCount = 0; // Cambia esto según tu lógica para obtener el conteo del carrito
+  const location = useLocation(); // Obtener la ubicación actual
 
   const handleOpenAuthModal = () => {
     setIsAuthModalOpen(true);
@@ -44,9 +23,9 @@ const Navbar = () => {
   return (
     <nav className="bg-white p-4 w-full flex flex-col md:flex-row justify-between items-center border-b-2 border-border-gray-opacity z-50">
       <div className="flex items-center justify-between w-full md:w-auto">
-        <img src={Logo} alt="logo" className="h-16 md:h-20 m-4" />
+        <img src={logo} alt="logo" className="h-16 md:h-20 m-4" />
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen(!isOpen)} // Asegúrate de definir `isOpen` si es necesario
           className="md:hidden text-black focus:outline-none"
         >
           <AlignJustify size={28} />
@@ -82,23 +61,16 @@ const Navbar = () => {
           className="transform transition-transform duration-300 hover:scale-110 cursor-pointer"
         >
           {isAuthenticated ? (
-            <UserCheck size={28} /> // Ícono de usuario autenticado
+            <UserCheck size={28} /> 
           ) : (
-            <UserRound size={28} /> // Ícono de usuario no autenticado
+            <UserRound size={28} /> 
           )}
         </div>
       </div>
 
       {isAuthModalOpen && <AuthForm isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
-      
-      {showMessage && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 mb-12 bg-white text-black p-2 rounded shadow-lg text-xl z-50 transition-opacity duration-300">
-        {message}
-        </div>
-      )}
     </nav>
   );
 };
 
 export default Navbar;
-

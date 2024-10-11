@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import { GlobalContext } from '../global/GlobalState'; 
 import FetchUser from '../../hooks/FetchUser'; 
 import { useUpdateUser } from '../../hooks/UserUpdate';
 import { X } from 'lucide-react';
 
 const PerfilCliente = () => {
+    const navigate = useNavigate(); // Inicializar useNavigate
     const { state } = useContext(GlobalContext); 
     const [modalOpen, setModalOpen] = useState(false);
     const [formData, setFormData] = useState({
@@ -37,7 +39,10 @@ const PerfilCliente = () => {
     }, [userLoading, fetchedUserData]);
 
     const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false);
+    const closeModal = () => {
+        setModalOpen(false);
+        navigate('/'); // Redirigir a la página de inicio
+    };
 
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
@@ -45,7 +50,6 @@ const PerfilCliente = () => {
             ...formData,
             [name]: type === 'checkbox' ? checked : value,
         });
-    
     };
 
     const handleSave = async () => {
@@ -78,7 +82,7 @@ const PerfilCliente = () => {
 
             {modalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
-                    <div className="fixed inset-0 bg-black opacity-50" onClick={closeModal}></div>
+                    <div className="fixed inset-0 bg-black opacity-50"></div>
                     <div className="bg-white rounded-lg shadow-lg p-6 z-10 w-96">
                         <button onClick={closeModal} className="absolute top-4 right-4 text-gray">
                             <X size={24} />

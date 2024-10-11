@@ -8,8 +8,7 @@ const FormEliminarContenido = ({ onClose }) => {
   
   const { contenidos, isLoading: isLoadingContenidos } = useFetchContenidos();
   const [contenidoSeleccionado, setContenidoSeleccionado] = useState(null);
-  const [showPopup, setShowPopup] = useState(false); // Estado para el popup
-
+  const [showPopup, setShowPopup] = useState(false); 
   const handleSelectChange = (e) => {
     const contenidoId = parseInt(e.target.value);
     const contenidoEncontrado = contenidos.find(cont => cont.id === contenidoId);

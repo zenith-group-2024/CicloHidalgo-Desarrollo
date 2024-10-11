@@ -1,25 +1,33 @@
-import { div } from "framer-motion/client";
 import React from "react";
-export const Card = (props) =>{
-return(
-    <div className="border-b-2 border-border-gray-opacity w-full  mt-8 ">
-      
-   <div className=" rounded-md  bg-white h-full border-black w-10/12   mx-auto"> 
-   
-   <video src={props.videoUrl} controls className="w-full m-auto ">
-    Tu navegador no soporta la etiqueta de video.
-    </video>
-    <div className="bg-white p-4 mb-8 shadow-lg">
-    <h1 className=" font-primary font-semibold text-xl text-black  text-right"> {props.title} </h1>
+
+export const Card = (props) => {
+  
+  const convertToEmbedUrl = (url) => {
+    return url.replace("watch?v=", "embed/");
+  };
+
+  const embedUrl = convertToEmbedUrl(props.videoUrl);
+
+  console.log("Rendering Card: ", props.title); 
+
+  return (
+    <div className="border-b-2 border-border-gray-opacity w-full mt-8">
+      <div className="rounded-md bg-white border-black w-10/12 mx-auto">
+        <iframe
+          src={embedUrl}
+          className="w-full h-80" 
+          title={props.title}
+          allowFullScreen
+          frameBorder="0"
+        ></iframe>
+        <div className="bg-white p-4 mb-8 shadow-lg">
+          <h1 className="font-primary font-semibold text-xl text-black text-right">
+            {props.title}
+          </h1>
+        </div>
+      </div>
     </div>
-   
+  );
+};
 
-    </div>
-
-    </div>
- 
- 
-);
-
-
-};export default Card
+export default Card;
