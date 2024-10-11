@@ -5,19 +5,27 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Contenido;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContenidoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index(Request $request)
     {
         $listaContenidos = Contenido::all();
-
-        if($request->is('api/')||$request->wantsJson()) {
-            return response()->json(['contenidos' => $listaContenidos]);
+    
+   
+        if ($listaContenidos->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron contenidos'], 404);
         }
+    
+        
+        if ($request->is('api/*') || $request->wantsJson()) {
+            return response()->json(['contenidos' => $listaContenidos], 200);
+        }
+    
+       
+        return response()->json(['contenidos' => $listaContenidos], 200);
     }
 
     /**
@@ -39,7 +47,11 @@ class ContenidoController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
+            if ($validator->fails()) {
+                if ($request->is('api/*') || $request->wantsJson()) {
+                    return response()->json(['errors' => $validator->errors()], 400);
+                }
+            }
         }
 
         $validated = $validator->validated();

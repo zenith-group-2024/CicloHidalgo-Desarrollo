@@ -37,7 +37,7 @@ class UserController extends Controller
             'password' => ['required', 'string', 'min:8'],
             'cumpleanos' => ['string', 'max:255'],
             'boletin' => ['required', 'boolean'],
-            'admin' => ['required', 'boolean']
+            'admin' => ['boolean']
         ], [
             'nombre.required' => 'El campo nombre es requerido.',
             'password.required' => 'El campo contraseña es requerido.',
@@ -65,7 +65,7 @@ class UserController extends Controller
             'direccion' => $validated['direccion'],
             'cumpleanos' => $validated['cumpleanos'],
             'boletin' => $validated['boletin'],
-            'admin' => $validated['admin']
+           
         ]);
 
         // Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
@@ -100,7 +100,8 @@ class UserController extends Controller
 
         return response()->json([
             'token' => $token, 
-            'user' => $user
+            'user' => $user,
+            'userId' => $user->id 
         ]);
     }
 
@@ -118,14 +119,26 @@ class UserController extends Controller
 
     public function show(string $id)
     {
-        $user = User::findOrFail($id);
-
-    if (!Auth::user()->admin || !$user->admin) {
-        return response()->json(['message' => 'No autorizado'], 403);
+        
+        $user = User::select(
+            'users.nombre',
+            'users.contacto',
+            'users.direccion',
+            'users.email',
+            'users.cumpleanos',
+            'users.boletin',
+            
+        )->where('id', $id)->first();
+    
+        
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+    
+    
+        return response()->json($user);
     }
 
-    return response()->json($user);
-    }
 
     public function edit(string $id)
     {
@@ -134,51 +147,44 @@ class UserController extends Controller
 
     public function update(Request $request, string $id)
     {
-        
         $validator = validator($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'.$id],
+            'nombre' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
             'contacto' => ['string', 'max:255'],
             'direccion' => ['string', 'max:255'],
-            'password' => ['nullable', 'string', 'min:8'],
             'cumpleanos' => ['string', 'max:255'],
             'boletin' => ['required', 'boolean'],
-
         ], [
             'nombre.required' => 'El campo nombre es requerido.',
             'boletin.required' => 'El campo boletín es requerido.',
-            'password.required' => 'El campo contraseña es requerido.',
             'email.required' => 'El campo email es requerido.',
             'email.email' => 'El email debe ser una dirección de correo válida.'
         ]);
-
+       
         if ($validator->fails()) {
-            if ($request->is('api/*') || $request->wantsJson()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            } else {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
+            return response()->json(['errors' => $validator->errors()], 400);
         }
-
+    
         $validated = $validator->validated();
-
         $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado.'], 404);
+        }
+    
         $user->nombre = $validated['nombre'];
         $user->email = $validated['email'];
         $user->contacto = $validated['contacto'];
         $user->direccion = $validated['direccion'];
         $user->cumpleanos = $validated['cumpleanos'];
         $user->boletin = $validated['boletin'];
-        if(!empty($validated['password'])){
-            $user->password = Hash::make($validated['password']);
-        }
+    
+        
         $user->save();
-
-        if ($request->is('api/*') || $request->wantsJson()) {
-            return response()->json(['message' => 'Usuario actualizado exitosamente.', 'user' => $user]);
-          }
-
+    
+        return response()->json(['message' => 'Usuario actualizado exitosamente.', 'user' => $user]);
     }
+    
 
     public function destroy(string $id)
     {
