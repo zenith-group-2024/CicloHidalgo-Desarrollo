@@ -48,6 +48,11 @@ const Navbar = () => {
         <Link to="/Servicios" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
           Servicios
         </Link>
+
+          <Link to="/admin-dashboard" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
+            Dashboard
+          </Link>
+
       </div>
 
       <div className="flex space-x-4 m-4 md:ml-4 relative">
