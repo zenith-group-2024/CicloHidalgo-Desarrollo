@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import { GlobalContext } from '../global/GlobalState'; 
 import FetchUser from '../../hooks/FetchUser'; 
 import { useUpdateUser } from '../../hooks/UserUpdate';
 import { X } from 'lucide-react';
 
-const PerfilCliente = () => {
-    const navigate = useNavigate(); // Inicializar useNavigate
+const PerfilCliente = ({ isOpen, onClose }) => {
     const { state } = useContext(GlobalContext); 
-    const [modalOpen, setModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         nombre: '',
         contacto: '',
@@ -38,12 +35,6 @@ const PerfilCliente = () => {
         }
     }, [userLoading, fetchedUserData]);
 
-    const openModal = () => setModalOpen(true);
-    const closeModal = () => {
-        setModalOpen(false);
-        navigate('/'); 
-    };
-
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
         setFormData({
@@ -54,7 +45,6 @@ const PerfilCliente = () => {
 
     const handleSave = async () => {
         try {
-            console.log('Datos a actualizar:', formData); 
             await updateUserData(formData);
             setEditing(false);
             setMessage('Datos actualizados correctamente.'); 
@@ -67,27 +57,17 @@ const PerfilCliente = () => {
         return <p>Cargando datos...</p>;
     }
 
-    if (!state.isAuthenticated) {
-        return <p>No has iniciado sesión. Por favor, inicia sesión para ver tu perfil.</p>;
-    }
-
     return (
-        <div className="flex flex-col items-center">
-            <nav className="bg-gray p-4 flex items-center shadow-md w-full">
-                <button onClick={openModal} className="text-white focus:outline-none">
-                    ☰
-                </button>
-                <span className="text-white ml-4 text-lg font-semibold">Perfil de Usuario</span>
-            </nav>
-
-            {modalOpen && (
+        <>
+            {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="fixed inset-0 bg-black opacity-50"></div>
-                    <div className="bg-white rounded-lg shadow-lg p-6 z-10 w-96">
-                        <button onClick={closeModal} className="absolute top-4 right-4 text-gray">
+                    <div className="bg-white rounded-lg shadow-lg p-6 z-10 w-96 relative">
+                        <button onClick={onClose} className="absolute top-4 right-4 text-gray-500">
                             <X size={24} />
                         </button>
                         <h2 className="text-2xl font-bold mb-4">{editing ? 'Editar Perfil' : 'Datos de Usuario'}</h2>
+                     
                         {message && <p className="text-red mb-4">{message}</p>}
                         {editing ? (
                             <>
@@ -165,7 +145,7 @@ const PerfilCliente = () => {
                                 <p><strong>Email:</strong> {formData.email}</p>
                                 <p><strong>Dirección:</strong> {formData.direccion}</p>
                                 <p><strong>Cumpleaños:</strong> {formData.cumpleanos}</p>
-                                <p><strong>boletin:</strong> {formData.boletin ? 'Sí' : 'No'}</p>
+                                <p><strong>Boletín:</strong> {formData.boletin ? 'Sí' : 'No'}</p>
                                 <button onClick={() => setEditing(true)} className="mt-4 bg-red text-white rounded p-2">
                                     Editar
                                 </button>
@@ -174,7 +154,7 @@ const PerfilCliente = () => {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

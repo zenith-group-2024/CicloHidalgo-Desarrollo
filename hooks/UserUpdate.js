@@ -4,6 +4,7 @@ import { GlobalContext } from '../src/global/GlobalState';
 export const useUpdateUser = () => {
     const { state } = useContext(GlobalContext);
     const updateUserData = async (updatedData) => {
+        console.log(state.id)
         try {
             if (!state.id) {
                 throw new Error('ID de usuario no disponible');
