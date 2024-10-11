@@ -21,20 +21,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
-Route::get('/contenidos/all', [ContenidoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
-Route::post('/user/login', [UserController::class, 'check']);
-Route::post('/user/signin', [UserController::class, 'store']);
-Route::post('/user/update/{id}', [UserController::class, 'update']);
 Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
+
+Route::post('/user/login', [UserController::class, 'check']);
+Route::post('/user/signin', [UserController::class, 'store']);
+Route::put('/user/update/{id}', [UserController::class, 'update']);
+Route::get('/user/{id}', [UserController::class, 'show']);
 
 Route::post('/actualizar-descuento', [ProductoController::class, 'actualizarDescuento']);
 Route::get('/sin-descuento/all', [ProductoController::class, 'noDiscountlist']);
 Route::get('/con-descuento/all', [ProductoController::class, 'discountList']);
 
-Route::post('/contenido/crear', [ContenidoController::class, 'store']);
+Route::get('/contenidos/all', [ContenidoController::class, 'index']);
+Route::post('/contenido/creacion', [ContenidoController::class, 'store']);
 Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
 Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
 
