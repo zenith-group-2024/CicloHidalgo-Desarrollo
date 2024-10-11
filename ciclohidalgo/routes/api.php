@@ -38,7 +38,7 @@ Route::get('/con-descuento/all', [ProductoController::class, 'discountList']);
 Route::get('/contenidos/all', [ContenidoController::class, 'index']);
 Route::post('/contenido/creacion', [ContenidoController::class, 'store']);
 Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
-Route::get('/contenido/update/{id}', [ContenidoController::class, 'update']);
+Route::put('/contenido/update/{id}', [ContenidoController::class, 'update']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/getprofile/{id}', [ProfileController::class, 'getEditData']);

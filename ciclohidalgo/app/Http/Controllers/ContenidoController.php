@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contenido;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ContenidoController extends Controller
 {
@@ -41,31 +42,35 @@ class ContenidoController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = validator([$request->all(),
+        
+        $validator = Validator::make($request->all(), [
             'titulo' => 'required',
             'video_incrustado' => 'required',
         ]);
 
-        if($validator->fails()){
-            if ($validator->fails()) {
-                if ($request->is('api/*') || $request->wantsJson()) {
-                    return response()->json(['errors' => $validator->errors()], 400);
-                }
+        
+        if ($validator->fails()) {
+            if ($request->is('api/*') || $request->wantsJson()) {
+                return response()->json(['errors' => $validator->errors()], 400);
             }
         }
 
+        
         $validated = $validator->validated();
-        $descripcion = '';
-        if($request->descripcion !=''||$request->descripcion != null){
-            $descripcion = $request->descripcion;
-        }
+        
+        $descripcion = $request->descripcion ?? '';
 
+      
         $contenido = Contenido::create([
             'titulo' => $validated['titulo'],
-            'descripcion'=> $descripcion,
+            'descripcion' => $descripcion,
             'video_incrustado' => $validated['video_incrustado']
         ]);
+
+     
+        return response()->json(['message' => 'Contenido creado con éxito', 'contenido' => $contenido], 201);
     }
+
 
     /**
      * Display the specified resource.
