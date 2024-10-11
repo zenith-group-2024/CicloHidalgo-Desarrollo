@@ -103,21 +103,23 @@ export default function EliminarOferta() {
                             />
                         </div>
 
-                        <div className="grid grid-cols-4">
+                        <div className="grid grid-cols-5">
+                            <label className="mx-auto block text-gray-700 text-lg font-bold">Imagen</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Producto</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Marca</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Descuento actual</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Eliminar Oferta</label>
                         </div>
-
+                        <div className="flex flex-col divide-y-2 divide-blue">
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((producto) => (
-                                <div className="grid grid-cols-4 " key={producto.id}>
-                                    <p className="mx-auto">{producto.nombre}</p>
-                                    <p className="mx-auto">{producto.marca}</p>
-                                    <p className="mx-auto">{producto.descuento}%</p>
+                                <div className="grid grid-cols-5 p-4" key={producto.id}>
+                                    <img className="m-auto w-20 h-20 object-cover rounded-lg" src={`../src/assets/${producto.imagen}`} alt={producto.nombre} />
+                                    <p className="m-auto">{producto.nombre}</p>
+                                    <p className="m-auto">{producto.marca}</p>
+                                    <p className="m-auto">{producto.descuento}%</p>
                                     <input
-                                        className="mx-auto"
+                                        className="m-auto size-6 accent-red"
                                         type="checkbox"
                                         checked={!!selectedProducts[producto.id]}
                                         onChange={() => handleCheckboxChange(producto.id)}
@@ -128,7 +130,7 @@ export default function EliminarOferta() {
                         ) : (
                             <p className="text-center">No hay productos en este momento!</p>
                         )}
-
+</div>
                         <button type="submit" className="bg-blue text-white px-4 py-2 rounded-full hover:bg-red transition w-full">
                             Eliminar
                         </button>

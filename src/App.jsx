@@ -9,7 +9,7 @@ import AdminCRUD from './UI/AdminCRUD';
 import { Carrito } from './pages/Carrito';
 import { CartProvider } from './UI/Prueba_Carrito';
 import DetalleProducto from './UI/DetalleProducto';
-import PerfilCliente from './pages/PerfilCliente.jsx'
+import PerfilCliente from './pages/PerfilCliente.jsx';
 import { GlobalProvider } from '../src/global/GlobalState.jsx'; 
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/crud/:resource" element={<AdminCRUD />} /> 
             <Route path="/PerfilCliente" element={<PerfilCliente />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/admin-dashboard" />} />
           </Routes>
         </CartProvider>
       </GlobalProvider>

@@ -24,7 +24,7 @@ export const Card = (props) => {
             />
           </div>
           <div className="flex-grow flex flex-col justify-between">
-            <h1 className="font-primary font-semibold text-lg text-black mt-2">{props.title}</h1>
+            <h1 className="font-primary font-semibold text-lg text-black mt-2">{props.nombre}</h1>
             <h2 className="font-primary font-light text-md text-black">{props.precio}</h2>
           </div>
         </div>

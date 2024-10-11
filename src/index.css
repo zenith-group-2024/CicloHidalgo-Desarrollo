@@ -27,4 +27,27 @@ body {
     display: none;
 }
 
+.bg-red-500 {
+    background-color: #f00;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+.w-6 {
+    width: 1.1rem;
+}
+
+.h-6 {
+    height: 1.1rem;
+}
+
+.text-xs {
+    font-size: 0.75rem;
+}
+
+.text-white {
+    color: #fff;
+}
 

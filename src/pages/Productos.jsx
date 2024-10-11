@@ -70,6 +70,7 @@ export function Productos() {
                         filteredProductos.map((producto) => (
                             <Card
                                 key={producto.id}
+                                nombre={producto.nombre}
                                 id={producto.id}
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio} (IVAI)`}

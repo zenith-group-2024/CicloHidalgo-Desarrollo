@@ -92,18 +92,21 @@ export default function AnadirOferta() {
                                 placeholder="Buscar producto o marca"
                             />
                         </div>
-                        <div className="grid grid-cols-3">
+                        <div className="grid grid-cols-4">
+                            <label className="mx-auto block text-gray-700 text-lg font-bold">Imagen</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Producto</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Marca</label>
                             <label className="mx-auto block text-gray-700 text-lg font-bold">Elegir Producto</label>
                         </div>
+                        <div className="flex flex-col divide-y-2 divide-blue">
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((producto) => (
-                                <div className="grid grid-cols-3 " key={producto.id}>
-                                    <p className="mx-auto">{producto.nombre}</p>
-                                    <p className="mx-auto">{producto.marca}</p>
+                                <div className="grid grid-cols-4 p-4" key={producto.id}>
+                                    <img className="m-auto w-20 h-20 object-cover rounded-lg" src={`../src/assets/${producto.imagen}`} alt={producto.nombre} />
+                                    <p className="m-auto">{producto.nombre}</p>
+                                    <p className="m-auto">{producto.marca}</p>
                                     <input
-                                        className="mx-auto"
+                                        className="m-auto size-6 accent-green-600"
                                         type="checkbox"
                                         checked={!!selectedProducts[producto.id]}
                                         onChange={() => handleCheckboxChange(producto.id)}
@@ -114,6 +117,7 @@ export default function AnadirOferta() {
                         ) : (
                             <p className="text-center">No hay productos sin descuento.</p>
                         )}
+                        </div>
                         <div className="flex flex-col items-center mb-4">
                             <label className="block text-gray-700 text-lg font-bold m-4">Descuento a aplicar:</label>
                             <input
@@ -131,6 +135,7 @@ export default function AnadirOferta() {
                                 required
                             />
                         </div>
+                        
                         <button type="submit" className="bg-blue text-white px-4 py-2 rounded-full hover:bg-red transition w-full">
                             Guardar
                         </button>
