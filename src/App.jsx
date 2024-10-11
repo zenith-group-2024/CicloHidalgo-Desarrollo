@@ -27,7 +27,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/crud/:resource" element={<AdminCRUD />} /> 
             <Route path="/PerfilCliente" element={<PerfilCliente />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/admin-dashboard" />} />
           </Routes>
         </CartProvider>
       </GlobalProvider>

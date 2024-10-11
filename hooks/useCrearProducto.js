@@ -13,6 +13,7 @@ export const useCrearProducto = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            nombre,
             marca,
             especificacion,
             subcategoria,

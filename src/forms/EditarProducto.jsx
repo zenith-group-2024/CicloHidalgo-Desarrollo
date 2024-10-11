@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
+import Select from 'react-select';
 import { X } from 'lucide-react'; 
 import { useUpdateProducto } from '../../hooks/useUpdateProducto.js';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
+import { div, label } from 'framer-motion/client';
 
 const FormEditarProducto = ({ onClose }) => {
 
@@ -10,6 +12,7 @@ const FormEditarProducto = ({ onClose }) => {
 
   const [imagen, setImagen] = useState();
   const inputFile = useRef(null);
+
 
   const [producto, setProducto] = useState({
     id: '',
@@ -45,8 +48,41 @@ const FormEditarProducto = ({ onClose }) => {
 
   };
 
+  const [selectedOption, setSelectedOption] = useState();
+
+  const handleProductChanged = (option) => {
+  
+    setSelectedOption(option);
+    setProducto((producto) => ({
+      ...producto,
+      id: option.id,
+    }))
+  
+  }
+
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+
+
+  const crearOpciones = () => {
+    const opciones = productos.map(producto => ({
+      value : producto.id,
+      label : producto.nombre,
+      id : producto.id,
+      image : `../src/assets/${producto.imagen}`
+    }))
+    setOptions(opciones);
+  }
+
+  crearOpciones(); 
+  },[productos]);
+  
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(producto);
     update(
       producto.id,
       producto.nombre,
@@ -88,7 +124,7 @@ const FormEditarProducto = ({ onClose }) => {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center py-10">
       <div className="relative w-full max-w-4xl mx-4">
-        
+
         <button onClick={onClose} className="absolute top-2 right-2">
           <X className="w-6 h-6 text-gray-700 hover:text-gray-900" />
         </button>
@@ -99,12 +135,26 @@ const FormEditarProducto = ({ onClose }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <div>
+                
+               <Select value={selectedOption}
+                options={options}
+                inputId='id'
+                name = "id"
+                onChange={handleProductChanged}
+                formatOptionLabel={option =>(
+                  <div className='container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-white'>
+                      <div className="flex-grow flex flex-col">
+                        <div className="w-full h-48 "> {option.label}
+                          <img 
+                            src={option.image} 
+                            alt={option.label} 
+                            className="w-full h-full object-cover rounded-md" 
+                          />
+                        </div>
+                      </div>
+                  </div>
+                )} />  
                 <label htmlFor="producto">Seleccione el producto a editar</label>
-                <select name="id" id="productos" onChange={handleChange}>
-                    {productos.map((item) => (
-                        <option key={item.id} value={item.id}>{item.marca}</option>
-                    ))}
-                </select>
             </div>
 
             <div className="mb-4">
@@ -112,6 +162,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="text"
                 name="nombre"
+                id='nombre'
                 value={producto.nombre}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -123,6 +174,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="text"
                 name="marca"
+                id='marca'
                 value={producto.marca}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -134,6 +186,7 @@ const FormEditarProducto = ({ onClose }) => {
               <label className="block text-gray-700">Especificación</label>
               <textarea
                 name="especificacion"
+                id='especificacion'
                 value={producto.especificacion}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -146,6 +199,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="text"
                 name="subcategoria"
+                id='subcategoria'
                 value={producto.subcategoria}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -158,6 +212,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="text"
                 name="categoria"
+                id='categoria'
                 value={producto.categoria}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -170,6 +225,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="text"
                 name="modelo"
+                id='modelo'
                 value={producto.modelo}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -182,6 +238,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="number"
                 name="precio"
+                id='precio'
                 value={producto.precio}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -194,6 +251,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="file"
                 name="imagen"
+                id='imagen'
                 accept="image/*"
                 ref={inputFile}
                 onChange={handleChange}
@@ -207,6 +265,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="number"
                 name="cantidad"
+                id='cantidad'
                 value={producto.cantidad}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg"
@@ -217,6 +276,7 @@ const FormEditarProducto = ({ onClose }) => {
               <input
                 type="checkbox"
                 name="destacado"
+                id='destacado'
                 checked={producto.destacado}
                 onChange={handleChange}
                 className="mr-2"
