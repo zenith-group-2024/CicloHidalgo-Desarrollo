@@ -11,10 +11,10 @@ export const CartProvider = ({ children }) => {
 
     // Efecto para loguear los cambios en el carrito
     useEffect(() => {
-        console.log('Carrito actualizado:', cart);
+     
     }, [cart]);
 
-    // Función para añadir productos al carrito
+    
     const addToCart = (product) => {
         setCart((prevCart) => {
             const existingProduct = prevCart.find(item => item.id === product.id);
@@ -37,7 +37,7 @@ export const CartProvider = ({ children }) => {
         }, 2000);
     };
 
-    // Retornar el proveedor de contexto con valores
+    
     return (
         <CartContext.Provider value={{ cart, setCart, addToCart, message, showMessage }}>
             {children}

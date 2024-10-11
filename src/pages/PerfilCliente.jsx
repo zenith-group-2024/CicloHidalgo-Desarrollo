@@ -45,12 +45,12 @@ const PerfilCliente = () => {
             ...formData,
             [name]: type === 'checkbox' ? checked : value,
         });
-        console.log(formData); // Verifica el estado de formData
+    
     };
 
     const handleSave = async () => {
         try {
-            console.log('Datos a actualizar:', formData); // Verifica los datos antes de enviar
+            console.log('Datos a actualizar:', formData); 
             await updateUserData(formData);
             setEditing(false);
             setMessage('Datos actualizados correctamente.'); 

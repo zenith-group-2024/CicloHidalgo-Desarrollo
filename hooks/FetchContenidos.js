@@ -5,6 +5,7 @@ export const useFetchContenidos = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getContenidos = async () => {
+    setIsLoading(true); 
     try {
       const response = await fetch('http://127.0.0.1:8000/api/contenidos/all');
       const result = await response.json();
@@ -15,7 +16,6 @@ export const useFetchContenidos = () => {
       setIsLoading(false);
     }
   };
-  console.log(contenidos);
 
   useEffect(() => {
     getContenidos();
@@ -23,6 +23,8 @@ export const useFetchContenidos = () => {
 
   return {
     contenidos,
-    isLoading,  
+    setContenidos, 
+    isLoading,
+    getContenidos,
   };
 };

@@ -16,7 +16,7 @@ export const useCrearContenido = () => {
                 body: JSON.stringify({
                     titulo,
                     descripcion,
-                    video_incrustado
+                    video_incrustado 
                 }),
             });
 

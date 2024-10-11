@@ -4,7 +4,7 @@ import FormEditarProducto from '../forms/EditarProducto';
 import FormEliminarProducto from '../forms/EliminarProducto';
 import FormContenido from '../forms/AñadirContenido';
 import FormEditarContenido from '../forms/EditarContenido';
-
+import FormEliminarContenido from '../forms/EliminarContenido';
 import AnadirOferta from '../forms/AnadirOferta';
 import EditarOferta from '../forms/EditarOferta';
 import EliminarOferta from '../forms/EliminarOferta';
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteProduct = () => {
-    setIsDeliting(true);
+    setIsDeleting(true);
     setIsEditing(false);
     setIsAdding(false);
     setFormType('productoDelete');
@@ -84,6 +84,13 @@ const AdminDashboard = () => {
     setIsDeleting(false);
     setIsAdding(false);
     setFormType('contenidoEdit');
+  };
+
+  const handleDeleteContenido = () => {
+    setIsDeleting(true);
+    setIsEditing(false);
+    setIsAdding(false);
+    setFormType('contenidoDelete');
   };
 
   //Ofertas
@@ -139,7 +146,7 @@ const AdminDashboard = () => {
           title="Contenido"
           onAdd={handleAddContenido}
           onEdit={() => handleEditContenido(sampleContenido)}
-          onDelete={() => console.log('Eliminar Contenido')}
+          onDelete={handleDeleteContenido}
         />
         <CrudCard
           title="Servicios"
