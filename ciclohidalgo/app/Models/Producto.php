@@ -22,4 +22,9 @@ class Producto extends Model
         'cantidad', 
         'destacado',
     ];
+
+    public function ordenes()
+    {
+        return $this->belongsToMany(Orden::class)->withPivot('cantidad', 'precio');
+    }
 }
