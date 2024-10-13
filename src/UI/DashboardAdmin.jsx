@@ -149,12 +149,6 @@ const AdminDashboard = () => {
           onDelete={handleDeleteContenido}
         />
         <CrudCard
-          title="Servicios"
-          onAdd={() => console.log('Añadir Servicio')}
-          onEdit={() => console.log('Editar Servicio')}
-          onDelete={() => console.log('Eliminar Servicio')}
-        />
-        <CrudCard
           title="Ofertas"
           onAdd={(handleAnadirOferta)}
           onEdit={(handleEditarOferta)}
