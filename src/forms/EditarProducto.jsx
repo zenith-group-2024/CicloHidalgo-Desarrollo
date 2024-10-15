@@ -70,7 +70,7 @@ const FormEditarProducto = ({ onClose }) => {
       value : producto.id,
       label : producto.nombre,
       id : producto.id,
-      image : `../src/assets/${producto.imagen}`
+      image : producto.imagen
     }))
     setOptions(opciones);
   }
