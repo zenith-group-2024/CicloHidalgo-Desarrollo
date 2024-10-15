@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -17,13 +18,15 @@ return new class extends Migration
             $table->string('categoria');
             $table->string('modelo')->nullable();
             $table->double('precio');
-            $table->string('imagen')->nullable();
+            //$table->string('imagen')->nullable();
             $table->string('codigo_barras');
             $table->double('descuento')->default(0);
             $table->integer('cantidad');
             $table->boolean('destacado')->default(false);
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE productos ADD imagen LONGBLOB');
     }
 
     public function down(): void
