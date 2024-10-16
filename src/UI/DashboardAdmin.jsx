@@ -47,9 +47,7 @@ const AdminDashboard = () => {
     setIsAdding(false);
     setIsEditing(false);
     setIsDeleting(false);
-    setIsAnadirOferta(false);
-    setIsEditarOferta(false);
-    setIsEliminarOferta(false);
+   
   };
 
   const handleAddUser = () => {
@@ -93,12 +91,12 @@ const AdminDashboard = () => {
     setFormType('contenidoDelete');
   };
 
-  //Ofertas
+ 
   const handleAnadirOferta = () => {setIsAdding(true);setIsEditing(false);setIsDeleting(false);setFormType('ofertaAdd');}
   const handleEditarOferta = () => {setIsAdding(false);setIsEditing(true);setIsDeleting(false);setFormType('ofertaEdit');}
   const handleEliminarOferta = () => {setIsAdding(false);setIsEditing(false);setIsDeleting(true);setFormType('ofertaDelete');}
 
-  // Simulando un producto para la edición
+ 
   const sampleProduct = {
     nombre: 'Producto Ejemplo',
     marca: 'Marca Ejemplo',
@@ -147,12 +145,6 @@ const AdminDashboard = () => {
           onAdd={handleAddContenido}
           onEdit={() => handleEditContenido(sampleContenido)}
           onDelete={handleDeleteContenido}
-        />
-        <CrudCard
-          title="Servicios"
-          onAdd={() => console.log('Añadir Servicio')}
-          onEdit={() => console.log('Editar Servicio')}
-          onDelete={() => console.log('Eliminar Servicio')}
         />
         <CrudCard
           title="Ofertas"
