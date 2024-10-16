@@ -40,15 +40,12 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * @return array<string, string>
      */
-    public function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'boletin' => 'boolean',
-            'admin' => 'boolean',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'boletin' => 'boolean',
+        'admin' => 'boolean',
+    ];
 
     protected static function booted()
     {

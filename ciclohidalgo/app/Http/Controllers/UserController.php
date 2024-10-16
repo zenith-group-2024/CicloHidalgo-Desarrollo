@@ -93,15 +93,13 @@ class UserController extends Controller
         return response()->json(['message' => 'No autorizado'], 401);
     }
 
+    $user = Auth::user();
     $user = User::where('email', $request['email'])->firstOrFail();
     
     if ($user) {
-        $token = $user->createToken('TokenName')->plainTextToken;
-        $user = Auth::user();
-        return response()->json([
-            'token' => $token, 
+        return response()->json([ 
             'user' => $user,
-            'userId' => $user->id 
+
         ]);
     }
 
