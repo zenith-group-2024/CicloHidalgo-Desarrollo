@@ -97,7 +97,7 @@ class UserController extends Controller
     
     if ($user) {
         $token = $user->createToken('TokenName')->plainTextToken;
-
+        $user = Auth::user();
         return response()->json([
             'token' => $token, 
             'user' => $user,

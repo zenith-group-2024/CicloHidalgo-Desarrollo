@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ProfileController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
@@ -26,7 +27,7 @@ Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
 
-Route::post('/user/login', [UserController::class, 'check']);
+Route::post('/user/login', [UserController::class, 'check'])->name('login');
 Route::post('/user/signin', [UserController::class, 'store']);
 Route::put('/user/update/{id}', [UserController::class, 'update']);
 Route::get('/user/{id}', [UserController::class, 'show']);
