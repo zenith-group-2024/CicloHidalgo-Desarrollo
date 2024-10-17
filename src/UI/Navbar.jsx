@@ -8,7 +8,7 @@ import PerfilCliente from '../pages/PerfilCliente.jsx';
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
 const Navbar = () => {
   const { state, logout } = useContext(GlobalContext);
-  const { isAuthenticated } = state;
+  const { isAuthenticated, isAdmin } = state;
   const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
   const [isPerfilModalOpen, setIsPerfilModalOpen] = React.useState(false); 
   const location = useLocation();
@@ -17,6 +17,7 @@ const Navbar = () => {
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
   };
+  console.log("Estado del GlobalContext:", state);
 
   const handleLogout = () => {
  logout();
@@ -49,9 +50,11 @@ const Navbar = () => {
           Servicios
         </Link>
 
+          {state.isAdmin && (
           <Link to="/admin-dashboard" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
             Dashboard
           </Link>
+          )}
 
       </div>
 

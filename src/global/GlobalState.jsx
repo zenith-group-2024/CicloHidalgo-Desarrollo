@@ -4,6 +4,7 @@ const initialState = {
     isAuthenticated: false,
     token: null,
     id: null, 
+    isAdmin: false,
 };
 
 export const GlobalContext = createContext(initialState);
@@ -16,6 +17,7 @@ const globalReducer = (state, action) => {
                 isAuthenticated: true,
                 token: action.payload.token,
                 id: action.payload.id,
+                isAdmin: action.payload.isAdmin,
             };
         case 'LOGOUT':
             return {
@@ -23,6 +25,7 @@ const globalReducer = (state, action) => {
                 isAuthenticated: false,
                 token: null,
                 id: null, 
+                isAdmin: false,
             };
         default:
             return state;
@@ -35,21 +38,24 @@ export const GlobalProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         const id = localStorage.getItem('id'); 
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
         if (token && id) {
-            dispatch({ type: 'SET_AUTH', payload: { token, id } });
+            dispatch({ type: 'SET_AUTH', payload: { token, id, isAdmin } });
         }
     }, []);
 
-    const setToken = (token, id) => {
+    const setToken = (token, id, isAdmin) => {
         localStorage.setItem('authToken', token);
         localStorage.setItem('id', id); 
-        dispatch({ type: 'SET_AUTH', payload: { token, id } });
+        localStorage.setItem('isAdmin', isAdmin);
+        dispatch({ type: 'SET_AUTH', payload: { token, id, isAdmin } });
     };
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
         localStorage.removeItem('authToken');
         localStorage.removeItem('id'); 
+        localStorage.removeItem('isAdmin');
     };
 
     return (
