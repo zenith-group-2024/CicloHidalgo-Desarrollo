@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Truck, Store } from "lucide-react"; // Iconos para la sección de Entrega
 import Navbar from "./Navbar"; // Ajusta la ruta según tu estructura de carpetas
 import Footer from "./Footer"; // Ajusta la ruta según tu estructura de carpetas
 
@@ -21,9 +22,7 @@ const productos = [
 function FormularioEnvio() {
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
-  const [cantidades, setCantidades] = useState(
-    productos.map(() => 1) // Inicializa cada producto con una cantidad de 1
-  );
+  const [cantidades, setCantidades] = useState(productos.map(() => 1));
 
   const cambiarCantidad = (index, nuevaCantidad) => {
     const nuevasCantidades = [...cantidades];
@@ -38,195 +37,284 @@ function FormularioEnvio() {
     }, 0);
   };
 
-  return (
-    <div>
-      <Navbar /> {/* Agrega el Navbar aquí */}
-      <div className="flex gap-8 max-w-7xl mx-auto p-6">
-        {/* Formulario de Envío */}
-        <div className="w-2/3 bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4 flex justify-between items-center">
-            Cuenta
-          </h2>
-          <input
-            type="email"
-            defaultValue="juanperez@example.com"
-            className="w-full border p-2 rounded mb-2 bg-white"
-            readOnly
-          />
+  // Determinar el icono según el método de entrega
+  const getEntregaIcon = () => {
+    return envio === "envia" ? (
+      <Truck className="w-6 h-6 mr-2 text-blue" />
+    ) : (
+      <Store className="w-6 h-6 mr-2 text-blue" />
+    );
+  };
 
-          <h3 className="text-xl font-semibold mb-2">Entrega</h3>
-          <div className="flex gap-4 mb-4">
-            <label className="flex items-center">
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <Navbar /> {/* Agrega el Navbar aquí */}
+      <div className="flex gap-8 max-w-7xl mx-auto p-6 flex-1">
+        {/* Formulario de Envío */}
+        <div className="w-2/3 bg-white shadow-md rounded-lg p-8">
+          <h2 className="text-2xl font-semibold mb-6">Cuenta</h2>
+          <div className="flex items-center mb-6">
+            <input
+              type="email"
+              defaultValue="juanperez@example.com"
+              className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              readOnly
+            />
+          </div>
+
+          <h3 className="text-2xl font-semibold mb-4 flex items-center">
+            {getEntregaIcon()}
+            Entrega
+          </h3>
+          <div className="flex gap-6 mb-8">
+            <label className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="entrega"
                 value="envia"
                 checked={envio === "envia"}
                 onChange={() => setEnvio("envia")}
-                className="mr-2"
+                className="form-radio h-5 w-5 text-blue-600"
               />
-              Envia
+              <span className="ml-3 text-gray-700">Envío</span>
             </label>
-            <label className="flex items-center">
+            <label className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="entrega"
                 value="retiro"
                 checked={envio === "retiro"}
                 onChange={() => setEnvio("retiro")}
-                className="mr-2"
+                className="form-radio h-5 w-5 text-blue-600"
               />
-              Retiro en tienda
+              <span className="ml-3 text-gray-700">Retiro en tienda</span>
             </label>
           </div>
 
           {/* Mostrar campos según el método de entrega */}
           {envio === "envia" ? (
             <>
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  className="border p-2 rounded"
-                />
-                <input
-                  type="text"
-                  placeholder="Apellidos"
-                  className="border p-2 rounded"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="border p-2 rounded">
-                  Costa Rica
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-gray-700 mb-2">Nombre</label>
+                  <input
+                    type="text"
+                    placeholder="Nombre"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
-                <input type="text" placeholder="Teléfono" className="border p-2 rounded" />
+                <div>
+                  <label className="block text-gray-700 mb-2">Apellidos</label>
+                  <input
+                    type="text"
+                    placeholder="Apellidos"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div className="flex items-center bg-gray-100 border border-gray-300 p-3 rounded-lg">
+                  <span>Costa Rica</span>
+                </div>
+                <div className="flex flex-col">
+                  <label className="block text-gray-700 mb-2">Teléfono</label>
+                  <input
+                    type="text"
+                    placeholder="Teléfono"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
               </div>
 
-              <input
-                type="text"
-                placeholder="Dirección"
-                className="w-full border p-2 rounded mb-4"
-              />
-              <input
-                type="text"
-                placeholder="Casa, apartamento, etc. (opcional)"
-                className="w-full border p-2 rounded mb-4"
-              />
 
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                <input type="text" placeholder="Provincia / Estado" className="border p-2 rounded" />
-                <input type="text" placeholder="Ciudad" className="border p-2 rounded" />
-                <input type="text" placeholder="Código postal (opcional)" className="border p-2 rounded" />
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2">Dirección</label>
+                <input
+                  type="text"
+                  placeholder="Dirección"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2">
+                  Casa, apartamento, etc. (opcional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="Casa, apartamento, etc. (opcional)"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-6 mb-6">
+                <div>
+                  <label className="block text-gray-700 mb-2">Provincia / Estado</label>
+                  <input
+                    type="text"
+                    placeholder="Provincia / Estado"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 mb-2">Ciudad</label>
+                  <input
+                    type="text"
+                    placeholder="Ciudad"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 mb-2">Código postal (opcional)</label>
+                  <input
+                    type="text"
+                    placeholder="Código postal (opcional)"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
               </div>
             </>
           ) : (
             // Campos para Retiro en tienda
-            <div className="grid grid-cols-1 gap-4 mb-4">
-              <input type="text" placeholder="Nombre" className="border p-2 rounded" />
-              <input type="text" placeholder="Apellidos" className="border p-2 rounded" />
-              <input type="text" placeholder="Teléfono" className="border p-2 rounded" />
+            <div className="grid grid-cols-1 gap-6 mb-8">
+              <div>
+                <label className="block text-gray-700 mb-2">Nombre</label>
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 mb-2">Apellidos</label>
+                <input
+                  type="text"
+                  placeholder="Apellidos"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 mb-2">Teléfono</label>
+                <input
+                  type="text"
+                  placeholder="Teléfono"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
             </div>
           )}
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">Pago</h3>
-          <p className="text-sm text-gray mb-4">
+          <h3 className="text-2xl font-semibold mb-4">Pago</h3>
+          <p className="text-sm text-gray-600 mb-6">
             Todas las transacciones son seguras y están encriptadas.
           </p>
 
-          <div className="border rounded-lg p-4 mb-4">
-            <label className="flex items-center mb-4">
+          <div className="border border-gray-300 rounded-lg p-6 mb-8">
+            <label className="flex items-center mb-4 cursor-pointer">
               <input
                 type="radio"
                 name="pago"
                 value="sinpe"
                 checked={pago === "sinpe"}
                 onChange={() => setPago("sinpe")}
-                className="mr-2"
+                className="form-radio h-5 w-5 text-blue-600"
               />
-              Sinpe Móvil - Depósito
+              <span className="ml-3 text-gray-700 flex items-center">
+                Sinpe Móvil - Depósito
+              </span>
             </label>
 
-            <label className="flex items-center mb-4">
+            <label className="flex items-center mb-4 cursor-pointer">
               <input
                 type="radio"
                 name="pago"
                 value="efectivo"
                 checked={pago === "efectivo"}
                 onChange={() => setPago("efectivo")}
-                className="mr-2"
+                className="form-radio h-5 w-5 text-blue-600"
               />
-              Efectivo
+              <span className="ml-3 text-gray-700 flex items-center">
+                Efectivo
+              </span>
             </label>
 
-            <label className="flex items-center mb-4">
+            <label className="flex items-center mb-4 cursor-pointer">
               <input
                 type="radio"
                 name="pago"
                 value="credomatic"
                 checked={pago === "credomatic"}
                 onChange={() => setPago("credomatic")}
-                className="mr-2"
+                className="form-radio h-5 w-5 text-blue-600"
               />
-              Tasa 0 con Credomatic
+              <span className="ml-3 text-gray-700 flex items-center">
+                Tasa 0 con Credomatic
+              </span>
             </label>
 
-            <label className="flex items-center mb-4">
+            <label className="flex items-center mb-4 cursor-pointer">
               <input
                 type="radio"
                 name="pago"
                 value="bn"
                 checked={pago === "bn"}
                 onChange={() => setPago("bn")}
-                className="mr-2"
+                className="form-radio h-5 w-5 text-blue-600"
               />
-              Sistema de apartado a 2 meses con BN
+              <span className="ml-3 text-gray-700 flex items-center">
+                Sistema de apartado a 2 meses
+              </span>
             </label>
 
-            <label className="flex items-center mb-4">
+            <label className="flex items-center mb-4 cursor-pointer">
               <input
                 type="radio"
                 name="pago"
                 value="mini_cuotas"
                 checked={pago === "mini_cuotas"}
                 onChange={() => setPago("mini_cuotas")}
-                className="mr-2"
+                className="form-radio h-5 w-5 text-blue-600"
               />
-              Mini cuotas del BN
+              <span className="ml-3 text-gray-700 flex items-center">
+                Mini cuotas del Banco Nacional de Costa Rica
+              </span>
             </label>
           </div>
 
           {/* Mensaje para finalizar el pedido */}
-          <div className="mt-4 text-md font-semibold">
-            Finaliza el pedido y escribenos vía Facebook o Instagram para completar el pago.
-            <div className="mt-2 flex space-x-4"></div>
+          <div className="mt-4 text-md font-semibold text-gray-700">
+            Finaliza el pedido y escríbenos vía Whatsapp para completar el pago.
           </div>
 
-          <button className="w-full bg-blue hover:bg-red text-white py-2 rounded mt-4">
+          <button className="w-full bg-blue hover:bg-red text-white text-md py-3 rounded-lg mt-6 flex items-center justify-center transition-colors duration-200">
             Finalizar Pedido
           </button>
         </div>
 
         {/* Lista de Productos */}
-        <div className="w-1/3 bg-gray-50 p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Tu Pedido</h2>
+        <div className="w-1/3 bg-white p-8 rounded-lg shadow-md">
+          <h2 className="text-2xl font-semibold mb-6">Tu Pedido</h2>
           {productos.map((producto, index) => (
-            <div key={producto.id} className="relative mb-4 border-b pb-2 flex items-center">
+            <div key={producto.id} className="flex items-center mb-6">
               <div className="relative">
-                <img src={producto.imagen} alt={producto.nombre} className="w-16 h-16 rounded" />
+                <img
+                  src={producto.imagen}
+                  alt={producto.nombre}
+                  className="w-20 h-20 rounded-lg object-cover"
+                />
                 {/* Pop-up de cantidad encima de la imagen */}
                 <span className="absolute top-0 right-0 bg-blue text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full">
                   {cantidades[index]}
                 </span>
               </div>
-              <div className="ml-4 flex flex-col">
-                <span className="font-semibold">{producto.nombre}</span>
-                <span>₡{producto.precio.toLocaleString()}</span>
+              <div className="ml-4">
+                <h4 className="font-semibold ">{producto.nombre}</h4>
+                <p className="">₡{producto.precio.toLocaleString()}</p>
               </div>
             </div>
           ))}
-          <div className="flex justify-between font-semibold mt-4">
-            <span>Total:</span>
-            <span>₡{calcularTotal().toLocaleString()}</span>
+          <div className="flex justify-between items-center mt-8">
+            <span className="text-lg font-semibold">Total:</span>
+            <span className="text-lg font-semibold">₡{calcularTotal().toLocaleString()}</span>
           </div>
         </div>
       </div>

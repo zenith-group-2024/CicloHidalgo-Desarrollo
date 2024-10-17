@@ -16,7 +16,7 @@ const SocialMediaSection = () => {
                     </a>
 
                     
-                    <a href="https://facebook.com/your-page" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.facebook.com/share/R88QGPERJMBBC1QS/?mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
                         <Facebook 
                             size={50} 
                             className="text-blue transition-transform transform hover:scale-125" 
@@ -28,7 +28,7 @@ const SocialMediaSection = () => {
                     </a>
 
                     
-                    <a href="https://instagram.com/your-profile" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/ciclo_hidalgo?igsh=aDV3b2NpcWQ1eWpn" target="_blank" rel="noopener noreferrer">
                         <Instagram 
                             size={50} 
                             className="text-blue transition-transform transform hover:scale-125" 
