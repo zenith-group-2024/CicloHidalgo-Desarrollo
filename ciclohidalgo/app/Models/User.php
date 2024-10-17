@@ -16,17 +16,17 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * @var array<int, string>
      */
-        protected $fillable = [
-            'nombre',
-            'contacto',
-            'direccion',
-            'role_id',
-            'email',
-            'password',
-            'cumpleanos',
-            'boletin',
-            'admin',
-        ];
+    protected $fillable = [
+        'nombre',
+        'contacto',
+        'direccion',
+        'role_id',
+        'email',
+        'password',
+        'cumpleanos',
+        'boletin',
+        'admin',
+    ];
 
     /**
      * @var array<int, string>
@@ -34,7 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'admin',
+        
     ];
 
     /**
@@ -55,4 +55,5 @@ class User extends Authenticatable implements MustVerifyEmail
             }
         });
     }
+
 }
