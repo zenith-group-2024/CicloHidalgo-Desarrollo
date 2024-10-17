@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
-import { useRegistro } from '../../hooks/UseRegistro'; // Asegúrate de cambiar esta ruta
+import { useRegistro } from '../../hooks/UseRegistro';
 
 const Registro = () => {
   const [nombre, setNombre] = useState('');
@@ -13,14 +13,13 @@ const Registro = () => {
   const [boletin, setBoletin] = useState(false);
   const [isOpen, setIsOpen] = useState(true); 
   const navigate = useNavigate();
-  const { isLoading, register } = useRegistro(); 
+  const { register } = useRegistro(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     
     await register(email, password, nombre, dirrecion, cumpleanos, contacto, boletin);
-    
-  
+
     setNombre('');
     setContacto('');
     setDireccion('');
@@ -28,8 +27,9 @@ const Registro = () => {
     setCumpleanos('');
     setPassword('');
     setBoletin(false);
+
     
-   
+    closeModal();
   };
 
   const closeModal = () => {
@@ -40,8 +40,8 @@ const Registro = () => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 overflow-y-auto">
+          <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-md max-h-screen overflow-y-auto">
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray focus:outline-none"
@@ -53,7 +53,7 @@ const Registro = () => {
             <h2 className="text-2xl font-bold text-center mb-8 text-black">Registro</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray">
+                <label htmlFor="nombre" className="block text-sm font-medium text-gray">
                   Nombre
                 </label>
                 <input
@@ -67,7 +67,7 @@ const Registro = () => {
               </div>
 
               <div>
-                <label htmlFor="contact" className="block text-sm font-medium text-gray">
+                <label htmlFor="contacto" className="block text-sm font-medium text-gray">
                   Contacto
                 </label>
                 <input
@@ -81,12 +81,12 @@ const Registro = () => {
               </div>
 
               <div>
-                <label htmlFor="address" className="block text-sm font-medium text-gray">
+                <label htmlFor="direccion" className="block text-sm font-medium text-gray">
                   Dirección
                 </label>
                 <input
                   type="text"
-                  id="dirrecion"
+                  id="direccion"
                   value={dirrecion}
                   onChange={(e) => setDireccion(e.target.value)}
                   required
@@ -109,7 +109,7 @@ const Registro = () => {
               </div>
 
               <div>
-                <label htmlFor="birthday" className="block text-sm font-medium text-gray">
+                <label htmlFor="cumpleanos" className="block text-sm font-medium text-gray">
                   Cumpleaños
                 </label>
                 <input
@@ -144,7 +144,7 @@ const Registro = () => {
                   onChange={(e) => setBoletin(e.target.checked)}
                   className="h-4 w-4 text-blue focus:ring-blue border-gray rounded"
                 />
-                <label htmlFor="newsletter" className="ml-2 block text-sm text-gray">
+                <label htmlFor="boletin" className="ml-2 block text-sm text-gray">
                   Deseo recibir ofertas especiales
                 </label>
               </div>
@@ -153,7 +153,7 @@ const Registro = () => {
                 type="submit"
                 className="w-full py-3 px-4 bg-red text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue"
               >
-                {isLoading ? 'Cargando...' : 'Registrarse'}
+                Registrarse
               </button>
             </form>
           </div>
