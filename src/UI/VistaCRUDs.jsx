@@ -9,8 +9,8 @@ import AnadirOferta from '../forms/AnadirOferta';
 import EditarOferta from '../forms/EditarOferta';
 import EliminarOferta from '../forms/EliminarOferta';
 
-import CrudCard from '../UI/CRUDCard';
-import Navbar from '../UI/Navbar';
+import CrudCard from './CRUDCard';
+import Navbar from './Navbar';
 
 const AdminDashboard = () => {
   const [isAdding, setIsAdding] = useState(false);
