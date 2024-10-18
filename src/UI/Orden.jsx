@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { CartContext } from "../UI/Prueba_Carrito.jsx";
 import { Truck, Store } from "lucide-react"; // Iconos para la sección de Entrega
 import Navbar from "./Navbar"; // Ajusta la ruta según tu estructura de carpetas
 import Footer from "./Footer"; // Ajusta la ruta según tu estructura de carpetas
+import { p } from "framer-motion/client";
 
 // Datos de ejemplo de productos
 const productos = [
@@ -20,6 +22,8 @@ const productos = [
 ];
 
 function FormularioEnvio() {
+
+  const { cart, setCart } = useContext(CartContext);
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
   const [cantidades, setCantidades] = useState(productos.map(() => 1));
@@ -31,10 +35,8 @@ function FormularioEnvio() {
   };
 
   // Calcular total del pedido
-  const calcularTotal = () => {
-    return productos.reduce((total, producto, index) => {
-      return total + producto.precio * cantidades[index];
-    }, 0);
+  const getTotal = () => {
+    return cart.reduce((total, item) => total + item.precio * item.quantity, 0);
   };
 
   // Determinar el icono según el método de entrega
@@ -46,12 +48,16 @@ function FormularioEnvio() {
     );
   };
 
+  const handleFinalizarOrden = (e) => {
+    e.preventDefault();
+    console.log("Finalizar orden");
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Navbar /> {/* Agrega el Navbar aquí */}
+      <Navbar />
       <div className="flex gap-8 max-w-7xl mx-auto p-6 flex-1">
-        {/* Formulario de Envío */}
-        <div className="w-2/3 bg-white shadow-md rounded-lg p-8">
+        <form className="w-2/3 bg-white shadow-md rounded-lg p-8" onSubmit={handleFinalizarOrden}>
           <h2 className="text-2xl font-semibold mb-6">Cuenta</h2>
           <div className="flex items-center mb-6">
             <input
@@ -89,9 +95,9 @@ function FormularioEnvio() {
               />
               <span className="ml-3 text-gray-700">Retiro en tienda</span>
             </label>
-          </div>
 
-          {/* Mostrar campos según el método de entrega */}
+
+          </div>
           {envio === "envia" ? (
             <>
               <div className="grid grid-cols-2 gap-6 mb-6">
@@ -101,6 +107,7 @@ function FormularioEnvio() {
                     type="text"
                     placeholder="Nombre"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -109,6 +116,7 @@ function FormularioEnvio() {
                     type="text"
                     placeholder="Apellidos"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   />
                 </div>
               </div>
@@ -122,6 +130,7 @@ function FormularioEnvio() {
                     type="text"
                     placeholder="Teléfono"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   />
                 </div>
               </div>
@@ -133,6 +142,7 @@ function FormularioEnvio() {
                   type="text"
                   placeholder="Dirección"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div className="mb-6">
@@ -143,6 +153,7 @@ function FormularioEnvio() {
                   type="text"
                   placeholder="Casa, apartamento, etc. (opcional)"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+
                 />
               </div>
 
@@ -153,6 +164,7 @@ function FormularioEnvio() {
                     type="text"
                     placeholder="Provincia / Estado"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -161,6 +173,7 @@ function FormularioEnvio() {
                     type="text"
                     placeholder="Ciudad"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   />
                 </div>
                 <div>
@@ -182,6 +195,7 @@ function FormularioEnvio() {
                   type="text"
                   placeholder="Nombre"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div>
@@ -190,6 +204,7 @@ function FormularioEnvio() {
                   type="text"
                   placeholder="Apellidos"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div>
@@ -198,6 +213,7 @@ function FormularioEnvio() {
                   type="text"
                   placeholder="Teléfono"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
             </div>
@@ -280,45 +296,54 @@ function FormularioEnvio() {
             </label>
           </div>
 
-          {/* Mensaje para finalizar el pedido */}
           <div className="mt-4 text-md font-semibold text-gray-700">
             Finaliza el pedido y escríbenos vía Whatsapp para completar el pago.
           </div>
 
-          <button className="w-full bg-blue hover:bg-red text-white text-md py-3 rounded-lg mt-6 flex items-center justify-center transition-colors duration-200">
+          <button type="submit" className="w-full bg-blue hover:bg-red text-white text-md py-3 rounded-lg mt-6 flex items-center justify-center transition-colors duration-200">
             Finalizar Pedido
           </button>
-        </div>
+        </form>
 
-        {/* Lista de Productos */}
         <div className="w-1/3 bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-6">Tu Pedido</h2>
-          {productos.map((producto, index) => (
-            <div key={producto.id} className="flex items-center mb-6">
-              <div className="relative">
-                <img
-                  src={producto.imagen}
-                  alt={producto.nombre}
-                  className="w-20 h-20 rounded-lg object-cover"
-                />
-                {/* Pop-up de cantidad encima de la imagen */}
-                <span className="absolute top-0 right-0 bg-blue text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full">
-                  {cantidades[index]}
-                </span>
-              </div>
-              <div className="ml-4">
-                <h4 className="font-semibold ">{producto.nombre}</h4>
-                <p className="">₡{producto.precio.toLocaleString()}</p>
-              </div>
+
+          {cart.length === 0 ? (
+            <p>Carrito vacío</p>
+          ) : (
+            <div>
+
+              {cart.map((producto, index) => (
+
+                <div key={index} className="flex items-center mb-6">
+                  <div className="relative">
+                    <img src={`../src/assets/${producto.img}`} alt={producto.title}
+                      className="w-20 h-20 rounded-lg object-cover"
+                    />
+                    <span className="absolute top-0 right-0 bg-blue text-white text-xs font-bold w-[1.5rem] h-[1.5rem] flex items-center justify-center rounded-full">
+                      {producto.quantity}
+                    </span>
+                  </div>
+                  <div className="ml-4">
+                    <h4 className="font-semibold ">{producto.title}</h4>
+                    <p className="">{`₡${producto.precio * producto.quantity}`}</p>
+                  </div>
+                </div>
+              )
+              )
+              }
+
             </div>
-          ))}
+          )}
           <div className="flex justify-between items-center mt-8">
             <span className="text-lg font-semibold">Total:</span>
-            <span className="text-lg font-semibold">₡{calcularTotal().toLocaleString()}</span>
+            <span className="text-lg font-semibold">{`₡${getTotal()}`}</span>
           </div>
         </div>
+
+
       </div>
-      <Footer /> {/* Agrega el Footer aquí */}
+      <Footer />
     </div>
   );
 }
