@@ -11,6 +11,7 @@ import { CartProvider } from './UI/Prueba_Carrito';
 import DetalleProducto from './UI/DetalleProducto';
 import PerfilCliente from './pages/PerfilCliente.jsx';
 import { GlobalProvider } from '../src/global/GlobalState.jsx'; 
+import MenuPerfil from './pages/MenuPerfil.jsx';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/crud/:resource" element={<AdminCRUD />} /> 
             <Route path="/PerfilCliente" element={<PerfilCliente />} />
+            <Route path="/MenuPerfil" element={<MenuPerfil />} />
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
           </Routes>
         </CartProvider>

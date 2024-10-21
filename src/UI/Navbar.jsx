@@ -4,7 +4,7 @@ import { ShoppingCart, UserCheck, UserRound, AlignJustify } from 'lucide-react';
 import { GlobalContext } from '../global/GlobalState.jsx'; 
 import AuthForm from '../forms/Login.jsx'; 
 import logo from '../assets/images/logo.svg'; 
-import PerfilCliente from '../pages/PerfilCliente.jsx'; 
+import MenuPerfil from '../pages/MenuPerfil.jsx'
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
 const Navbar = () => {
   const { state, logout } = useContext(GlobalContext);
@@ -18,15 +18,18 @@ const Navbar = () => {
     setIsAuthModalOpen(false);
   };
 
-  const handleLogout = () => {
- logout();
-    
-  };
+    const handleLogout = () => {
+  logout();
+      
+    };
 
   return (
     <nav className="bg-white p-4 w-full flex flex-col md:flex-row justify-between items-center border-b-2 border-border-gray-opacity z-50">
       <div className="flex items-center justify-between w-full md:w-auto">
-        <img src={logo} alt="logo" className="h-16 md:h-20 m-4" />
+      <Link to="/" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
+      <img src={logo} alt="logo" className="h-16 md:h-20 m-4" />
+        </Link>
+        
         <button
           onClick={() => setIsOpen(!isOpen)} 
           className="md:hidden text-black focus:outline-none"
@@ -75,13 +78,10 @@ const Navbar = () => {
   {isAuthenticated ? <UserCheck size={28} /> : <UserRound size={28} />}
 </div>
 
-        {isAuthenticated && (
-          <button onClick={handleLogout} className="text-red-600">Cerrar sesión</button>
-        )}
       </div>
 
       {isAuthModalOpen && <AuthForm isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
-      {isPerfilModalOpen && <PerfilCliente isOpen={isPerfilModalOpen} onClose={() => setIsPerfilModalOpen(false)} />} 
+      {isPerfilModalOpen && <MenuPerfil isOpen={isPerfilModalOpen} onClose={() => setIsPerfilModalOpen(false)} />} 
     </nav>
   );
 };

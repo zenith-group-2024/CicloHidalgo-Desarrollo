@@ -8,7 +8,7 @@ export const Card = (props) => {
 
   const embedUrl = convertToEmbedUrl(props.videoUrl);
 
-  console.log("Rendering Card: ", props.title); 
+ 
 
   return (
     <div className="border-b-2 border-border-gray-opacity w-full mt-8">
