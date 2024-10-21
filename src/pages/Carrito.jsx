@@ -9,7 +9,7 @@ export const Carrito = () => {
   const { cart, setCart } = useContext(CartContext);
   const [productos, setProductos] = useState([]);
 
-  useEffect(() => {
+ /* useEffect(() => {
     const fetchProducts = async () => {
       try {
           const response = await fetch('URL_DE_TU_API');
@@ -26,7 +26,7 @@ export const Carrito = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, []);*/
 
   const getTotalProducts = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);

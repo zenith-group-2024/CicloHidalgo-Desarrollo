@@ -27,10 +27,6 @@ body {
     display: none;
 }
 
-.bg-red-500 {
-    background-color: #f00;
-}
-
 .rounded-full {
     border-radius: 9999px;
 }
@@ -51,3 +47,8 @@ body {
     color: #fff;
 }
 
+@layer utilities {
+    .clip-corner {
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+    }
+  }

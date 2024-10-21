@@ -1,8 +1,10 @@
 // useLogin.js
-import { useState } from 'react';
+import { useState,useContext } from 'react';
+import { GlobalContext } from '../src/global/GlobalState.jsx';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { setToken } = useContext(GlobalContext);
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -20,8 +22,9 @@ export const useLogin = () => {
       console.log("Resultado del inicio de sesión:", result); 
 
       if (response.ok) {
-        const { token, user } = result; 
-        return { token, userId: user.id }; 
+        const { token, user } = result;
+        setToken(token, user.id, user.admin);
+        return { token, userId: user.id, admin: user.admin}; 
       } else {
         throw new Error(result.message || 'Error en el inicio de sesión');
       }

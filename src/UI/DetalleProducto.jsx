@@ -45,7 +45,7 @@ export default function DetalleProducto() {
             alt={producto.marca} 
           />
           <div className="flex flex-col justify-center">
-            <h1 className="font-primary font-bold text-2xl text-black mb-2">{producto.marca}</h1>
+            <h1 className="font-primary font-bold text-2xl text-black mb-2">{producto.nombre}</h1>
             <p className="font-primary text-lg text-gray mb-4">{producto.especificacion}</p>
             <p className="font-primary text-xl text-black mb-6">Precio: ₡ {producto.precio} (IVAI)</p>
             <button

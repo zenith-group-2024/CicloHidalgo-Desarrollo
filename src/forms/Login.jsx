@@ -20,17 +20,18 @@ const LoginForm = ({ isOpen, onClose }) => {
     setErrorMessage(''); 
     try {
       const result = await login(email, password); 
-      const { token, userId } = result; 
+      const { token, userId, admin } = result; 
+      console.log(result);
       console.log("Token:", token);
       console.log("ID:", userId);
+      console.log("Admin:", admin);
   
       localStorage.setItem('authToken', token); 
       localStorage.setItem('userId', userId); 
-      setToken(token, userId); 
+      setToken(token, userId, admin); 
       setEmail('');
       setPassword('');
       onClose();
-      console.log("ID:", userId); 
     } catch (e) {
       setErrorMessage(e.message); 
       console.log(e.message); 
