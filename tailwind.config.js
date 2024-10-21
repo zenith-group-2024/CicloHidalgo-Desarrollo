@@ -12,6 +12,7 @@ export default {
         white: '#F9F9F9',
         black: '#1D1D1D',
         gray: '#6C757E',
+        old: '#4b5563',
         'border-gray-opacity': '#6C757E80',
       },
       fontFamily: {

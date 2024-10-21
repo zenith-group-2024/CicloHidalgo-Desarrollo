@@ -16,7 +16,11 @@ export const Carrito = () => {
   };
 
   const getTotal = () => {
-    return cart.reduce((total, item) => total + item.precio * item.quantity, 0);
+    return cart.reduce((total, item) => total + item.precio * item.quantity, 0).toLocaleString("es-CR", {
+      style: "currency",
+      currency: "CRC",
+      minimumFractionDigits: 2,
+    });
   };
 
   const handleEmptyCart = () => {
@@ -94,20 +98,24 @@ export const Carrito = () => {
               <div className="flex items-center justify-center">
                 <button
                   onClick={() => handleDecreaseQuantity(index)}
-                  className="mr-3 px-2 py-2 transition-all duration-300 flex items-center bg-gray-300 rounded-full shadow-md hover:bg-red"
+                  className="mr-2 px-1 py-1 transition-all duration-300 flex items-center bg-gray-300 rounded-full shadow-md hover:bg-red"
                 >
-                  <SquareMinus className="mr-1" />
+                  <SquareMinus className="h-4 w-4" />
                 </button>
                 <p className="font-primary font-semibold text-lg text-gray-800 text-center">{producto.quantity}</p>
                 <button
                   onClick={() => handleIncreaseQuantity(index)}
-                  className="ml-3 px-2 py-2 transition-all duration-300 flex items-center bg-gray-300 rounded-full shadow-md hover:bg-red"
+                  className="ml-2 px-1 py-1 transition-all duration-300 flex items-center bg-gray-300 rounded-full shadow-md hover:bg-red"
                 >
-                  <SquarePlus className="mr-1" />
+                  <SquarePlus className="h-4 w-4" />
                 </button>
               </div>
               <div className="flex items-center justify-end">
-                <p className="font-primary font-semibold text-lg text-gray-800 text-center">{`₡${producto.precio * producto.quantity}`}</p>
+                <p className="font-primary font-semibold text-lg text-gray-800 text-center">{`${(producto.precio * producto.quantity).toLocaleString("es-CR", {
+                  style: "currency",
+                  currency: "CRC",
+                  minimumFractionDigits: 2,
+                })}`}</p>
                 <button
                   onClick={() => handleRemoveProduct(index)}
                   className="ml-4 px-3 py-2 transition-all duration-300 rounded-full bg-gray-300 hover:bg-red shadow-md"
@@ -123,7 +131,7 @@ export const Carrito = () => {
           <>
             <div className="flex justify-between items-center mt-8">
               <h3 className="font-primary font-semibold text-2xl text-gray-800">
-                Total: <span className="">{`₡${getTotal()}`}</span>
+                Total: <span className="">{getTotal()}</span>
               </h3>
               <div className="flex space-x-4">
                 <button

@@ -50,35 +50,40 @@ export function Productos() {
     }, [productos]);
 
     return (
-        <div className="bg-white h-full w-full">
+        <div className="bg-gray-50 min-h-screen">
             <Navbar />
 
-            <div className="grid grid-cols-4 gap-8 mt-8 mx-6 max-w-fit">
-                <div className="col-span-1 p-4 rounded-md">
-                    <h1 className="font-secondary font-bold text-xl text-black mb-4">Filtros</h1>
-                    <CheckBoxCategoria
-                        onCategoryChange={handleCategoryChange}
-                        onSubCategoryChange={handleSubCategoryChange}
-                        onBrandChange={handleBrandChange}
-                    />
-                </div>
+            <div className="container mx-auto py-8">
+                {/* Filtros y productos */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    {/* Filtros */}
+                    <div className="bg-white p-6 rounded-md shadow-md">
+                        <h1 className="font-secondary font-bold text-2xl text-gray-800 mb-4">Filtros</h1>
+                        <CheckBoxCategoria
+                            onCategoryChange={handleCategoryChange}
+                            onSubCategoryChange={handleSubCategoryChange}
+                            onBrandChange={handleBrandChange}
+                        />
+                    </div>
 
-                <div className="col-span-3 grid xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-8 mb-8">
-                    {filteredProductos.length === 0 ? (
-                        <p>No hay productos disponibles.</p>
-                    ) : (
-                        filteredProductos.map((producto) => (
-                            <Card
-                                key={producto.id}
-                                nombre={producto.nombre}
-                                id={producto.id}
-                                title={producto.marca}
-                                precio={`₡ ${producto.precio} (IVAI)`}
-                                img={producto.imagen}
-                                addToCart={addToCart}  // Pasar la función addToCart aquí
-                            />
-                        ))
-                    )}
+                    {/* Productos */}
+                    <div className="md:col-span-3 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8">
+                        {filteredProductos.length === 0 ? (
+                            <p className="text-center text-gray-600">No hay productos disponibles.</p>
+                        ) : (
+                            filteredProductos.map((producto) => (
+                                <Card
+                                    key={producto.id}
+                                    nombre={producto.nombre}
+                                    id={producto.id}
+                                    title={producto.marca}
+                                    precio={`₡ ${producto.precio.toLocaleString("es-CR")} (IVAI)`}
+                                    img={producto.imagen}
+                                    addToCart={addToCart}  // Pasar la función addToCart aquí
+                                />
+                            ))
+                        )}
+                    </div>
                 </div>
             </div>
 
