@@ -9,10 +9,13 @@ export const Card = (props) => {
     threshold: 0.5,
   });
 
+  // Extraer el precio como número para pasarlo a addToCart
+  const precioNumerico = parseFloat(props.precio.replace(/[^\d.-]/g, ''));
+
   return (
     <motion.div
       ref={ref}
-      className="container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-white"
+      className="relative group container mx-auto p-10 border-black drop-shadow-lg rounded-md bg-white"
     >
       <Link to={`/producto/${props.id}`}>
         <div className="flex-grow flex flex-col">
@@ -29,6 +32,20 @@ export const Card = (props) => {
           </div>
         </div>
       </Link>
+
+      {/* Botón para añadir al carrito */}
+      <button
+        onClick={() => props.addToCart({
+          nombre: props.nombre,
+          id: props.id,
+          title: props.title,
+          precio: precioNumerico,  // Pasamos el precio como número
+          img: props.img
+        })}
+        className="absolute bottom-4 right-4 bg-red text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        Añadir al carrito
+      </button>
     </motion.div>
   );
 };

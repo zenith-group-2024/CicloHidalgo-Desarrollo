@@ -7,7 +7,7 @@ import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 
 export function Productos() {
-    const { addToCart } = useContext(CartContext);
+    const { addToCart } = useContext(CartContext); // Obtener la función addToCart
     const { productos } = useFetchProductos();
 
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -75,7 +75,7 @@ export function Productos() {
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio} (IVAI)`}
                                 img={producto.imagen}
-                               
+                                addToCart={addToCart}  // Pasar la función addToCart aquí
                             />
                         ))
                     )}

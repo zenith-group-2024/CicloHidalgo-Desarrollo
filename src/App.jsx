@@ -30,7 +30,7 @@ function App() {
             <Route path="/crud/:resource" element={<AdminCRUD />} /> 
             <Route path="/PerfilCliente" element={<PerfilCliente />} />
             <Route path="/MenuPerfil" element={<MenuPerfil />} />
-            <Route path="/Orden" element={<Orden />} />  {/* Nueva ruta para "Orden" */}
+            <Route path="/Orden" element={<Orden />} />  
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
           </Routes>
         </CartProvider>
