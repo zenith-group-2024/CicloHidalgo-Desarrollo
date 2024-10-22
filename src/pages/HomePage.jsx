@@ -15,9 +15,12 @@ const HomePage = () => {
     return (
         <div>
             
-            
-            <Orden/>
-           
+            <Navbar />
+            <Hero />
+            <ProductosDestacados />
+            <Info />
+            <RedesSociales />
+            <Footer />
            
 
            
