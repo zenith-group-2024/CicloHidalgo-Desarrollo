@@ -17,8 +17,7 @@ const Navbar = () => {
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
   };
-  console.log("Estado del GlobalContext:", state);
-
+  
     const handleLogout = () => {
   logout();
       
