@@ -177,7 +177,7 @@ function FormularioEnvio() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 mb-2">Código postal (opcional)</label>
+                  <label className="block text-gray-700 mb-2">Código postal</label>
                   <input
                     type="text"
                     placeholder="Código postal (opcional)"

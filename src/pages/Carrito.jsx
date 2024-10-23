@@ -1,44 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../UI/Navbar.jsx";
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
-import { Link } from "react-router-dom"; 
-import { Trash, SquarePlus, SquareMinus } from 'lucide-react'; 
+import { Link } from "react-router-dom";
+import { Trash, SquarePlus, SquareMinus } from 'lucide-react';
 import Footer from '../UI/Footer.jsx';
 
 export const Carrito = () => {
   const { cart, setCart } = useContext(CartContext);
-  const [productos, setProductos] = useState([]);
-
- /* useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-          const response = await fetch('URL_DE_TU_API');
-
-          if (!response.ok) {
-              throw new Error(`Error en la solicitud: ${response.status}`);
-          }
-
-          const data = await response.json();
-          setProductos(data); // Asegúrate de que este es el formato correcto
-      } catch (error) {
-          console.error('Error al obtener productos:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);*/
+  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
+  const navigate = useNavigate();
 
   const getTotalProducts = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
 
-  // Función para calcular el total del carrito
   const getTotal = () => {
-    return cart.reduce((total, item) => total + item.precio * item.quantity, 0);
+    return cart.reduce((total, item) => total + item.precio * item.quantity, 0).toLocaleString("es-CR", {
+      style: "currency",
+      currency: "CRC",
+      minimumFractionDigits: 2,
+    });
   };
 
   const handleEmptyCart = () => {
-    setCart([]); // Vaciar el carrito
+    setShowModal(true); // Mostrar el modal
+  };
+
+  const confirmEmptyCart = () => {
+    setCart([]);
+    setShowModal(false); // Ocultar el modal después de vaciar el carrito
   };
 
   const handleRemoveProduct = (index) => {
@@ -49,7 +40,7 @@ export const Carrito = () => {
   const handleIncreaseQuantity = (index) => {
     const updatedCart = cart.map((item, i) => {
       if (i === index) {
-        return { ...item, quantity: item.quantity + 1 }; // Aumentar la cantidad
+        return { ...item, quantity: item.quantity + 1 };
       }
       return item;
     });
@@ -59,69 +50,77 @@ export const Carrito = () => {
   const handleDecreaseQuantity = (index) => {
     const updatedCart = cart.map((item, i) => {
       if (i === index) {
-        const newQuantity = item.quantity > 1 ? item.quantity - 1 : 1; // Asegúrate de que la cantidad no sea menor que 1
-        return { ...item, quantity: newQuantity }; // Reducir la cantidad
+        const newQuantity = item.quantity > 1 ? item.quantity - 1 : 1;
+        return { ...item, quantity: newQuantity };
       }
       return item;
     });
     setCart(updatedCart);
   };
 
+  const handleCheckout = () => {
+    navigate("/Orden");
+  };
+
   return (
-    <div className="bg-white min-h-screen flex flex-col">
+    <div className="bg-gray-100 min-h-screen flex flex-col">
       <Navbar />
 
       <div className="container mx-auto px-4 py-8 flex-grow">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-black font-primary font-bold text-2xl">Tus compras</h1>
-          <Link 
-            to="/Productos" 
-            className="inline-block px-4 py-2 bg-red text-white font-primary font-bold rounded-lg hover:bg-red transition duration-200"
+          <h1 className="text-gray-800 font-primary font-bold text-3xl">Tus compras</h1>
+          <Link
+            to="/Productos"
+            className="inline-block px-5 py-3 bg-red text-white font-semibold rounded-lg hover:bg-red-600 transition-shadow duration-300 shadow-md"
           >
             Añadir más productos
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 text-center mb-4 bg-gray p-4 rounded-lg">
+        <div className="grid grid-cols-3 text-center mb-4 bg-gray p-4 rounded-lg shadow-lg">
           <h2 className="font-secondary font-semibold text-xl text-white">Producto</h2>
           <h2 className="font-secondary font-semibold text-xl text-white">Cantidad</h2>
           <h2 className="font-secondary font-semibold text-xl text-white">Subtotal</h2>
         </div>
 
         {cart.length === 0 ? (
-          <p className="text-center text-gray font-medium">No has agregado productos al carrito.</p>
+          <p className="text-center text-gray-600 font-medium">No has agregado productos al carrito.</p>
         ) : (
           cart.map((producto, index) => (
-            <div 
-              key={index} 
-              className="container mx-auto p-5 border border-gray-300 shadow-md rounded-md bg-white grid grid-cols-3 items-center mb-4 transition-opacity duration-300 ease-in"
+            <div
+              key={index}
+              className="container mx-auto p-5  shadow-lg rounded-lg bg-white grid grid-cols-3 items-center mb-4"
             >
               <div className="flex items-center">
-                <img className="w-20 h-20 object-cover rounded-lg" src={`../src/assets/${producto.img}`} alt={producto.title} />
-                <h3 className="font-primary font-semibold text-lg text-black ml-4">{producto.title}</h3>
+                <img className="w-24 h-24 object-cover rounded-lg shadow-lg" src={`../src/assets/${producto.img}`} alt={producto.title} />
+                <h3 className="font-primary font-semibold text-lg text-gray-800 ml-6">{producto.title}</h3>
               </div>
               <div className="flex items-center justify-center">
-                <button 
-                  onClick={() => handleDecreaseQuantity(index)} 
-                  className="mr-2 px-2 py-1 transition duration-200 flex items-center"
+                <button
+                  onClick={() => handleDecreaseQuantity(index)}
+                  className="mr-2 px-1 py-1 transition-all duration-300 flex items-center bg-gray-300 rounded-full shadow-md hover:bg-red"
                 >
-                  <SquareMinus className="mr-1 text-red" />
+                  <SquareMinus className="h-4 w-4" />
                 </button>
-                <p className="font-primary font-semibold text-lg text-black text-center">{producto.quantity}</p>
-                <button 
-                  onClick={() => handleIncreaseQuantity(index)} 
-                  className="ml-2 px-2 py-1 transition duration-200 flex items-center"
+                <p className="font-primary font-semibold text-lg text-gray-800 text-center">{producto.quantity}</p>
+                <button
+                  onClick={() => handleIncreaseQuantity(index)}
+                  className="ml-2 px-1 py-1 transition-all duration-300 flex items-center bg-gray-300 rounded-full shadow-md hover:bg-red"
                 >
-                  <SquarePlus className="mr-1 text-blue" />
-                </button> 
+                  <SquarePlus className="h-4 w-4" />
+                </button>
               </div>
               <div className="flex items-center justify-end">
-                <p className="font-primary font-semibold text-lg text-black text-center">{`₡${producto.precio * producto.quantity}`}</p>
-                <button 
-                  onClick={() => handleRemoveProduct(index)} 
-                  className="ml-4 px-2 py-1 transition duration-200"
+                <p className="font-primary font-semibold text-lg text-gray-800 text-center">{`${(producto.precio * producto.quantity).toLocaleString("es-CR", {
+                  style: "currency",
+                  currency: "CRC",
+                  minimumFractionDigits: 2,
+                })}`}</p>
+                <button
+                  onClick={() => handleRemoveProduct(index)}
+                  className="ml-4 px-3 py-2 transition-all duration-300 rounded-full bg-gray-300 hover:bg-red shadow-md"
                 >
-                  <Trash className="text-red" />
+                  <Trash />
                 </button>
               </div>
             </div>
@@ -130,22 +129,54 @@ export const Carrito = () => {
 
         {cart.length > 0 && (
           <>
-            <div className="text-right mt-8">
-              <h3 className="font-primary font-semibold text-2xl text-black">
-                Total: <span className="text-indigo">{`₡${getTotal()}`}</span>
+            <div className="flex justify-between items-center mt-8">
+              <h3 className="font-primary font-semibold text-2xl text-gray-800">
+                Total: <span className="">{getTotal()}</span>
               </h3>
+              <div className="flex space-x-4">
+                <button
+                  onClick={handleEmptyCart}
+                  className="px-4 py-2 bg-gray text-white rounded-lg transition-shadow duration-300 shadow-md"
+                >
+                  Vaciar Carrito
+                </button>
+
+                <button
+                  onClick={handleCheckout}
+                  className="px-4 py-2 bg-red text-white rounded-lg font-semibold transition-shadow duration-300 shadow-md"
+                >
+                  Finalizar Compra
+                </button>
+              </div>
             </div>
-            <button 
-              onClick={handleEmptyCart} 
-              className="mt-4 px-4 py-2 bg-blue text-white rounded-lg hover:bg-red-500 transition duration-200"
-            >
-              Vaciar Carrito
-            </button>
           </>
         )}
       </div>
 
-      <Footer /> 
+      <Footer />
+
+      {/* Modal de confirmación */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-8 rounded-lg shadow-xl z-50 text-center">
+            <h2 className="text-xl font-semibold mb-4">¿Estás seguro de que deseas vaciar el carrito?</h2>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={confirmEmptyCart}
+                className="px-4 py-2 bg-gray text-white rounded-lg shadow-md"
+              >
+                Confirmar
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-red text-white  rounded-lg shadow-md"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

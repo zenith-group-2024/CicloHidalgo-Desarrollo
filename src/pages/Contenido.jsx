@@ -39,7 +39,6 @@ export const Contenido = () => {
   return (
     <div className="bg-white h-full w-full">
       <Navbar />
-      <h1 className="text-center text-3xl font-secondary font-bold my-4 hover:underline">Videos</h1>
       <Slider {...settings} className="px-4 mb-8">
         {contenidos.map((contenido) => (
           <Card 

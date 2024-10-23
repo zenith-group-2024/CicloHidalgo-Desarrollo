@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import Card from "../UI/CardProductos";
 import Navbar from "../UI/Navbar";
 import Footer from "../UI/Footer";
@@ -7,7 +8,7 @@ import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 
 export function Productos() {
-    const { addToCart } = useContext(CartContext);
+    const { addToCart } = useContext(CartContext); 
     const { productos } = useFetchProductos();
 
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -27,7 +28,6 @@ export function Productos() {
         setSelectedBrands(selected);
     }, []);
 
-
     useEffect(() => {
         const filterProducts = () => {
             const filtered = productos.filter((producto) => {
@@ -42,44 +42,72 @@ export function Productos() {
         filterProducts();
     }, [productos, selectedCategories, selectedSubCategories, selectedBrands]); 
 
-   
     useEffect(() => {
         if (productos.length > 0) {
             setFilteredProductos(productos);
         }
     }, [productos]);
 
+    // Animations for the Cards and Filters
+    const cardVariants = {
+        hidden: { opacity: 0, scale: 0.9 },
+        visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+        hover: { scale: 1.05, transition: { duration: 0.3 } }
+    };
+
+    const filterVariants = {
+        hidden: { opacity: 0, x: -100 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.5 } }
+    };
+
     return (
-        <div className="bg-white h-full w-full">
+        <div className="bg-gray-50 min-h-screen">
             <Navbar />
 
-            <div className="grid grid-cols-4 gap-8 mt-8 mx-6 max-w-fit">
-                <div className="col-span-1 p-4 rounded-md">
-                    <h1 className="font-secondary font-bold text-xl text-black mb-4">Filtros</h1>
-                    <CheckBoxCategoria
-                        onCategoryChange={handleCategoryChange}
-                        onSubCategoryChange={handleSubCategoryChange}
-                        onBrandChange={handleBrandChange}
-                    />
-                </div>
+            <div className="container mx-auto py-8">
+                {/* Filtros y productos */}
+                <motion.div 
+                    className="grid grid-cols-1 md:grid-cols-4 gap-8"
+                    initial="hidden"
+                    animate="visible"
+                    variants={filterVariants}
+                >
+                    {/* Filtros */}
+                    <motion.div className="bg-white p-6 rounded-md shadow-md" variants={filterVariants}>
+                        <h1 className="font-secondary font-bold text-2xl text-gray-800 mb-4">Filtros</h1>
+                        <CheckBoxCategoria
+                            onCategoryChange={handleCategoryChange}
+                            onSubCategoryChange={handleSubCategoryChange}
+                            onBrandChange={handleBrandChange}
+                        />
+                    </motion.div>
 
-                <div className="col-span-3 grid xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-8 mb-8">
-                    {filteredProductos.length === 0 ? (
-                        <p>No hay productos disponibles.</p>
-                    ) : (
-                        filteredProductos.map((producto) => (
-                            <Card
-                                key={producto.id}
-                                nombre={producto.nombre}
-                                id={producto.id}
-                                title={producto.marca}
-                                precio={`₡ ${producto.precio} (IVAI)`}
-                                img={producto.imagen}
-                               
-                            />
-                        ))
-                    )}
-                </div>
+                    {/* Productos */}
+                    <div className="md:col-span-3 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8">
+                        {filteredProductos.length === 0 ? (
+                            <p className="text-center text-gray-600">No hay productos disponibles.</p>
+                        ) : (
+                            filteredProductos.map((producto) => (
+                                <motion.div
+                                    key={producto.id}
+                                    variants={cardVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    whileHover="hover"
+                                >
+                                    <Card
+                                        nombre={producto.nombre}
+                                        id={producto.id}
+                                        title={producto.marca}
+                                        precio={`₡ ${producto.precio.toLocaleString("es-CR")} (IVAI)`}
+                                        img={producto.imagen}
+                                        addToCart={addToCart}  // Pasar la función addToCart aquí
+                                    />
+                                </motion.div>
+                            ))
+                        )}
+                    </div>
+                </motion.div>
             </div>
 
             <Footer />

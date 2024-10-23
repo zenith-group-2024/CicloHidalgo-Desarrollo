@@ -12,7 +12,7 @@ import DetalleProducto from './UI/DetalleProducto';
 import PerfilCliente from './pages/PerfilCliente.jsx';
 import { GlobalProvider } from '../src/global/GlobalState.jsx'; 
 import MenuPerfil from './pages/MenuPerfil.jsx';
-
+import Orden from './UI/Orden';  // Asegúrate de que este archivo sea el correcto para la página de "Orden"
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
             <Route path="/crud/:resource" element={<AdminCRUD />} /> 
             <Route path="/PerfilCliente" element={<PerfilCliente />} />
             <Route path="/MenuPerfil" element={<MenuPerfil />} />
+            <Route path="/Orden" element={<Orden />} />  
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
           </Routes>
         </CartProvider>
