@@ -4,6 +4,7 @@ import FetchUser from '../../hooks/FetchUser';
 import { useUpdateUser } from '../../hooks/UserUpdate';
 import { X } from 'lucide-react';
 import Navbar from '../UI/Navbar';
+import Footer from '../UI/Footer';
 
 const PerfilCliente = () => {
     const { state } = useContext(GlobalContext);
@@ -58,11 +59,11 @@ const PerfilCliente = () => {
         return <p>Cargando datos...</p>;
     }
     return (
-        <div className="container mx-auto px-6 py-4">
+        <div className=" ">
             <Navbar />
-            <div className="max-w-3xl mx-auto bg-white p-8 shadow-md rounded-lg">
-                <h2 className="text-3xl font-bold text-center mb-8">Editar Perfil</h2>
-    
+            <div className="max-w-3xl m-auto bg-white p-8  my-4 shadow-md rounded-lg">
+                <h2 className="text-3xl font-bold text-center mb-4 ">Perfil</h2>
+               
                 {message && (
                     <p className="text-center text-red-500 bg-red-100 p-3 rounded-lg mb-6">
                         Error al actualizar los datos: {message}
@@ -165,6 +166,7 @@ const PerfilCliente = () => {
                     </div>
                 )}
             </div>
+            <Footer />
         </div>
     );
     
