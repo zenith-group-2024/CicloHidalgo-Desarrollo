@@ -30,7 +30,7 @@ const FormEditarProducto = ({ onClose }) => {
 
   const handleChange = (e) => {
 
-    //console.log(e.target.files)
+   
     const { name, value, type, checked, files } = e.target;
     setProducto({
       ...producto,

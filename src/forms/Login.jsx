@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useLogin } from '../../hooks/UseLogin.js';
-import { X } from 'lucide-react';
+import { X, Eye, EyeOff } from 'lucide-react'; 
 import Registro from './Registro.jsx';
 import { GlobalContext } from '../global/GlobalState.jsx'; 
 import { Link, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ const LoginForm = ({ isOpen, onClose }) => {
   const { isAuthenticated = false } = state; 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); 
   const [showRegistro, setShowRegistro] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); 
@@ -50,6 +51,10 @@ const LoginForm = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       {isOpen && (
@@ -87,14 +92,28 @@ const LoginForm = ({ isOpen, onClose }) => {
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                     Password
                   </label>
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="mt-2 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'} 
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="mt-2 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+              
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="w-5 h-5 text-gray-500" />
+                      ) : (
+                        <Eye className="w-5 h-5 text-gray-500" />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 <button

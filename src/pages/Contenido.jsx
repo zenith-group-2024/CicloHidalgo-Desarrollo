@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 export const Contenido = () => {
   const { contenidos, isLoading } = useFetchContenidos(); 
 
-  console.log("Contenidos fetched: ", contenidos); // Debugging
+  console.log("Contenidos fetched: ", contenidos); 
 
   const settings = {
     dots: true,

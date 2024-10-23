@@ -14,7 +14,7 @@ export default function DetalleProducto() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!producto) return <p className="text-center">Producto no encontrado</p>;
 
-  // Convertimos el precio a número y lo formateamos para mostrarlo con comas y decimales
+  
   const numericPrice = typeof producto.precio === 'number'
     ? producto.precio
     : parseFloat(producto.precio.replace(/[^\d.-]/g, ''));
@@ -46,14 +46,14 @@ export default function DetalleProducto() {
       <Navbar />
       <div className="container mx-auto p-10">
         <div className="bg-white p-8 rounded-lg  grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
-          {/* Imagen del producto */}
+          
           <img 
             className="w-full h-auto mx-auto max-w-sm md:max-w-md rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105" 
             src={`../src/assets/${producto.imagen}`} 
             alt={producto.marca} 
           />
 
-          {/* Detalles del producto */}
+        
           <div className="flex flex-col justify-center space-y-6">
             <h1 className="font-primary font-bold text-3xl ">{producto.nombre}</h1>
             <p className="font-primary text-lg text-gray">{producto.especificacion}</p>
