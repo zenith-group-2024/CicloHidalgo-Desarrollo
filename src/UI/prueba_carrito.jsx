@@ -1,15 +1,15 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-// Crear el contexto
+
 export const CartContext = createContext();
 
-// Componente proveedor del contexto
+
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [message, setMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
 
-    // Efecto para loguear los cambios en el carrito
+    
     useEffect(() => {
      
     }, [cart]);

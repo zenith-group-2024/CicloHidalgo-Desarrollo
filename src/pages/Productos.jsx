@@ -48,7 +48,7 @@ export function Productos() {
         }
     }, [productos]);
 
-    // Animations for the Cards and Filters
+    
     const cardVariants = {
         hidden: { opacity: 0, scale: 0.9 },
         visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
@@ -65,14 +65,14 @@ export function Productos() {
             <Navbar />
 
             <div className="container mx-auto py-8">
-                {/* Filtros y productos */}
+               
                 <motion.div 
                     className="grid grid-cols-1 md:grid-cols-4 gap-8"
                     initial="hidden"
                     animate="visible"
                     variants={filterVariants}
                 >
-                    {/* Filtros */}
+                    
                     <motion.div className="bg-white p-6 rounded-md shadow-md" variants={filterVariants}>
                         <h1 className="font-secondary font-bold text-2xl text-gray-800 mb-4">Filtros</h1>
                         <CheckBoxCategoria
@@ -82,7 +82,7 @@ export function Productos() {
                         />
                     </motion.div>
 
-                    {/* Productos */}
+                   
                     <div className="md:col-span-3 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8">
                         {filteredProductos.length === 0 ? (
                             <p className="text-center text-gray-600">No hay productos disponibles.</p>
@@ -101,7 +101,7 @@ export function Productos() {
                                         title={producto.marca}
                                         precio={`₡ ${producto.precio.toLocaleString("es-CR")} (IVAI)`}
                                         img={producto.imagen}
-                                        addToCart={addToCart}  // Pasar la función addToCart aquí
+                                        addToCart={addToCart}  
                                     />
                                 </motion.div>
                             ))

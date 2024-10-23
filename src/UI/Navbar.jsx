@@ -17,8 +17,7 @@ const Navbar = () => {
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
   };
-  console.log("Estado del GlobalContext:", state);
-
+  
     const handleLogout = () => {
   logout();
       
@@ -52,9 +51,16 @@ const Navbar = () => {
         <Link to="/Servicios" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
           Servicios
         </Link>
+        
 
           {state.isAdmin && (
           <Link to="/admin-dashboard" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
+            Admin CRUD
+          </Link>
+          )}
+
+{state.isAdmin && (
+          <Link to="/Dashboard" className={`text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Dashboard' ? 'text-red' : ''}`}>
             Dashboard
           </Link>
           )}

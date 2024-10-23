@@ -28,7 +28,7 @@ const CardDestacado = ({ nombre, title, precio, img, id }) => {
         });
     };
 
-    // Asegurarse de que 'precio' es un número y luego formatearlo
+   
     const numericPrice = typeof precio === 'number' ? precio : parseFloat(precio.replace(/[^\d.-]/g, ''));
     const formattedPrice = isNaN(numericPrice)
         ? "Precio no disponible"
@@ -42,7 +42,7 @@ const CardDestacado = ({ nombre, title, precio, img, id }) => {
         <motion.div
             className="rounded-lg shadow-lg overflow-hidden h-[350px] w-[300px] transition-transform transform hover:scale-105 m-2 bg-white flex flex-col justify-between"
             whileHover={{ scale: 1.05 }}
-            transition={{ duration: 1.5 }}  // Aquí ajustamos la duración a 1.5 segundos
+            transition={{ duration: 1.5 }}  
         >
             <Link to={`/producto/${id}`}>
                 <div>
@@ -53,7 +53,7 @@ const CardDestacado = ({ nombre, title, precio, img, id }) => {
                     />
                     <div className="p-3 flex flex-col h-full">
                         <h2 className="text-lg font-bold mb-1 text-black flex-grow">{nombre}</h2>
-                        {/* Mostrar el precio formateado */}
+                        
                         <p className="text-xl text-gray">{formattedPrice}</p>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="container mx-auto px-4">
                 <div className="flex flex-wrap justify-between items-start">
                     
-                    {/* Sección de Contacto */}
+                   
                     <div className="w-full md:w-1/3 mb-6 md:mb-0">
                         <h2 className="text-xl font-bold mb-3">Contacto</h2>
                         <p className="mb-3 text-lg">San Pedro de Poás, Alajuela, Costa Rica</p>
@@ -18,7 +18,7 @@ const Footer = () => {
                             <a href="mailto:ciclohidalgo@hotmail.com" className="hover:underline"> ciclohidalgo@hotmail.com</a>
                         </p>
                         
-                        {/* Sección de Redes Sociales */}
+                      
                         <div className="flex space-x-4 mt-4">
                             <a 
                                 href="https://wa.me/50624484946" 
@@ -50,7 +50,7 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Sección de Enlaces Rápidos */}
+                  
                     <div className="w-full md:w-1/3 mb-6 md:mb-0">
                         <h2 className="text-xl font-bold mb-3">Enlaces Rápidos</h2>
                         <ul>
@@ -73,7 +73,6 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Sección de Derechos Reservados */}
                 <div className="text-center mt-8">
                     <p className="text-lg">&copy; {new Date().getFullYear()} Ciclo Hidalgo. Todos los derechos reservados.</p>
                 </div>

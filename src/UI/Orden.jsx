@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { CartContext } from "../UI/Prueba_Carrito.jsx";
-import { Truck, Store } from "lucide-react"; // Iconos para la sección de Entrega
-import Navbar from "./Navbar"; // Ajusta la ruta según tu estructura de carpetas
-import Footer from "./Footer"; // Ajusta la ruta según tu estructura de carpetas
+import { Truck, Store } from "lucide-react"; 
+import Navbar from "./Navbar"; 
+import Footer from "./Footer"; 
 import { p } from "framer-motion/client";
 
-// Datos de ejemplo de productos
+
 const productos = [
   {
     id: 1,
