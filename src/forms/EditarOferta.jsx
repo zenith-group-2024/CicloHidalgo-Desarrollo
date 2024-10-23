@@ -8,7 +8,7 @@ export default function EditarOferta() {
     const [selectedProducts, setSelectedProducts] = useState({});
     const [descuento, setDescuento] = useState(0);
     const [backendMessage, setBackendMessage] = useState('');
-    const [searchTerm, setSearchTerm] = useState(''); // Nuevo estado para la búsqueda
+    const [searchTerm, setSearchTerm] = useState(''); 
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -74,7 +74,6 @@ export default function EditarOferta() {
         }
     };
 
-    // Filtrar productos en función del término de búsqueda
     const filteredProducts = productos.filter((producto) =>
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || 
         producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
@@ -99,8 +98,8 @@ export default function EditarOferta() {
                                 type="search"
                                 id="search"
                                 name="search"
-                                value={searchTerm} // Estado de búsqueda
-                                onChange={(e) => setSearchTerm(e.target.value)} // Actualiza el estado
+                                value={searchTerm} 
+                                onChange={(e) => setSearchTerm(e.target.value)} 
                                 placeholder="Buscar producto o marca"
                             />
                         </div>

@@ -8,7 +8,7 @@ import Footer from '../UI/Footer.jsx';
 
 export const Carrito = () => {
   const { cart, setCart } = useContext(CartContext);
-  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
+  const [showModal, setShowModal] = useState(false); 
   const navigate = useNavigate();
 
   const getTotalProducts = () => {
@@ -24,12 +24,12 @@ export const Carrito = () => {
   };
 
   const handleEmptyCart = () => {
-    setShowModal(true); // Mostrar el modal
+    setShowModal(true); 
   };
 
   const confirmEmptyCart = () => {
     setCart([]);
-    setShowModal(false); // Ocultar el modal después de vaciar el carrito
+    setShowModal(false); 
   };
 
   const handleRemoveProduct = (index) => {
@@ -155,7 +155,7 @@ export const Carrito = () => {
 
       <Footer />
 
-      {/* Modal de confirmación */}
+     
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl z-50 text-center">

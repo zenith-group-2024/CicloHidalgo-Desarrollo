@@ -9,7 +9,7 @@ export const Card = (props) => {
     threshold: 0.5,
   });
 
-  // Extraer el precio como número y formatearlo para la vista
+  
   const precioNumerico = parseFloat(props.precio.replace(/[^\d.-]/g, ''));
   const precioFormateado = precioNumerico.toLocaleString("es-CR", {
     style: "currency",
@@ -38,13 +38,13 @@ export const Card = (props) => {
         </div>
       </Link>
 
-      {/* Botón para añadir al carrito */}
+      
       <button
         onClick={() => props.addToCart({
           nombre: props.nombre,
           id: props.id,
           title: props.title,
-          precio: precioNumerico,  // Pasamos el precio como número
+          precio: precioNumerico,  
           img: props.img
         })}
         className="absolute bottom-4 right-4 bg-red text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"

@@ -81,7 +81,7 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
 
     return (
         <div className="space-y-4">
-            {/* Categorías */}
+           
             <div className="space-y-2">
                 <div className="text-black w-full mb-4 font-secondary font-bold">Categoría</div>
                 {Object.keys(categorias).map((category) => (
@@ -100,7 +100,7 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                 ))}
             </div>
 
-            {/* Subcategorías */}
+           
             <div className="space-y-2">
                 <div className="text-black w-full mb-4 font-secondary font-bold">Subcategoría</div>
                 {getSubCategoriesForSelected().map((subCategory) => (
@@ -119,7 +119,7 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                 ))}
             </div>
 
-            {/* Marcas */}
+           
             <div className="space-y-2">
                 <div className="text-black w-full mb-4 font-secondary font-bold">Marca</div>
                 {getBrandsForSelected().map((brand) => (

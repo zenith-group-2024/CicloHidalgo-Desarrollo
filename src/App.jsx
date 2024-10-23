@@ -3,21 +3,23 @@ import React from 'react';
 import HomePage from './pages/HomePage';
 import Contenido from './pages/Contenido';
 import Productos from './pages/Productos';
-import Servicios from './pages/Servicios'; 
-import AdminDashboard from './UI/VistaCRUDs.jsx'; 
-import AdminCRUD from './UI/AdminCRUD'; 
+import Servicios from './pages/Servicios';
+import AdminDashboard from './UI/VistaCRUDs.jsx';
+import AdminCRUD from './UI/AdminCRUD';
 import { Carrito } from './pages/Carrito';
 import { CartProvider } from './UI/Prueba_Carrito';
 import DetalleProducto from './UI/DetalleProducto';
 import PerfilCliente from './pages/PerfilCliente.jsx';
-import { GlobalProvider } from '../src/global/GlobalState.jsx'; 
+import { GlobalProvider } from '../src/global/GlobalState.jsx';
 import MenuPerfil from './pages/MenuPerfil.jsx';
-import Orden from './UI/Orden';  // Asegúrate de que este archivo sea el correcto para la página de "Orden"
+import Orden from './UI/Orden';
+import Dashboard from './UI/Dashboard.jsx';
+
 
 function App() {
   return (
     <BrowserRouter>
-      <GlobalProvider> 
+      <GlobalProvider>
         <CartProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -27,12 +29,14 @@ function App() {
             <Route path="/Carrito" element={<Carrito />} />
             <Route path="/producto/:id" element={<DetalleProducto />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path="/crud/:resource" element={<AdminCRUD />} /> 
+            <Route path="/crud/:resource" element={<AdminCRUD />} />
             <Route path="/PerfilCliente" element={<PerfilCliente />} />
             <Route path="/MenuPerfil" element={<MenuPerfil />} />
-            <Route path="/Orden" element={<Orden />} />  
+            <Route path="/Orden" element={<Orden />} />
+            <Route path="/Dashboard" element={<Dashboard />} />  
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
           </Routes>
+
         </CartProvider>
       </GlobalProvider>
     </BrowserRouter>
