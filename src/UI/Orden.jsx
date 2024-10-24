@@ -1,34 +1,23 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { CartContext } from "../UI/Prueba_Carrito.jsx";
-import { Truck, Store } from "lucide-react"; 
-import Navbar from "./Navbar"; 
-import Footer from "./Footer"; 
-import { p } from "framer-motion/client";
 
-
-const productos = [
-  {
-    id: 1,
-    nombre: "Bicicleta de Montaña",
-    precio: 350000,
-    imagen: "https://via.placeholder.com/100",
-  },
-  {
-    id: 2,
-    nombre: "Casco Profesional",
-    precio: 75000,
-    imagen: "https://via.placeholder.com/100",
-  },
-];
+import { Truck, Store } from "lucide-react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { GlobalContext } from '../global/GlobalState';
+import FetchUser from "../../hooks/FetchUser";
 
 function FormularioEnvio() {
 
+  const productos = [];
+  const { state } = useContext(GlobalContext);
   const { cart, setCart } = useContext(CartContext);
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
   const [cantidades, setCantidades] = useState(productos.map(() => 1));
 
-  const [fromData, setFormData] = useState({
+  const [formOrdenData, setFormData] = useState({
+    user_id: state.id || "",
     metodo_envio: "envia",
     nombre: "",
     apellido: "",
@@ -45,11 +34,21 @@ function FormularioEnvio() {
     })),
   });
 
-  const cambiarCantidad = (index, nuevaCantidad) => {
-    const nuevasCantidades = [...cantidades];
-    nuevasCantidades[index] = nuevaCantidad;
-    setCantidades(nuevasCantidades);
-  };
+  const { formData: userData, loading: userLoading } = FetchUser();
+
+  useEffect(() => {
+    setFormData(prevData => ({
+      ...prevData,
+      user_id: state.id // Actualizas el formOrdenData con el id del usuario
+    }));
+  }, [state.id]);
+
+
+  /*   const cambiarCantidad = (index, nuevaCantidad) => {
+      const nuevasCantidades = [...cantidades];
+      nuevasCantidades[index] = nuevaCantidad;
+      setCantidades(nuevasCantidades);
+    }; */
 
   // Calcular total del pedido
   const getTotal = () => {
@@ -75,30 +74,53 @@ function FormularioEnvio() {
   };
   const handlePagoChange = (e) => {
     const { value } = e.target;
-    setPago(value); // Actualiza el estado de pago
+    setPago(value);
     setFormData((prevData) => ({
       ...prevData,
-      metodo_pago: value, // Actualiza el campo metodo_pago en formData
+      metodo_pago: value,
     }));
   };
 
-  const handleFinalizarOrden = (e) => {
+  const handleFinalizarOrden = async (e) => {
     e.preventDefault();
 
+    try {
+      const response = await fetch('http://localhost:8000/api/registrar-orden', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}` // si necesitas enviar un token de autenticación
+        },
+        body: JSON.stringify(formOrdenData),
+      });
 
-
-    console.log('Datos del Form:', fromData);
-    console.log("Finalizar orden");
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data.message);
+      } else {
+        console.error('Error al registrar la orden:', data.message); // Maneja el error
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
-      ...fromData,
+      ...formOrdenData,
       [name]: value
     });
 
   };
+
+  if (userLoading) {
+    return (
+      <>
+        <p className="text-2xl font-semibold text-center text-gray-500 italic mx-auto">Cargando...</p>
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -109,7 +131,7 @@ function FormularioEnvio() {
           <div className="flex items-center mb-6">
             <input
               type="email"
-              defaultValue="juanperez@example.com"
+              value={userData.email || ""}
               className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
               readOnly
             />
@@ -152,7 +174,7 @@ function FormularioEnvio() {
               <input
                 type="text"
                 name="nombre"
-                value={fromData.nombre}
+                value={formOrdenData.nombre}
                 onChange={handleChange}
                 placeholder="Nombre"
                 className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -164,7 +186,7 @@ function FormularioEnvio() {
               <input
                 type="text"
                 name="apellido"
-                value={fromData.apellido}
+                value={formOrdenData.apellido}
                 onChange={handleChange}
                 placeholder="Apellidos"
                 className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -176,7 +198,7 @@ function FormularioEnvio() {
               <input
                 type="text"
                 name="telefono"
-                value={fromData.telefono}
+                value={formOrdenData.telefono}
                 onChange={handleChange}
                 placeholder="Teléfono"
                 className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -192,7 +214,7 @@ function FormularioEnvio() {
                 <input
                   type="text"
                   name="direccion"
-                  value={fromData.direccion}
+                  value={formOrdenData.direccion}
                   onChange={handleChange}
                   placeholder="Dirección"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -206,7 +228,7 @@ function FormularioEnvio() {
                 <input
                   type="text"
                   name="direccion_detalles"
-                  value={fromData.direccion_detalles}
+                  value={formOrdenData.direccion_detalles}
                   onChange={handleChange}
                   placeholder="Casa, apartamento, etc. (opcional)"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -220,7 +242,7 @@ function FormularioEnvio() {
                   <input
                     type="text"
                     name="provincia"
-                    value={fromData.provincia}
+                    value={formOrdenData.provincia}
                     onChange={handleChange}
                     placeholder="Provincia / Estado"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -232,7 +254,7 @@ function FormularioEnvio() {
                   <input
                     type="text"
                     name="ciudad"
-                    value={fromData.ciudad}
+                    value={formOrdenData.ciudad}
                     onChange={handleChange}
                     placeholder="Ciudad"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -243,7 +265,7 @@ function FormularioEnvio() {
                   <label className="block text-gray-700 mb-2">Código postal</label>
                   <input
                     name="codigo_postal"
-                    value={fromData.codigo_postal}
+                    value={formOrdenData.codigo_postal}
                     onChange={handleChange}
                     type="text"
                     placeholder="Código postal (opcional)"
@@ -348,7 +370,7 @@ function FormularioEnvio() {
           {cart.length === 0 ? (
             <p>Carrito vacío</p>
           ) : (
-          
+
             <div>
 
               {cart.map((producto, index) => (
