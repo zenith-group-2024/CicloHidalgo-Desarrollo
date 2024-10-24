@@ -10,10 +10,19 @@ return new class extends Migration
     {
         Schema::create('ordenes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->double('total');
-            $table->string('estado')->default('Pendiente');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('metodo_envio');
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->string('telefono');
+            $table->string('direccion')->nullable();
+            $table->string('direccion_detalles')->nullable();
+            $table->string('provincia')->nullable();
+            $table->string('ciudad')->nullable();
+            $table->string('codigo_postal')->nullable();
             $table->string('metodo_pago')->default('SINPE');
+            $table->double('total');
+            
             $table->timestamps();
         });
     }

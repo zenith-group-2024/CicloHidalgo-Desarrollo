@@ -13,10 +13,17 @@ class Orden extends Model
 
     protected $fillable = [
         'user_id',
-        'total',
-        'estado',
+        'metodo_envio',
+        'nombre',
+        'apellido',
+        'telefono',
+        'direccion',
+        'direccion_detalles',
+        'provincia',
+        'ciudad',
+        'codigo_postal',
         'metodo_pago',
-        'fecha',
+        'total',
     ];
 
     public function user()
@@ -26,6 +33,8 @@ class Orden extends Model
 
     public function productos()
     {
-        return $this->belongsToMany(Producto::class)->withPivot('cantidad', 'precio');
+        return $this->belongsToMany(Producto::class)
+                    ->withPivot('cantidad', 'precio')
+                    ->withTimestamps();
     }
 }

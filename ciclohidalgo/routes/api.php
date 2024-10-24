@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ProfileController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use App\Http\Controllers\OrdenController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -46,5 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/update/{id}', [ProfileController::class, 'updateEditData']);
     Route::delete('/user/delete/{id}', [ProfileController::class, 'deleteUser']);
 });
+
+Route::post('/registrar-orden', [OrdenController::class, 'registrarOrden']);
 
 Route::get('/roles', function() {return App\Models\Role::all();});
