@@ -41,7 +41,7 @@ const ProductosDestacados = () => {
                                 id={producto.id}
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio}`}
-                                img={`../src/assets/${producto.imagen}`}
+                                img={producto.imagen}
                             />
                         </div>
                     ))}

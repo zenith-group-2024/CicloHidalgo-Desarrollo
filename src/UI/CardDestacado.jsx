@@ -46,11 +46,13 @@ const CardDestacado = ({ nombre, title, precio, img, id }) => {
         >
             <Link to={`/producto/${id}`}>
                 <div>
-                    <img
-                        src={img}
-                        alt={title}
-                        className="w-full h-[200px] object-cover"
-                    />
+                <div className="w-full h-[200px] flex justify-center items-center">
+    <img
+        src={img}
+        alt={title}
+        className="max-h-full max-w-full object-contain"
+    />
+</div>
                     <div className="p-3 flex flex-col h-full">
                         <h2 className="text-lg font-bold mb-1 text-black flex-grow">{nombre}</h2>
                         

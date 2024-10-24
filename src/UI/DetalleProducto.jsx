@@ -49,7 +49,7 @@ export default function DetalleProducto() {
           
           <img 
             className="w-full h-auto mx-auto max-w-sm md:max-w-md rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105" 
-            src={`../src/assets/${producto.imagen}`} 
+            src={producto.imagen}
             alt={producto.marca} 
           />
 
