@@ -28,6 +28,23 @@ function FormularioEnvio() {
   const [pago, setPago] = useState("sinpe");
   const [cantidades, setCantidades] = useState(productos.map(() => 1));
 
+  const [fromData, setFormData] = useState({
+    metodo_envio: "envia",
+    nombre: "",
+    apellido: "",
+    telefono: "",
+    direccion: "",
+    direccion_detalles: "",
+    provincia: "",
+    ciudad: "",
+    codigo_postal: "",
+    metodo_pago: "sinpe",
+    productos: cart.map(item => ({
+      id: item.id,
+      cantidad: item.quantity,
+    })),
+  });
+
   const cambiarCantidad = (index, nuevaCantidad) => {
     const nuevasCantidades = [...cantidades];
     nuevasCantidades[index] = nuevaCantidad;
@@ -48,9 +65,39 @@ function FormularioEnvio() {
     );
   };
 
+  const handleEnvioChange = (e) => {
+    const { value } = e.target;
+    setEnvio(value);
+    setFormData((prevData) => ({
+      ...prevData,
+      metodo_envio: value,
+    }));
+  };
+  const handlePagoChange = (e) => {
+    const { value } = e.target;
+    setPago(value); // Actualiza el estado de pago
+    setFormData((prevData) => ({
+      ...prevData,
+      metodo_pago: value, // Actualiza el campo metodo_pago en formData
+    }));
+  };
+
   const handleFinalizarOrden = (e) => {
     e.preventDefault();
+
+
+
+    console.log('Datos del Form:', fromData);
     console.log("Finalizar orden");
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...fromData,
+      [name]: value
+    });
+
   };
 
   return (
@@ -79,7 +126,7 @@ function FormularioEnvio() {
                 name="entrega"
                 value="envia"
                 checked={envio === "envia"}
-                onChange={() => setEnvio("envia")}
+                onChange={handleEnvioChange}
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-3 text-gray-700">Envío</span>
@@ -90,7 +137,7 @@ function FormularioEnvio() {
                 name="entrega"
                 value="retiro"
                 checked={envio === "retiro"}
-                onChange={() => setEnvio("retiro")}
+                onChange={handleEnvioChange}
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-3 text-gray-700">Retiro en tienda</span>
@@ -98,48 +145,55 @@ function FormularioEnvio() {
 
 
           </div>
+
+          <div className="grid grid-cols-1 gap-6 mb-8">
+            <div>
+              <label className="block text-gray-700 mb-2">Nombre</label>
+              <input
+                type="text"
+                name="nombre"
+                value={fromData.nombre}
+                onChange={handleChange}
+                placeholder="Nombre"
+                className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Apellidos</label>
+              <input
+                type="text"
+                name="apellido"
+                value={fromData.apellido}
+                onChange={handleChange}
+                placeholder="Apellidos"
+                className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Teléfono</label>
+              <input
+                type="text"
+                name="telefono"
+                value={fromData.telefono}
+                onChange={handleChange}
+                placeholder="Teléfono"
+                className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+          </div>
+
           {envio === "envia" ? (
             <>
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label className="block text-gray-700 mb-2">Nombre</label>
-                  <input
-                    type="text"
-                    placeholder="Nombre"
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700 mb-2">Apellidos</label>
-                  <input
-                    type="text"
-                    placeholder="Apellidos"
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div className="flex items-center bg-gray-100 border border-gray-300 p-3 rounded-lg">
-                  <span>Costa Rica</span>
-                </div>
-                <div className="flex flex-col">
-                  <label className="block text-gray-700 mb-2">Teléfono</label>
-                  <input
-                    type="text"
-                    placeholder="Teléfono"
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-              </div>
-
-
               <div className="mb-6">
                 <label className="block text-gray-700 mb-2">Dirección</label>
                 <input
                   type="text"
+                  name="direccion"
+                  value={fromData.direccion}
+                  onChange={handleChange}
                   placeholder="Dirección"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
@@ -151,6 +205,9 @@ function FormularioEnvio() {
                 </label>
                 <input
                   type="text"
+                  name="direccion_detalles"
+                  value={fromData.direccion_detalles}
+                  onChange={handleChange}
                   placeholder="Casa, apartamento, etc. (opcional)"
                   className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
 
@@ -162,6 +219,9 @@ function FormularioEnvio() {
                   <label className="block text-gray-700 mb-2">Provincia / Estado</label>
                   <input
                     type="text"
+                    name="provincia"
+                    value={fromData.provincia}
+                    onChange={handleChange}
                     placeholder="Provincia / Estado"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -171,6 +231,9 @@ function FormularioEnvio() {
                   <label className="block text-gray-700 mb-2">Ciudad</label>
                   <input
                     type="text"
+                    name="ciudad"
+                    value={fromData.ciudad}
+                    onChange={handleChange}
                     placeholder="Ciudad"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -179,6 +242,9 @@ function FormularioEnvio() {
                 <div>
                   <label className="block text-gray-700 mb-2">Código postal</label>
                   <input
+                    name="codigo_postal"
+                    value={fromData.codigo_postal}
+                    onChange={handleChange}
                     type="text"
                     placeholder="Código postal (opcional)"
                     className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -187,36 +253,7 @@ function FormularioEnvio() {
               </div>
             </>
           ) : (
-           
-            <div className="grid grid-cols-1 gap-6 mb-8">
-              <div>
-                <label className="block text-gray-700 mb-2">Nombre</label>
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 mb-2">Apellidos</label>
-                <input
-                  type="text"
-                  placeholder="Apellidos"
-                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 mb-2">Teléfono</label>
-                <input
-                  type="text"
-                  placeholder="Teléfono"
-                  className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-            </div>
+            <></>
           )}
 
           <h3 className="text-2xl font-semibold mb-4">Pago</h3>
@@ -231,7 +268,7 @@ function FormularioEnvio() {
                 name="pago"
                 value="sinpe"
                 checked={pago === "sinpe"}
-                onChange={() => setPago("sinpe")}
+                onChange={handlePagoChange}
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-3 text-gray-700 flex items-center">
@@ -245,7 +282,7 @@ function FormularioEnvio() {
                 name="pago"
                 value="efectivo"
                 checked={pago === "efectivo"}
-                onChange={() => setPago("efectivo")}
+                onChange={handlePagoChange}
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-3 text-gray-700 flex items-center">
@@ -259,7 +296,7 @@ function FormularioEnvio() {
                 name="pago"
                 value="credomatic"
                 checked={pago === "credomatic"}
-                onChange={() => setPago("credomatic")}
+                onChange={handlePagoChange}
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-3 text-gray-700 flex items-center">
@@ -273,7 +310,7 @@ function FormularioEnvio() {
                 name="pago"
                 value="bn"
                 checked={pago === "bn"}
-                onChange={() => setPago("bn")}
+                onChange={handlePagoChange}
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-3 text-gray-700 flex items-center">
@@ -287,7 +324,7 @@ function FormularioEnvio() {
                 name="pago"
                 value="mini_cuotas"
                 checked={pago === "mini_cuotas"}
-                onChange={() => setPago("mini_cuotas")}
+                onChange={handlePagoChange}
                 className="form-radio h-5 w-5 text-blue-600"
               />
               <span className="ml-3 text-gray-700 flex items-center">
@@ -311,6 +348,7 @@ function FormularioEnvio() {
           {cart.length === 0 ? (
             <p>Carrito vacío</p>
           ) : (
+          
             <div>
 
               {cart.map((producto, index) => (
