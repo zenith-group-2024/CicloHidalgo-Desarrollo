@@ -49,5 +49,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/registrar-orden', [OrdenController::class, 'registrarOrden']);
+Route::get('/ordenes/all', [OrdenController::class, 'getOrdenes']);
+Route::get('/ordenes-usuario/{id}', [OrdenController::class, 'getOrdenesByUser']);
+Route::delete('/borrar-orden/{id}', [OrdenController::class, 'destroyOrden']);
 
 Route::get('/roles', function() {return App\Models\Role::all();});

@@ -9,6 +9,32 @@ use Illuminate\Support\Facades\Auth;
 
 class OrdenController extends Controller
 {
+
+    public function getOrdenes()
+    {
+        $ordenes = Orden::with(['user', 'productos'])->get();
+        return response()->json($ordenes);
+    }
+
+    public function getOrdenesByUser($id)
+{
+    $ordenes = Orden::with('productos')->where('user_id', $id)->get();
+    return response()->json($ordenes);
+}
+
+    public function destroyOrden($id)
+{
+    $orden = Orden::find($id);
+
+    if (!$orden) {
+        return response()->json(['error' => 'Orden no encontrada'], 404);
+    }
+
+    $orden->delete();
+
+    return response()->json(['message' => 'Orden eliminada correctamente'], 200);
+}
+
     public function registrarOrden(Request $request)
     {
         $validatedData = $request->validate([
