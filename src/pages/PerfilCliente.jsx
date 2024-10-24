@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../global/GlobalState';
 import FetchUser from '../../hooks/FetchUser';
 import { useUpdateUser } from '../../hooks/UserUpdate';
-import { X } from 'lucide-react';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
 
 const PerfilCliente = () => {
-  
+    const navigate = useNavigate(); 
+    const { state, logout } = useContext(GlobalContext);
+    const { isAuthenticated } = state;
+
     const [formData, setFormData] = useState({
         nombre: '',
         contacto: '',
@@ -24,7 +27,7 @@ const PerfilCliente = () => {
     const updateUserData = useUpdateUser();
 
     useEffect(() => {
-        if (!userLoading) {
+        if (!userLoading && fetchedUserData) {
             setFormData({
                 nombre: fetchedUserData.nombre || '',
                 contacto: fetchedUserData.contacto || '',
@@ -37,12 +40,18 @@ const PerfilCliente = () => {
         }
     }, [userLoading, fetchedUserData]);
 
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/'); 
+        }
+    }, [isAuthenticated, navigate]);
+
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData((prevData) => ({
+            ...prevData,
             [name]: type === 'checkbox' ? checked : value,
-        });
+        }));
     };
 
     const handleSave = async () => {
@@ -50,8 +59,15 @@ const PerfilCliente = () => {
             await updateUserData(formData);
             setEditing(false);
             setMessage('Datos actualizados correctamente.');
+
+            setTimeout(() => {
+                setMessage('');
+            }, 2000);
         } catch (error) {
             setMessage('Error al actualizar los datos: ' + error.message);
+            setTimeout(() => {
+                setMessage('');
+            }, 2000);
         }
     };
 
@@ -60,101 +76,80 @@ const PerfilCliente = () => {
     }
 
     return (
-        <div className="container mx-auto p-6 gap-8 grid flex-row ">
-              <Navbar />
-            <h2 className="text-2xl font-bold mb-4">{editing ? 'Editar Perfil' : 'Datos de Usuario'}</h2>
+        <div className="container mx-auto gap-4 grid flex-row ">
+            <Navbar />
+            <h2 className="text-2xl font-bold mb-4 text-center">{editing ? 'Editar Perfil' : 'Datos de Usuario'}</h2>
 
-            {message && <p className="text-red mb-4">{message}</p>}
+            {message && <p className="text-red text-lg text-center font-semibold">{message}</p>}
             {editing ? (
-                <>
-                <div className="w-5/6 h-full m-auto bg-white p-8 shadow-md rounded-lg">
-                         <div className='' >
-                        <label htmlFor="nombre" className="block font-semibold mb-1">Nombre:</label>
-                        <input
-                            type="text"
-                            name="nombre"
-                            value={formData.nombre}
-                            onChange={handleChange}
-                            className="border rounded p-2 w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="contacto" className="block">Contacto:</label>
-                        <input
-                            type="text"
-                            name="contacto"
-                            value={formData.contacto}
-                            onChange={handleChange}
-                            className="border rounded p-2 w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="email" className="block">Email:</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="border rounded p-2 w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="direccion" className="block">Dirección:</label>
-                        <input
-                            type="text"
-                            name="direccion"
-                            value={formData.direccion}
-                            onChange={handleChange}
-                            className="border rounded p-2 w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="cumpleanos" className="block">Cumpleaños:</label>
-                        <input
-                            type="date"
-                            name="cumpleanos"
-                            value={formData.cumpleanos}
-                            onChange={handleChange}
-                            className="border rounded p-2 w-full"
-                        />
-                    </div>
-                    <div className="flex items-center">
-                        <input
-                            type="checkbox"
-                            id="boletin"
-                            name="boletin"
-                            checked={formData.boletin}
-                            onChange={handleChange}
-                            className="h-4 w-4 text-blue focus:ring-blue border-gray rounded"
-                        />
-                        <label htmlFor="boletin" className="ml-2 block text-sm text-gray">
-                            Deseo recibir ofertas especiales
-                        </label>
-                    </div>
-                    <button onClick={handleSave} className="mt-4 bg-blue text-white rounded p-2">
+                <div className="w-5/6 h-full m-auto bg-white p-8 shadow-lg rounded-xl border border-old">
+                    <h2 className="text-2xl font-bold text-black mb-6">Información del Perfil</h2>
+
+                    {Object.entries(formData).map(([key, value]) => (
+                        <div className="mb-4" key={key}>
+                            <label htmlFor={key} className="block font-bold text-black">
+                                {key.charAt(0).toUpperCase() + key.slice(1)}:
+                            </label>
+                            {key === 'boletin' ? (
+                                <div className="flex items-center mb-6">
+                                    <input
+                                        type="checkbox"
+                                        id={key}
+                                        name={key}
+                                        checked={value}
+                                        onChange={handleChange}
+                                        className="h-5 w-5 text-blue focus:ring-blue border-old rounded"
+                                    />
+                                    <label htmlFor={key} className="ml-2 text-black">
+                                        Deseo recibir ofertas especiales
+                                    </label>
+                                </div>
+                            ) : (
+                                <input
+                                    type={key === 'cumpleanos' ? 'date' : 'text'}
+                                    name={key}
+                                    value={value}
+                                    onChange={handleChange}
+                                    className="border border-old rounded-lg p-3 w-full text-old font-medium transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue focus:border-transparent"
+                                />
+                            )}
+                        </div>
+                    ))}
+
+                    <button
+                        onClick={handleSave}
+                        className="mt-4 bg-blue text-white rounded-xl font-bold p-3 hover:bg-red transition duration-300 transform hover:scale-105"
+                    >
                         Guardar
-                    </button>    
+                    </button>
                 </div>
-           
-                </>
             ) : (
-                <div className='w-5/6 h-full m mx-auto bg-white p-8 shadow-md  rounded-lg'>
-     
-                <p className=''><strong>Nombre:</strong> {formData.nombre}</p>
-                <p className=' '><strong>Contacto:</strong> {formData.contacto}</p>
-                <p  className='' ><strong>Email:</strong> {formData.email}</p>
-                <p c className='' ><strong>Dirección:</strong> {formData.direccion}</p>
-                <p c className=' '><strong>Cumpleaños:</strong> {formData.cumpleanos}</p>
-                <p  className='  '><strong>Boletín:</strong> {formData.boletin ? 'Sí' : 'No'}</p>
-                
-                <button onClick={() => setEditing(true)} className="mt-4 bg-red text-white rounded p-2">
-                    Editar
-                </button>
-            </div>
+                <div className='w-4/6 h-full mx-auto bg-white p-8 shadow-lg rounded-3xl text-lg'>
+                      <h2 className="text-2xl font-bold text-black mb-6">Información del Perfil</h2>
+                    <div className='flex flex-col'>
+                        {Object.entries(formData).map(([key, value]) => (
+                            <p className='mb-6 flex items-center' key={key}>
+                                <strong className='text-black text-xl'>
+                                    {key.charAt(0).toUpperCase() + key.slice(1)}:
+                                </strong>
+                                <span className="text-old ml-4">
+                                    {key === 'boletin' ? (value ? 'Sí' : 'No') : value.toString()}
+                                </span>
+                            </p>
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={() => setEditing(true)}
+                        className="mt-6 bg-blue text-white font-bold py-3 px-6 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-110"
+                    >
+                        Editar
+                    </button>
+                </div>
             )}
-               <Footer />  
+            <Footer />
         </div>
     );
 };
 
-export default PerfilCliente; 
+export default PerfilCliente;

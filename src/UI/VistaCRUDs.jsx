@@ -154,7 +154,7 @@ const AdminDashboard = () => {
         />
       </div>
 
-      {isAdding && formType === 'producto' && <FormProducto onClose={handleCloseForms} />}
+{isAdding && formType === 'producto' && <FormProducto onClose={handleCloseForms} />}
 {isEditing && formType === 'productoEdit' && <FormEditarProducto productoData={selectedProduct} onClose={handleCloseForms} />}
 {isDeleting && formType === 'productoDelete' && <FormEliminarProducto onClose={handleCloseForms} />}
 
