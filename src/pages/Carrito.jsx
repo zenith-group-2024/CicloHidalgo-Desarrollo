@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Trash, SquarePlus, SquareMinus } from 'lucide-react';
 import Footer from '../UI/Footer.jsx';
 
-export const Carrito = () => {
+export const Carrito = () => { // Sin recibir props
   const { cart, setCart } = useContext(CartContext);
   const [showModal, setShowModal] = useState(false); 
   const navigate = useNavigate();
@@ -89,10 +89,14 @@ export const Carrito = () => {
           cart.map((producto, index) => (
             <div
               key={index}
-              className="container mx-auto p-5  shadow-lg rounded-lg bg-white grid grid-cols-3 items-center mb-4"
+              className="container mx-auto p-5 shadow-lg rounded-lg bg-white grid grid-cols-3 items-center mb-4"
             >
               <div className="flex items-center">
-                <img className="w-24 h-24 object-cover rounded-lg shadow-lg" src={`../src/assets/${producto.img}`} alt={producto.title} />
+                <img
+                  className="w-24 h-24 object-cover rounded-lg shadow-lg"
+                  src={producto.imagen} 
+                  alt={producto.title}
+                />
                 <h3 className="font-primary font-semibold text-lg text-gray-800 ml-6">{producto.title}</h3>
               </div>
               <div className="flex items-center justify-center">
