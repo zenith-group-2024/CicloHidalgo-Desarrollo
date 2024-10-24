@@ -1,15 +1,21 @@
 <?php
 
+
 namespace App\Models;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Producto;
 
+
 class Orden extends Model
 {
     use HasFactory;
+
+    protected $table = 'ordenes';
+
 
     protected $fillable = [
         'user_id',
@@ -26,15 +32,17 @@ class Orden extends Model
         'total',
     ];
 
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+
     public function productos()
     {
         return $this->belongsToMany(Producto::class)
-                    ->withPivot('cantidad', 'precio')
-                    ->withTimestamps();
+            ->withPivot('cantidad', 'precio')
+            ->withTimestamps();
     }
 }

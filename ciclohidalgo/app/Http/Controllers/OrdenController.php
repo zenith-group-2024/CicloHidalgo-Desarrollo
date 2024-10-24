@@ -11,8 +11,8 @@ class OrdenController extends Controller
 {
     public function registrarOrden(Request $request)
     {
-        // Validar la solicitud
         $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
             'metodo_envio' => 'required|string',
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -28,19 +28,14 @@ class OrdenController extends Controller
             'productos.*.cantidad' => 'required|integer|min:1',
         ]);
 
-        // Obtener el usuario autenticado
-        $user = Auth::user();
-
-        // Calcular el total de la orden
         $total = 0;
         foreach ($validatedData['productos'] as $producto) {
             $productoModel = Producto::find($producto['id']);
             $total += $productoModel->precio * $producto['cantidad'];
         }
 
-        // Crear la orden
         $orden = Orden::create([
-            'user_id' => $user->id,
+            'user_id' => $validatedData['user_id'],
             'metodo_envio' => $validatedData['metodo_envio'],
             'nombre' => $validatedData['nombre'],
             'apellido' => $validatedData['apellido'],
@@ -53,16 +48,12 @@ class OrdenController extends Controller
             'metodo_pago' => $validatedData['metodo_pago'],
             'total' => $total,
         ]);
-
-        // Asociar los productos a la orden
         foreach ($validatedData['productos'] as $producto) {
             $orden->productos()->attach($producto['id'], [
                 'cantidad' => $producto['cantidad'],
                 'precio' => Producto::find($producto['id'])->precio,
             ]);
         }
-
-        // Responder con éxito
         return response()->json(['message' => 'Orden registrada con éxito', 'orden_id' => $orden->id], 201);
     }
 }
