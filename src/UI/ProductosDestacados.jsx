@@ -24,6 +24,8 @@ const ProductosDestacados = () => {
         return () => clearInterval(scrollInterval);
     }, [productos.length]);
 
+    const productosDestacados = productos.filter(producto => producto.destacado);
+
     return (
         <section className="bg-white p-8">
             <h1 className="text-3xl font-bold mb-6 mt-20 text-center font-primary">Productos Destacados</h1>
@@ -32,14 +34,14 @@ const ProductosDestacados = () => {
                     ref={carouselRef}
                     className="flex hide-scrollbar whitespace-nowrap overflow-hidden"
                 >
-                    {productos.map((producto) => (
+                   {productosDestacados.map((producto) => (
                         <div key={producto.id} className="inline-block p-4">
                             <Card
                                 nombre={producto.nombre}
                                 id={producto.id}
                                 title={producto.marca}
                                 precio={`₡ ${producto.precio}`}
-                                img={`../src/assets/${producto.imagen}`}
+                                img={producto.imagen}
                             />
                         </div>
                     ))}

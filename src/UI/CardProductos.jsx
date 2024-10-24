@@ -24,13 +24,13 @@ export const Card = (props) => {
     >
       <Link to={`/producto/${props.id}`}>
         <div className="flex-grow flex flex-col">
-          <div className="w-full h-48">
-            <img 
-              src={props.img} 
-              alt={props.title} 
-              className="w-full h-full object-cover rounded-md" 
-            />
-          </div>
+        <div className="w-full h-48 flex justify-center items-center">
+  <img 
+    src={props.img} 
+    alt={props.title} 
+    className="max-h-full max-w-full object-contain" 
+  />
+</div>
           <div className="flex-grow flex flex-col justify-between">
             <h1 className="font-primary font-semibold text-lg text-black mt-2">{props.nombre}</h1>
             <h2 className="font-primary font-light text-md text-black">{precioFormateado}</h2>
