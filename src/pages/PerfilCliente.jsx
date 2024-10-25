@@ -76,7 +76,7 @@ const PerfilCliente = () => {
     }
 
     return (
-        <div className="container mx-auto gap-4 grid flex-row ">
+        <div className="mx-auto gap-4 grid flex-row ">
             <Navbar />
             <h2 className="text-2xl font-bold mb-4 text-center">{editing ? 'Editar Perfil' : 'Datos de Usuario'}</h2>
 
