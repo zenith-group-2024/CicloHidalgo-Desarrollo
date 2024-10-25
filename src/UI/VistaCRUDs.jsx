@@ -8,6 +8,9 @@ import FormEliminarContenido from '../forms/EliminarContenido';
 import AnadirOferta from '../forms/AnadirOferta';
 import EditarOferta from '../forms/EditarOferta';
 import EliminarOferta from '../forms/EliminarOferta';
+import FormCrearAdmin from '../forms/FormCrearAdmin';
+import FormEditarAdmin from '../forms/FormEditarAdmin';
+import FormEliminarAdmin from '../forms/FormEliminarAdmin';
 
 import CrudCard from './CRUDCard';
 import Navbar from './Navbar';
@@ -165,6 +168,10 @@ const AdminDashboard = () => {
 {isAdding && formType === 'ofertaAdd' && <AnadirOferta onClose={handleCloseForms} />}
 {isEditing && formType === 'ofertaEdit' && <EditarOferta onClose={handleCloseForms} />}
 {isDeleting && formType === 'ofertaDelete' && <EliminarOferta onClose={handleCloseForms} />}
+
+{isAdding && formType === 'usuario' && <FormCrearAdmin onClose={handleCloseForms} />}
+{isEditing && formType === 'usuarioEdit' && <FormEditarAdmin adminData={selectedAdmin} onClose={handleCloseForms} />}
+{isDeleting && formType === 'usuarioDelete' && <FormEliminarAdmin adminData={selectedAdmin} onClose={handleCloseForms} />}
 
     </div>
   );

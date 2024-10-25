@@ -14,6 +14,8 @@ import { GlobalProvider } from '../src/global/GlobalState.jsx';
 import MenuPerfil from './pages/MenuPerfil.jsx';
 import Orden from './UI/Orden';
 import Dashboard from './UI/Dashboard.jsx';
+import ListAdmins from './UI/ListAdmins.jsx';
+import FormEditarAdmin from './forms/FormEditarAdmin.jsx';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -36,6 +38,8 @@ function App() {
             <Route path="/MenuPerfil" element={<MenuPerfil />} />
             <Route path="/Orden" element={<Orden />} />
             <Route path="/Dashboard" element={<Dashboard />} />  
+            <Route path="/admin/lista" element={<ListAdmins />} />
+            <Route path="/admin/editar/:id" element={<FormEditarAdmin />} />
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
           </Routes>
 
