@@ -20,10 +20,10 @@ export const CartProvider = ({ children }) => {
             const existingProduct = prevCart.find(item => item.id === product.id);
 
             if (existingProduct) {
-
+                debugger
                 const newQuantity = existingProduct.quantity + 1;
-                
-                if (newQuantity > product.stock) {
+
+                if (newQuantity > product.cantidad) {
                     setMessage('No hay suficiente stock para este producto');
                     setShowMessage(true);
 
@@ -40,7 +40,7 @@ export const CartProvider = ({ children }) => {
                 );
             } else {
 
-                if (product.stock < 1 ){
+                if (product.cantidad < 1 ){
                     setMessage('No hay suficiente stock para este producto');
                     setShowMessage(true);
 

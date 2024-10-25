@@ -12,8 +12,6 @@ import DetalleProducto from './UI/DetalleProducto';
 import PerfilCliente from './pages/PerfilCliente.jsx';
 import { GlobalProvider } from '../src/global/GlobalState.jsx';
 import MenuPerfil from './pages/MenuPerfil.jsx';
-import Orden from './UI/Orden';
-import Dashboard from './UI/Dashboard.jsx';
 import ListAdmins from './UI/ListAdmins.jsx';
 import FormEditarAdmin from './forms/FormEditarAdmin.jsx';
 import Orden from './pages/Orden';
@@ -21,7 +19,6 @@ import Dashboard from './pages/Dashboard.jsx';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ListaOrdenes from './pages/ListaOrdenes.jsx';
-
 
 function App() {
   return (

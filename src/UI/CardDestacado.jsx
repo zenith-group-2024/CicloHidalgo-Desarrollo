@@ -20,13 +20,7 @@ const CardDestacado = ({ nombre, title, precio, img, id, pauseCarousel, resumeCa
             return;
         }
 
-        addToCart({
-            id: producto.id,
-            nombre: producto.nombre,
-            title: producto.marca,
-            precio: numericPrice,
-            img: producto.imagen,
-        });
+        addToCart(producto);
     };
 
     // Formatear el precio para mostrarlo
