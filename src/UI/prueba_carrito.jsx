@@ -20,10 +20,37 @@ export const CartProvider = ({ children }) => {
             const existingProduct = prevCart.find(item => item.id === product.id);
 
             if (existingProduct) {
+
+                const newQuantity = existingProduct.quantity + 1;
+                
+                if (newQuantity > product.stock) {
+                    setMessage('No hay suficiente stock para este producto');
+                    setShowMessage(true);
+
+                    setTimeout(() => {
+                        setShowMessage(false);
+                        setMessage('');
+                    }, 2000);
+
+                    return prevCart;
+                }
+
                 return prevCart.map(item =>
                     item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                 );
             } else {
+
+                if (product.stock < 1 ){
+                    setMessage('No hay suficiente stock para este producto');
+                    setShowMessage(true);
+
+                    setTimeout(() => {
+                        setShowMessage(false);
+                        setMessage('');
+                    }, 2000);
+
+                    return prevCart;
+                }
                 return [...prevCart, { ...product, quantity: 1 }];
             }
         });
