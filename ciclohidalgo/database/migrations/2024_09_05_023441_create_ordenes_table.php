@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('ciudad')->nullable();
             $table->string('codigo_postal')->nullable();
             $table->string('metodo_pago')->default('SINPE');
+            $table->string('estado')->default('PENDIENTE');
             $table->double('total');
             
             $table->timestamps();

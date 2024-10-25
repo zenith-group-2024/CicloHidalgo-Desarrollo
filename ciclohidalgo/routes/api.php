@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/admin/update/{id}', [UserController::class, 'updateAdmin']);
     Route::delete('/admin/delete/{id}', [UserController::class, 'deleteAdmin']);
 });
+Route::get('/obtener-usuarios', [UserController::class, 'obtenerUsuarios']);
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
@@ -48,9 +49,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/user/delete/{id}', [ProfileController::class, 'deleteUser']);
 });
 
+
 Route::post('/registrar-orden', [OrdenController::class, 'registrarOrden']);
 Route::get('/ordenes/all', [OrdenController::class, 'getOrdenes']);
 Route::get('/ordenes-usuario/{id}', [OrdenController::class, 'getOrdenesByUser']);
 Route::delete('/borrar-orden/{id}', [OrdenController::class, 'destroyOrden']);
+Route::put('/orden-completa/{id}', [OrdenController::class, 'ordenCompleta']);
+Route::get('/top-productos', [OrdenController::class, 'getTopProductosVendidos']);
 
 Route::get('/roles', function() {return App\Models\Role::all();});

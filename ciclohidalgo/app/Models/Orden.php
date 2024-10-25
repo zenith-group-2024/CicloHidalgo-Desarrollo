@@ -29,6 +29,7 @@ class Orden extends Model
         'ciudad',
         'codigo_postal',
         'metodo_pago',
+        'estado' => 'PENDIENTE',
         'total',
     ];
 

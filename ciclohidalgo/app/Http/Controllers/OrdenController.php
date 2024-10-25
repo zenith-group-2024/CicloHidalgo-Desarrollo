@@ -6,6 +6,7 @@ use App\Models\Orden;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrdenController extends Controller
 {
@@ -17,23 +18,23 @@ class OrdenController extends Controller
     }
 
     public function getOrdenesByUser($id)
-{
-    $ordenes = Orden::with('productos')->where('user_id', $id)->get();
-    return response()->json($ordenes);
-}
-
-    public function destroyOrden($id)
-{
-    $orden = Orden::find($id);
-
-    if (!$orden) {
-        return response()->json(['error' => 'Orden no encontrada'], 404);
+    {
+        $ordenes = Orden::with('productos')->where('user_id', $id)->get();
+        return response()->json($ordenes);
     }
 
-    $orden->delete();
+    public function destroyOrden($id)
+    {
+        $orden = Orden::find($id);
 
-    return response()->json(['message' => 'Orden eliminada correctamente'], 200);
-}
+        if (!$orden) {
+            return response()->json(['error' => 'Orden no encontrada'], 404);
+        }
+
+        $orden->delete();
+
+        return response()->json(['message' => 'Orden eliminada correctamente'], 200);
+    }
 
     public function registrarOrden(Request $request)
     {
@@ -72,6 +73,7 @@ class OrdenController extends Controller
             'ciudad' => $validatedData['ciudad'],
             'codigo_postal' => $validatedData['codigo_postal'],
             'metodo_pago' => $validatedData['metodo_pago'],
+            'estado' => 'PENDIENTE',
             'total' => $total,
         ]);
         foreach ($validatedData['productos'] as $producto) {
@@ -81,5 +83,37 @@ class OrdenController extends Controller
             ]);
         }
         return response()->json(['message' => 'Orden registrada con éxito', 'orden_id' => $orden->id], 201);
+    }
+
+    public function ordenCompleta($id)
+    {
+        $orden = Orden::find($id);
+        if (!$orden) {
+            return response()->json(['mensaje' => 'Orden no encontrada'], 404);
+        }
+        $orden->estado = 'COMPLETO';
+        $orden->save();
+        return response()->json(['mensaje' => 'Orden completada', 'orden' => $orden], 200);
+    }
+
+    public function getTopProductosVendidos()
+    {
+        $topProductos = DB::table('orden_producto')
+            ->join('ordenes', 'orden_producto.orden_id', '=', 'ordenes.id')
+            ->select('orden_producto.producto_id', DB::raw('SUM(orden_producto.cantidad) as total_cantidad'))
+            ->where('ordenes.estado', 'COMPLETO')
+            ->groupBy('orden_producto.producto_id')
+            ->orderByDesc('total_cantidad')
+            ->limit(5)
+            ->get();
+
+        $productosConInfo = Producto::whereIn('id', $topProductos->pluck('producto_id'))
+            ->get()
+            ->map(function ($producto) use ($topProductos) {
+                $producto->total_cantidad = $topProductos->firstWhere('producto_id', $producto->id)->total_cantidad;
+                return $producto;
+            });
+
+        return response()->json(['top_productos' => $productosConInfo]);
     }
 }

@@ -21,6 +21,12 @@ class UserController extends Controller
         
     }
 
+    public function obtenerUsuarios()
+{
+    $usuarios = User::select('id', 'nombre', 'contacto', 'direccion', 'email')->get();
+    return response()->json($usuarios, 200);
+}
+
     public function listAdmins()
     {
         $admins = User::where('admin', true)->get();
