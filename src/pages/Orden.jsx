@@ -1,11 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { CartContext } from "../UI/Prueba_Carrito.jsx";
-
 import { Truck, Store } from "lucide-react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { GlobalContext } from '../global/GlobalState';
-import FetchUser from "../../hooks/FetchUser";
+import Navbar from "../UI/Navbar.jsx";
+import Footer from "../UI/Footer.jsx";
+import { GlobalContext } from '../global/GlobalState.jsx';
+import FetchUser from "../../hooks/FetchUser.js";
 
 function FormularioEnvio() {
 
@@ -15,7 +14,6 @@ function FormularioEnvio() {
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
   const [cantidades, setCantidades] = useState(productos.map(() => 1));
-
   const [formOrdenData, setFormData] = useState({
     user_id: state.id || "",
     metodo_envio: "envia",
@@ -39,23 +37,14 @@ function FormularioEnvio() {
   useEffect(() => {
     setFormData(prevData => ({
       ...prevData,
-      user_id: state.id // Actualizas el formOrdenData con el id del usuario
+      user_id: state.id
     }));
   }, [state.id]);
 
-
-  /*   const cambiarCantidad = (index, nuevaCantidad) => {
-      const nuevasCantidades = [...cantidades];
-      nuevasCantidades[index] = nuevaCantidad;
-      setCantidades(nuevasCantidades);
-    }; */
-
-  // Calcular total del pedido
   const getTotal = () => {
     return cart.reduce((total, item) => total + item.precio * item.quantity, 0);
   };
 
-  // Determinar el icono según el método de entrega
   const getEntregaIcon = () => {
     return envio === "envia" ? (
       <Truck className="w-6 h-6 mr-2 text-blue" />
@@ -63,7 +52,6 @@ function FormularioEnvio() {
       <Store className="w-6 h-6 mr-2 text-blue" />
     );
   };
-
   const handleEnvioChange = (e) => {
     const { value } = e.target;
     setEnvio(value);
@@ -80,16 +68,14 @@ function FormularioEnvio() {
       metodo_pago: value,
     }));
   };
-
   const handleFinalizarOrden = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch('http://localhost:8000/api/registrar-orden', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}` // si necesitas enviar un token de autenticación
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}` 
         },
         body: JSON.stringify(formOrdenData),
       });
@@ -98,22 +84,19 @@ function FormularioEnvio() {
       if (response.ok) {
         console.log(data.message);
       } else {
-        console.error('Error al registrar la orden:', data.message); // Maneja el error
+        console.error('Error al registrar la orden:', data.message);
       }
     } catch (error) {
       console.error('Error al realizar la solicitud:', error);
     }
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formOrdenData,
       [name]: value
     });
-
   };
-
   if (userLoading) {
     return (
       <>
@@ -121,7 +104,6 @@ function FormularioEnvio() {
       </>
     );
   }
-
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar />
@@ -133,10 +115,8 @@ function FormularioEnvio() {
               type="email"
               value={userData.email || ""}
               className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              readOnly
-            />
+              readOnly/>
           </div>
-
           <h3 className="text-2xl font-semibold mb-4 flex items-center">
             {getEntregaIcon()}
             Entrega
