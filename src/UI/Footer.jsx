@@ -12,7 +12,7 @@ const Footer = () => {
                     <div className="w-full md:w-1/3 mb-6 md:mb-0">
                         <h2 className="text-xl font-bold mb-3">Contacto</h2>
                         <p className="mb-3 text-lg">San Pedro de Poás, Alajuela, Costa Rica</p>
-                        <p className="mb-3 text-lg">Teléfono: (506) 2448-4946</p>
+                        <p className="mb-3 text-lg">Teléfono: (+506) 2448-4946</p>
                         <p className="mb-3 text-lg">
                             Email: 
                             <a href="mailto:ciclohidalgo@hotmail.com" className="hover:underline"> ciclohidalgo@hotmail.com</a>
