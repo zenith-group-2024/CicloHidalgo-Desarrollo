@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Footer from './Footer'; 
-import Navbar from './Navbar'; 
+import Footer from '../UI/Footer'; 
+import Navbar from '../UI/Navbar'; 
 import { Clock, CheckCircle } from 'lucide-react'; 
 
 const API_URL = 'https://api.example.com'; 

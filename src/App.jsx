@@ -16,6 +16,7 @@ import Orden from './UI/Orden';
 import Dashboard from './UI/Dashboard.jsx';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ListaOrdenes from './UI/ListaOrdenes.jsx';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route path="/Orden" element={<Orden />} />
             <Route path="/Dashboard" element={<Dashboard />} />  
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
+            <Route path="/ListaOrdenes" element={<ListaOrdenes />} />
           </Routes>
 
         </CartProvider>

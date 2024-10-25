@@ -54,7 +54,7 @@ const MenuPerfil = ({ onClose }) => {
             </Link>
 
             <Link
-              to="/ver-ordenes"
+              to="/ListaOrdenes"
               className="flex items-center bg-blue text-white p-3 rounded-2xl text-center font-secondary text-lg transform transition-transform duration-300 hover:scale-105 shadow-md"
             >
               <List className="w-6 h-6 mr-3" />
