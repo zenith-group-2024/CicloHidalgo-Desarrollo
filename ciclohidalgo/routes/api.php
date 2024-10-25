@@ -15,11 +15,15 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/admin/users', [UserController::class, 'listAdmins']);
+
+});
+
+    Route::get('/admins', [UserController::class, 'listAdmins']);
     Route::post('/admin/create', [UserController::class, 'createAdmin']);
     Route::put('/admin/update/{id}', [UserController::class, 'updateAdmin']);
     Route::delete('/admin/delete/{id}', [UserController::class, 'deleteAdmin']);
-});
+    Route::get('/admin/{id}', [UserController::class, 'getAdmin']);
+    
 
 Route::get('/productos/all', [ProductoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
