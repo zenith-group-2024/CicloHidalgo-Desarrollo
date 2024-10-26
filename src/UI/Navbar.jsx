@@ -117,7 +117,7 @@ const Navbar = () => {
           </div>
         )}
         <div onClick={() => isAuthenticated ? setIsPerfilModalOpen(true) : setIsAuthModalOpen(true)} className="transform transition-transform duration-300 hover:scale-110 cursor-pointer">
-          {isAuthenticated ? <UserCheck className='lg:w-8 lg:h-8 md:w-7 md:h-7 ml-2' /> : <UserRound className='w-8 h-8 md:w-7 md:h-7 ml-2' />}
+          {isAuthenticated ? <UserCheck className='lg:w-8 lg:h-8 md:w-7 md:h-7 mt-1' /> : <UserRound className='w-8 h-8 md:w-7 md:h-7 mt-1' />}
         </div>
       </div>
 

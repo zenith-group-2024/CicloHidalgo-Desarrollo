@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../UI/Navbar.jsx";
-import { CartContext } from '../UI/Prueba_Carrito.jsx';
+import { CartContext } from '../UI/prueba_carrito.jsx';
 import { Link } from "react-router-dom";
 import { Trash, SquarePlus, SquareMinus } from 'lucide-react';
 import Footer from '../UI/Footer.jsx';
 
-export const Carrito = () => { // Sin recibir props
+export const Carrito = () => {
   const { cart, setCart } = useContext(CartContext);
   const [showModal, setShowModal] = useState(false); 
   const navigate = useNavigate();
@@ -85,29 +85,34 @@ export const Carrito = () => { // Sin recibir props
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 text-center mb-4 bg-gray p-4 rounded-lg shadow-lg">
+        {/* Header de Categorías */}
+        <div className="hidden md:grid grid-cols-3 text-center mb-4 bg-gray p-4 rounded-lg shadow-lg">
           <h2 className="font-secondary font-semibold text-xl text-white">Producto</h2>
           <h2 className="font-secondary font-semibold text-xl text-white">Cantidad</h2>
           <h2 className="font-secondary font-semibold text-xl text-white">Subtotal</h2>
         </div>
 
+        {/* Productos */}
         {cart.length === 0 ? (
           <p className="text-center text-gray-600 font-medium">No has agregado productos al carrito.</p>
         ) : (
           cart.map((producto, index) => (
             <div
               key={index}
-              className="container mx-auto p-5 shadow-lg rounded-lg bg-white grid grid-cols-3 items-center mb-4"
+              className="container mx-auto p-5 shadow-lg rounded-lg bg-white mb-4 md:grid md:grid-cols-3 md:items-center"
             >
-              <div className="flex items-center">
+              {/* Sección Producto */}
+              <div className="flex flex-col items-center md:flex-row md:items-center lg:mx-auto md:justify-start">
                 <img
-                  className="w-24 h-24 object-cover rounded-lg shadow-lg"
+                  className="w-24 h-24 object-cover rounded-lg shadow-lg mx-auto md:mr-6"
                   src={producto.imagen} 
                   alt={producto.title}
                 />
-                <h3 className="font-primary font-semibold text-lg text-gray-800 ml-6">{producto.title}</h3>
+                <h3 className="font-primary font-semibold text-lg text-gray-800 mt-2 md:mt-0">{producto.title}</h3>
               </div>
-              <div className="flex items-center justify-center">
+              
+              {/* Sección Cantidad */}
+              <div className="flex items-center justify-center mt-4 md:mt-0">
                 <button
                   onClick={() => handleDecreaseQuantity(index)}
                   className="mr-2 px-1 py-1 transition-all duration-300 flex items-center bg-gray-300 rounded-full shadow-md hover:bg-red"
@@ -122,12 +127,16 @@ export const Carrito = () => { // Sin recibir props
                   <SquarePlus className="h-4 w-4" />
                 </button>
               </div>
-              <div className="flex items-center justify-end">
-                <p className="font-primary font-semibold text-lg text-gray-800 text-center">{`${(producto.precio * producto.quantity).toLocaleString("es-CR", {
-                  style: "currency",
-                  currency: "CRC",
-                  minimumFractionDigits: 2,
-                })}`}</p>
+              
+              {/* Sección Subtotal */}
+              <div className="flex items-center justify-center mt-4 md:mt-0">
+                <p className="font-primary font-semibold text-lg text-gray-800 text-center">
+                  {`${(producto.precio * producto.quantity).toLocaleString("es-CR", {
+                    style: "currency",
+                    currency: "CRC",
+                    minimumFractionDigits: 2,
+                  })}`}
+                </p>
                 <button
                   onClick={() => handleRemoveProduct(index)}
                   className="ml-4 px-3 py-2 transition-all duration-300 rounded-full bg-gray-300 hover:bg-red shadow-md"
@@ -139,35 +148,34 @@ export const Carrito = () => { // Sin recibir props
           ))
         )}
 
+        {/* Total y botones */}
         {cart.length > 0 && (
-          <>
-            <div className="flex justify-between items-center mt-8">
-              <h3 className="font-primary font-semibold text-2xl text-gray-800">
-                Total: <span className="">{getTotal()}</span>
-              </h3>
-              <div className="flex space-x-4">
-                <button
-                  onClick={handleEmptyCart}
-                  className="px-4 py-2 bg-gray text-white rounded-lg transition-shadow duration-300 shadow-md"
-                >
-                  Vaciar Carrito
-                </button>
+          <div className="flex flex-col md:flex-row justify-between items-center mt-8">
+            <h3 className="font-primary font-semibold text-2xl text-gray-800 mb-4 md:mb-0">
+              Total: <span>{getTotal()}</span>
+            </h3>
+            <div className="flex space-x-4">
+              <button
+                onClick={handleEmptyCart}
+                className="px-4 py-2 bg-gray text-white rounded-lg transition-shadow duration-300 shadow-md"
+              >
+                Vaciar Carrito
+              </button>
 
-                <button
-                  onClick={handleCheckout}
-                  className="px-4 py-2 bg-red text-white rounded-lg font-semibold transition-shadow duration-300 shadow-md"
-                >
-                  Finalizar Compra
-                </button>
-              </div>
+              <button
+                onClick={handleCheckout}
+                className="px-4 py-2 bg-red text-white rounded-lg font-semibold transition-shadow duration-300 shadow-md"
+              >
+                Finalizar Compra
+              </button>
             </div>
-          </>
+          </div>
         )}
       </div>
 
       <Footer />
 
-     
+      {/* Modal de Confirmación */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl z-50 text-center">
