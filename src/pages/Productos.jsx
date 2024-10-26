@@ -6,10 +6,12 @@ import Footer from "../UI/Footer";
 import { CartContext } from '../UI/Prueba_Carrito.jsx';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
+import loadingGif from '../assets/animaciones/AnimationLoading.gif';
+
 
 export function Productos() {
     const { addToCart } = useContext(CartContext); 
-    const { productos } = useFetchProductos();
+    const { productos, isLoading } = useFetchProductos(); // Assuming useFetchProductos provides an isLoading flag
 
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
@@ -48,7 +50,6 @@ export function Productos() {
         }
     }, [productos]);
 
-    
     const cardVariants = {
         hidden: { opacity: 0, scale: 0.9 },
         visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
@@ -65,14 +66,12 @@ export function Productos() {
             <Navbar />
 
             <div className="container mx-auto py-8">
-               
                 <motion.div 
                     className="grid grid-cols-1 md:grid-cols-4 gap-8"
                     initial="hidden"
                     animate="visible"
                     variants={filterVariants}
                 >
-                    
                     <motion.div className="bg-white p-6 rounded-md shadow-md" variants={filterVariants}>
                         <h1 className="font-secondary font-bold text-2xl text-gray-800 mb-4">Filtros</h1>
                         <CheckBoxCategoria
@@ -82,9 +81,14 @@ export function Productos() {
                         />
                     </motion.div>
 
-                   
                     <div className="md:col-span-3 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8">
-                        {filteredProductos.length === 0 ? (
+                        {isLoading ? (
+                        
+
+                            <div className="flex justify-center items-center col-span-full">
+                                <img src={loadingGif} alt="Loading" className="w-20 h-20" />
+                            </div>
+                        ) : filteredProductos.length === 0 ? (
                             <p className="text-center text-gray-600">No hay productos disponibles.</p>
                         ) : (
                             filteredProductos.map((producto) => (
