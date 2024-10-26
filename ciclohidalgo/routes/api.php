@@ -49,10 +49,11 @@ Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
 Route::put('/contenido/update/{id}', [ContenidoController::class, 'update']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user/getprofile/{id}', [ProfileController::class, 'getEditData']);
-    Route::put('/user/update/{id}', [ProfileController::class, 'updateEditData']);
-    Route::delete('/user/delete/{id}', [ProfileController::class, 'deleteUser']);
 });
+
+    //Route::get('/user/getprofile/{id}', [ProfileController::class, 'getEditData']);
+    Route::put('/user/update/{id}', [ProfileController::class, 'updateEditData']);
+    //Route::delete('/user/delete/{id}', [ProfileController::class, 'deleteUser']);
 
 
 Route::post('/registrar-orden', [OrdenController::class, 'registrarOrden']);
