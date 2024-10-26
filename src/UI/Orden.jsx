@@ -3,7 +3,7 @@ import { CartContext } from "../UI/Prueba_Carrito.jsx";
 import { Truck, Store } from "lucide-react"; 
 import Navbar from "./Navbar"; 
 import Footer from "./Footer"; 
-import { p } from "framer-motion/client";
+
 
 
 const productos = [
@@ -355,7 +355,7 @@ function FormularioEnvio() {
 
                 <div key={index} className="flex items-center mb-6">
                   <div className="relative">
-                    <img src={`../src/assets/${producto.img}`} alt={producto.title}
+                    <img src={producto.imagen} alt={producto.title}
                       className="w-20 h-20 rounded-lg object-cover"
                     />
                     <span className="absolute top-0 right-0 bg-blue text-white text-xs font-bold w-[1.5rem] h-[1.5rem] flex items-center justify-center rounded-full">
