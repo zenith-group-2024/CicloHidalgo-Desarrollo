@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { CartContext } from "../UI/Prueba_Carrito.jsx";
+import { CartContext } from "../UI/prueba_carrito.jsx";
 import { Truck, Store } from "lucide-react";
 import Navbar from "../UI/Navbar.jsx";
 import Footer from "../UI/Footer.jsx";
@@ -10,10 +10,9 @@ function FormularioEnvio() {
 
   const productos = [];
   const { state } = useContext(GlobalContext);
-  const { cart, setCart } = useContext(CartContext);
+  const { cart} = useContext(CartContext);
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
-  const [cantidades, setCantidades] = useState(productos.map(() => 1));
   const [formOrdenData, setFormData] = useState({
     user_id: state.id || "",
     metodo_envio: "envia",
