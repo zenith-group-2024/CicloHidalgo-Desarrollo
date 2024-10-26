@@ -38,9 +38,17 @@ export const Carrito = () => { // Sin recibir props
   };
 
   const handleIncreaseQuantity = (index) => {
+    const producto = cart[index];
+    const newQuantity = producto.quantity + 1;
+
+    if (newQuantity > producto.cantidad) {
+      alert("No hay suficiente stock para este producto");
+      return;
+    }
+
     const updatedCart = cart.map((item, i) => {
       if (i === index) {
-        return { ...item, quantity: item.quantity + 1 };
+        return { ...item, quantity: newQuantity};
       }
       return item;
     });

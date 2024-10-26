@@ -33,12 +33,7 @@ export default function DetalleProducto() {
       return;
     }
 
-    addToCart({
-      id: producto.id, 
-      title: producto.marca,
-      precio: numericPrice,
-      img: producto.imagen,
-    });
+    addToCart(producto);
   };
 
   return (

@@ -100,11 +100,7 @@ export function Productos() {
                                     whileHover="hover"
                                 >
                                     <Card
-                                        nombre={producto.nombre}
-                                        id={producto.id}
-                                        title={producto.marca}
-                                        precio={`₡ ${producto.precio.toLocaleString("es-CR")} (IVAI)`}
-                                        img={producto.imagen}
+                                        producto={producto}
                                         addToCart={addToCart}  
                                     />
                                 </motion.div>
