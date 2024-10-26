@@ -6,7 +6,7 @@ import { useRegistro } from '../../hooks/UseRegistro';
 const Registro = () => {
   const [nombre, setNombre] = useState('');
   const [contacto, setContacto] = useState('');
-  const [dirrecion, setDireccion] = useState('');
+  const [direccion, setDireccion] = useState(''); // Corrección de la variable
   const [email, setEmail] = useState('');
   const [cumpleanos, setCumpleanos] = useState('');
   const [password, setPassword] = useState('');
@@ -18,8 +18,9 @@ const Registro = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    await register(email, password, nombre, dirrecion, cumpleanos, contacto, boletin);
+    await register(email, password, nombre, direccion, cumpleanos, contacto, boletin); // Corrección de la variable
 
+    // Resetear los campos
     setNombre('');
     setContacto('');
     setDireccion('');
@@ -28,7 +29,6 @@ const Registro = () => {
     setPassword('');
     setBoletin(false);
 
-    
     closeModal();
   };
 
@@ -40,17 +40,17 @@ const Registro = () => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 overflow-y-auto">
-          <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-md max-h-screen overflow-y-auto">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 overflow-hidden">
+          <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-md h-fit mx-4 my-8">
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray focus:outline-none"
+              className="absolute  top-4 right-4 text-gray-400 hover:text-gray focus:outline-none"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
               <span className="sr-only">Cerrar</span>
             </button>
 
-            <h2 className="text-2xl font-bold text-center mb-8 text-black">Registro</h2>
+            <h2 className="text-2xl font-bold text-center mb-2 text-black">Registro</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="nombre" className="block text-sm font-medium text-gray">
@@ -62,7 +62,7 @@ const Registro = () => {
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
                   required
-                  className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
+                  className=" block w-full p-2 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
               </div>
 
@@ -76,7 +76,7 @@ const Registro = () => {
                   value={contacto}
                   onChange={(e) => setContacto(e.target.value)}
                   required
-                  className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
+                  className=" block w-full p-2 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
               </div>
 
@@ -87,10 +87,10 @@ const Registro = () => {
                 <input
                   type="text"
                   id="direccion"
-                  value={dirrecion}
+                  value={direccion}
                   onChange={(e) => setDireccion(e.target.value)}
                   required
-                  className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
+                  className=" block w-full p-2 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
               </div>
 
@@ -104,7 +104,7 @@ const Registro = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
+                  className="block w-full p-2 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
               </div>
 
@@ -118,7 +118,7 @@ const Registro = () => {
                   value={cumpleanos}
                   onChange={(e) => setCumpleanos(e.target.value)}
                   required
-                  className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
+                  className=" block w-full p-2 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
               </div>
 
@@ -132,7 +132,7 @@ const Registro = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="mt-2 block w-full p-3 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
+                  className=" block w-full p-2 border border-gray rounded-md shadow-sm focus:ring-blue focus:border-blue"
                 />
               </div>
 

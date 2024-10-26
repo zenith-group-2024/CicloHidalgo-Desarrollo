@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useLogin } from '../../hooks/UseLogin.js';
 import { X, Eye, EyeOff } from 'lucide-react'; 
 import Registro from './Registro.jsx';
@@ -36,7 +36,6 @@ const LoginForm = ({ isOpen, onClose }) => {
     } catch (e) {
       setErrorMessage(e.message); 
       console.log(e.message); 
-     
     }
   };
 
@@ -54,6 +53,15 @@ const LoginForm = ({ isOpen, onClose }) => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage(''); 
+      }, 3000);
+
+      return () => clearTimeout(timer); 
+    }
+  }, [errorMessage]);
 
   return (
     <>
@@ -70,7 +78,7 @@ const LoginForm = ({ isOpen, onClose }) => {
 
             <h2 className="text-2xl font-bold text-center mb-8 text-black">Login</h2>
 
-            {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+            {errorMessage && <p className="text-red font-primary font-semibold text-center">{errorMessage}</p>}
 
             {!isAuthenticated ? (
               <form onSubmit={handleLogin} className="space-y-6">
@@ -101,7 +109,6 @@ const LoginForm = ({ isOpen, onClose }) => {
                       required
                       className="mt-2 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     />
-              
                     <button
                       type="button"
                       onClick={togglePasswordVisibility}
@@ -125,12 +132,8 @@ const LoginForm = ({ isOpen, onClose }) => {
               </form>
             ) : (
               <div className="text-center">
-                <h3 className="mb-4">Estás autenticado</h3>
-                <Link to="/PerfilCliente" className="text-black font-primary font-bold text-lg hover:text-gray transform transition-transform duration-300 hover:scale-110">Editar Perfil </Link> 
-                <button
-                  onClick={handleLogout}
-                  className="w-full py-3 px-4 bg-red text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
+                <p>Estás autenticado.</p>
+                <button onClick={handleLogout} className="mt-4 text-red underline">
                   Cerrar sesión
                 </button>
               </div>
@@ -151,3 +154,4 @@ const LoginForm = ({ isOpen, onClose }) => {
 };
 
 export default LoginForm;
+

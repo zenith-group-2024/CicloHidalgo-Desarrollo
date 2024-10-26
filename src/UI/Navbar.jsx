@@ -29,7 +29,7 @@ const Navbar = () => {
     <nav className="bg-white p-4 w-full flex flex-col md:flex-row justify-between items-center border-b-2 border-border-gray-opacity z-50">
       <div className="flex items-center justify-between w-full md:w-auto">
       <Link to="/" className={` transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
-      <img src={logo} alt="logo" className="h-16 md:h-20  mr-4" />
+      <img src={logo} alt="logo" className="lg:h-16 md:h-14  m-4" />
         </Link>
         
         <button
@@ -40,36 +40,36 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className="hidden md:flex flex-grow justify-center space-x-10 md:space-x-4">
-        <Link to="/" className={`text-black font-primary font-bold text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
+      <div className="hidden md:flex flex-grow justify-center xl:space-x-10 lg:space-x-10 md:space-x-4">
+        <Link to="/" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
           Inicio
         </Link>
-        <Link to="/Productos" className={`text-black font-primary font-bold text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Productos' ? 'text-red' : ''}`}>
+        <Link to="/Productos" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Productos' ? 'text-red' : ''}`}>
           Productos
         </Link>
-        <Link to="/Contenido" className={`text-black font-primary font-bold text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}>
+        <Link to="/Contenido" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}>
           Contenido
         </Link>
-        <Link to="/Servicios" className={`text-black font-primary font-bold text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
+        <Link to="/Servicios" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
           Servicios
         </Link>
         
 
           {state.isAdmin && (
-          <Link to="/admin-dashboard" className={`text-black font-primary font-bold text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
+          <Link to="/admin-dashboard" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
             Admin CRUD
           </Link>
           )}
 
 {state.isAdmin && (
-          <Link to="/Dashboard" className={`text-black font-primary font-bold text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Dashboard' ? 'text-red' : ''}`}>
+          <Link to="/Dashboard" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/Dashboard' ? 'text-red' : ''}`}>
             Dashboard
           </Link>
           )}
 
       </div>
 
-      <div className="flex space-x-4 md:space-x-2 m-4 md:ml-4 relative">
+      <div className="flex lg:space-x-4 md:space-x-2 m-4 md:ml-4 relative">
       <Link to="/Carrito" className="relative flex items-center">
   <ShoppingCart size={28} className="transform transition-transform duration-300 hover:scale-110" />
   {cartCount > 0 && (
@@ -86,7 +86,7 @@ const Navbar = () => {
         </div>
       )}
         <div onClick={() => isAuthenticated ? setIsPerfilModalOpen(true) : setIsAuthModalOpen(true)} className="transform transition-transform duration-300 hover:scale-110 cursor-pointer">
-  {isAuthenticated ? <UserCheck className='w-8 h8 md:w-7 md:h-7' /> : <UserRound className='w-8 h8 md:w-7 md:h-7' />}
+  {isAuthenticated ? <UserCheck className='lg:w-8 lg:h8 md:w-7 md:h-7' /> : <UserRound className='w-8 h8 md:w-7 md:h-7' />}
     
 </div>
 
