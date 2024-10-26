@@ -49,19 +49,20 @@ export const CartProvider = ({ children }) => {
                         setMessage('');
                     }, 2000);
 
+                    setMessage('Producto agregado al carrito!');
+                    setShowMessage(true);
+            
+                    setTimeout(() => {
+                        setShowMessage(false);
+                        setMessage('');
+                    }, 2000);
+                    
                     return prevCart;
                 }
                 return [...prevCart, { ...product, quantity: 1 }];
             }
         });
 
-        setMessage('Producto agregado al carrito!');
-        setShowMessage(true);
-
-        setTimeout(() => {
-            setShowMessage(false);
-            setMessage('');
-        }, 2000);
     };
 
     
