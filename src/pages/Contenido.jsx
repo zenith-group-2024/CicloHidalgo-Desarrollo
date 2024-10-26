@@ -37,7 +37,7 @@ export const Contenido = () => {
   }
 
   return (
-    <div className="bg-white h-full w-full">
+    <div className="bg-white h-full w-full overflow-x-hidden">
       <Navbar />
       <Slider {...settings} className="px-4 mb-8">
         {contenidos.map((contenido) => (

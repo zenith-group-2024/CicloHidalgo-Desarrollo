@@ -43,7 +43,7 @@ const Navbar = () => {
       
       {isMenuOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-40 md:hidden" onClick={() => setIsMenuOpen(false)}>
-          <div className="fixed left-0 top-0 w-64 bg-white h-full p-4">
+          <div className="fixed right-0 top-0 w-2/4 bg-white h-full p-4">
           <button onClick={() => setIsMenuOpen(false)} className="text-black mb-4 absolute top-4 right-4">
               <X size={24} />
             </button>
