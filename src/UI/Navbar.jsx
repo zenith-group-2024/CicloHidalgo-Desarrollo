@@ -5,7 +5,7 @@ import { GlobalContext } from '../global/GlobalState.jsx';
 import AuthForm from '../forms/Login.jsx'; 
 import logo from '../assets/images/logo.svg'; 
 import MenuPerfil from '../pages/MenuPerfil.jsx'
-import { CartContext } from '../UI/Prueba_Carrito.jsx';
+import { CartContext } from '../UI/prueba_carrito.jsx';
 const Navbar = () => {
   const { state, logout } = useContext(GlobalContext);
   const { isAuthenticated, isAdmin } = state;

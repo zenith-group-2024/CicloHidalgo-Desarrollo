@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Link } from 'react-router-dom';
+import {CartContext} from '../UI/prueba_carrito'
+
 
 export const Card = ({producto}) => {
+  const { addToCart, message, showMessage } = useContext(CartContext);
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.5,
@@ -38,7 +41,7 @@ export const Card = ({producto}) => {
 
       
       <button
-        onClick={() => props.addToCart(producto)}
+        onClick={() => addToCart(producto)}
         className="absolute bottom-4 right-4 bg-red text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
         Añadir al carrito
