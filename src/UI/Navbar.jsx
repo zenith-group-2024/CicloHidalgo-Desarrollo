@@ -17,6 +17,8 @@ const Navbar = () => {
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
   };
+
+  //aaaaaa
   
     const handleLogout = () => {
   logout();
