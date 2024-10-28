@@ -235,7 +235,7 @@ function FormularioEnvio() {
     <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center transform transition-transform duration-300 ease-out scale-105">
       <h2 className="text-2xl font-bold mb-4 text-green-600">¡Pedido realizado con éxito!</h2>
       <p className="text-gray mb-8 ">
-        Por favor, comunícate con nosotros por medio de WhatsApp para finalizar el proceso.
+        Por favor, comunícate con nosotros por medio de WhatsApp para finalizar el pago.
       </p>
       <button
         onClick={() => setShowSuccessMessage(false)}
