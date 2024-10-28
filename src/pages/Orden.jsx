@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { CartContext } from "../UI/Prueba_Carrito.jsx";
+import { CartContext } from "../UI/prueba_carrito.jsx";
 import { Truck, Store } from "lucide-react";
 import Navbar from "../UI/Navbar.jsx";
 import Footer from "../UI/Footer.jsx";
@@ -8,7 +8,7 @@ import FetchUser from "../../hooks/FetchUser.js";
 
 function FormularioEnvio() {
   const { state } = useContext(GlobalContext);
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
   const [formOrdenData, setFormData] = useState({
