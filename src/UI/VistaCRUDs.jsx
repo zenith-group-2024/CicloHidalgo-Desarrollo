@@ -18,6 +18,7 @@ import Navbar from './Navbar';
 const AdminDashboard = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedContenido, setSelectedContenido] = useState(null);
@@ -61,15 +62,20 @@ const AdminDashboard = () => {
   };
 
   const handleEditUser = (userData) => {
-    setSelectedProduct(userData);
+    setSelectedAdmin(userData);
     setIsEditing(true);
     setIsAdding(false);
-    setFormType('usuario');
-  };
+    setIsDeleting(false);
+    setFormType('usuarioEdit');
+};
 
-  const handleDeleteUser = () => {
-    console.log("Usuario eliminado");
-  };
+const handleDeleteUser = (userData) => {
+    setSelectedAdmin(userData);
+    setIsDeleting(true);
+    setIsEditing(false);
+    setIsAdding(false);
+    setFormType('usuarioDelete');
+};
 
   const handleAddContenido= () => {
     setIsAdding(true);
