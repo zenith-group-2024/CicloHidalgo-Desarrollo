@@ -20,7 +20,6 @@ export const CartProvider = ({ children }) => {
             const existingProduct = prevCart.find(item => item.id === product.id);
 
             if (existingProduct) {
-                debugger
                 const newQuantity = existingProduct.quantity + 1;
 
                 if (newQuantity > product.cantidad) {
@@ -41,24 +40,16 @@ export const CartProvider = ({ children }) => {
             } else {
 
                 if (product.cantidad < 1 ){
-                    setMessage('No hay suficiente stock para este producto');
-                    setShowMessage(true);
-
-                    setTimeout(() => {
-                        setShowMessage(false);
-                        setMessage('');
-                    }, 2000);
-
-                    setMessage('Producto agregado al carrito!');
-                    setShowMessage(true);
-            
-                    setTimeout(() => {
-                        setShowMessage(false);
-                        setMessage('');
-                    }, 2000);
-                    
                     return prevCart;
                 }
+                setMessage('Producto agregado al carrito!');
+                setShowMessage(true);
+        
+                setTimeout(() => {
+                    setShowMessage(false);
+                    setMessage('');
+                }, 2000);
+
                 return [...prevCart, { ...product, quantity: 1 }];
             }
         });
