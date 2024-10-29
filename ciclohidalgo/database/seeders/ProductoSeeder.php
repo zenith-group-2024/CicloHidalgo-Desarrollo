@@ -13,7 +13,7 @@ class ProductoSeeder extends Seeder
             [
                 'nombre' => 'SIS Energy Electrolyte',
                 'marca' => 'SIS',
-                'especificacion' => 'Gel SIS con electrolitos sabor Pink Grapefruit de 60ml',
+                'especificacion' => 'Proporciona energía rápida y repone electrolitos esenciales para mantener el rendimiento durante el ejercicio intenso. ',
                 'subcategoria' => 'Gel',
                 'categoria' => 'Suplemento',
                 'modelo' => 'Energy+Electrolyte',
@@ -25,7 +25,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'SIS Energy Electrolyte',
                 'marca' => 'SIS',
-                'especificacion' => 'Gel SIS con electrolitos sabor Fruit Salad de 60ml',
+                'especificacion' => 'Proporciona energía rápida y repone electrolitos esenciales para mantener el rendimiento durante el ejercicio intenso. ',
                 'subcategoria' => 'Gel',
                 'categoria' => 'Suplemento',
                 'modelo' => 'Energy+Electrolyte',
@@ -37,7 +37,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'SIS Energy Electrolyte',
                 'marca' => 'SIS',
-                'especificacion' => 'Gel SIS con electrolitos sabor Lemon & Lime de 60ml',
+                'especificacion' => 'Proporciona energía rápida y repone electrolitos esenciales para mantener el rendimiento durante el ejercicio intenso. ',
                 'subcategoria' => 'Gel',
                 'categoria' => 'Suplemento',
                 'modelo' => 'Energy+Electrolyte',
@@ -49,7 +49,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Cannondale Bicicleta',
                 'marca' => 'Cannondale',
-                'especificacion' => 'Bicicleta 29" Cannondale color rojo, especial para montaña de 8 velocidades, montada con componentes Shimano, marco de aluminio, frenos hidraulicos, suspensión SrSuntor',
+                'especificacion' => 'Diseñada para terrenos exigentes, cuenta con 8 velocidades y componentes Shimano que ofrecen cambios precisos y duraderos. Su marco de aluminio garantiza ligereza y resistencia, mientras que la suspensión SR Suntour y los frenos hidráulicos brindan control y confort en cualquier camino.',
                 'subcategoria' => 'Bici 1 sc',
                 'categoria' => 'Bicicleta',
                 'modelo' => 'Trail Seven',
@@ -61,7 +61,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Scott Bicicleta',
                 'marca' => 'Scott',
-                'especificacion' => 'Bicicleta 29" negra con detalles rojos marca Scott especial para montaña, componentes Sram 12x1, suspensión RockShox, frenos hidraulicos',
+                'especificacion' => 'Equipada con transmisión Sram 1x12 para un rendimiento preciso, suspensión RockShox que absorbe cualquier terreno y frenos hidráulicos de alta potencia para un control total. Ideal para conquistar senderos exigentes con confianza y durabilidad.',
                 'subcategoria' => 'Bici 2 sc',
                 'categoria' => 'Bicicleta',
                 'modelo' => 'Scale 970',
@@ -73,7 +73,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Flypony Bicicleta',
                 'marca' => 'Euro',
-                'especificacion' => 'Bicicleta niña 20" color morado y blanco con adornos en la manivela',
+                'especificacion' => 'Bicicleta para niña 20 en colores morado y blanco: divertida y segura, con detalles encantadores en la manivela que añaden un toque especial. Diseñada para brindar comodidad y estabilidad, perfecta para acompañar sus aventuras al aire libre',
                 'subcategoria' => 'Bici 3 sc',
                 'categoria' => 'Bicicleta',
                 'modelo' => 'Flypony',
@@ -85,7 +85,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Calory Guantes',
                 'marca' => 'Garneu',
-                'especificacion' => 'Guantes cortos color negro-gris ',
+                'especificacion' => 'Protección y comodidad en cada movimiento, diseñados con materiales transpirables y ajuste ergonómico. Ideales para deportes o entrenamientos intensivos, ofrecen un excelente agarre y resistencia al desgaste',
                 'subcategoria' => 'Guantes',
                 'categoria' => 'Ropa',
                 'modelo' => 'Calory',
@@ -97,7 +97,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Maxxis Llanta',
                 'marca' => 'Maxxis',
-                'especificacion' => 'Llanta crossmark para bicicleta 29" especial para agarre en los terrenos con suelo suelto y seco',
+                'especificacion' => 'Llanta Crossmark 29 para bicicleta: diseñada específicamente para terrenos con suelo suelto y seco, ofrece un excelente agarre y control. Su banda de rodadura central mejora la velocidad en superficies duras, mientras que los tacos laterales proporcionan estabilidad y tracción en condiciones desafiantes',
                 'subcategoria' => 'Llanta',
                 'categoria' => 'Repuestos',
                 'modelo' => 'Crossmark',
@@ -109,7 +109,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'WD-40',
                 'marca' => 'WD-40',
-                'especificacion' => 'Aceite WD-40 especial para tu cadena en temporada lluviosa ',
+                'especificacion' => 'Aceite WD-40 para cadenas: formulado especialmente para proteger y lubricar en temporada lluviosa. Su fórmula resistente al agua reduce el desgaste y previene la corrosión, asegurando un pedaleo suave y una cadena en óptimas condiciones bajo la lluvia',
                 'subcategoria' => 'Aceite',
                 'categoria' => 'Repuestos',
                 'modelo' => 'Bike Wet Chain Lube',
@@ -121,7 +121,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Cable de freno Favarcia',
                 'marca' => 'Favarcia',
-                'especificacion' => 'Cable de freno trasero',
+                'especificacion' => 'Cable de freno trasero: fabricado para ofrecer una respuesta precisa y confiable en cada frenada. Ideal para reemplazo o mantenimiento, asegura una conducción segura y un control óptimo en todo tipo de terrenos.',
                 'subcategoria' => 'Cable',
                 'categoria' => 'Repuestos',
                 'modelo' => '',
@@ -133,7 +133,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Medias XPedition',
                 'marca' => 'XPedition',
-                'especificacion' => 'Medias unisex color azul con cintas reflectivas en el tobillo',
+                'especificacion' => 'Medias unisex en color azul con cintas reflectivas en el tobillo: diseñadas para combinar estilo y seguridad, ideales para actividades al aire libre o uso urbano. Su tejido cómodo y duradero ofrece un ajuste perfecto, mientras que las cintas reflectivas mejoran la visibilidad en condiciones de poca luz',
                 'subcategoria' => 'Ropa',
                 'categoria' => 'Medias',
                 'modelo' => 'Reflective',
@@ -145,7 +145,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Casco Scott',
                 'marca' => 'Scott',
-                'especificacion' => 'Casco gris de alta calidad con teconología MIPS para esa protección necesaria a la hora de realizar deporte',
+                'especificacion' => 'Casco gris de alta calidad con tecnología MIPS: diseñado para brindar una protección superior en deportes de alto impacto. Su sistema MIPS reduce las fuerzas de rotación en caso de impacto, ofreciendo una capa extra de seguridad y confianza en cada aventura',
                 'subcategoria' => 'Ropa',
                 'categoria' => 'Casco',
                 'modelo' => 'Arx Plus',
@@ -157,7 +157,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Casco Scott',
                 'marca' => 'Scott',
-                'especificacion' => 'Casco color azul de gran calidad para protegerte a la hora de realizar deporte',
+                'especificacion' => 'Casco deportivo azul de gran calidad: diseñado para brindar máxima protección y comodidad durante tus actividades deportivas. Su estructura resistente y ajuste ergonómico aseguran seguridad y estabilidad en cada movimiento',
                 'subcategoria' => 'Ropa',
                 'categoria' => 'Casco',
                 'modelo' => 'Arx Plus',
@@ -169,7 +169,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Suspensión Recon',
                 'marca' => 'RockShox',
-                'especificacion' => 'Suspensión 29" RockShox con cámara de aire tubos de acero inoxidable',
+                'especificacion' => 'Suspensión RockShox 29 con cámara de aire y tubos de acero inoxidable: diseñada para ofrecer un rendimiento superior en terrenos exigentes. Su cámara de aire garantiza una respuesta suave y ajustable, mientras que los tubos de acero inoxidable brindan durabilidad y resistencia a la corrosión',
                 'subcategoria' => 'Suspensión',
                 'categoria' => 'Piezas',
                 'modelo' => 'Recon',
@@ -181,7 +181,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Road Comp BOA',
                 'marca' => 'Scott',
-                'especificacion' => 'Zapato de ruta color negro-plata',
+                'especificacion' => 'Zapato de ruta en negro y plata: combina estilo y rendimiento para ciclistas exigentes. Su diseño aerodinámico y suela rígida optimizan la transferencia de potencia, mientras que su ajuste preciso asegura comodidad en cada kilómetro',
                 'subcategoria' => 'Ropa',
                 'categoria' => 'Zapato',
                 'modelo' => 'Road Comp BOA',
@@ -193,7 +193,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Calzado XC1',
                 'marca' => 'Shimano',
-                'especificacion' => 'Zapato de ciclismo para montaña ',
+                'especificacion' => 'Zapato de ciclismo para montaña: diseñado para brindar tracción y soporte en terrenos difíciles. Su suela robusta y antideslizante asegura un agarre óptimo tanto en el pedal como al caminar en superficies irregulares, mientras que su ajuste ergonómico proporciona comodidad y estabilidad en cada recorrido',
                 'subcategoria' => 'Ropa',
                 'categoria' => 'Zapato',
                 'modelo' => 'XC1',
@@ -205,7 +205,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Luz Sprinter',
                 'marca' => 'Sprinter',
-                'especificacion' => 'Luz recargable delantera de 400 lumens adaptable a la bicicleta',
+                'especificacion' => 'Luz delantera recargable de 400 lúmenes: potente y adaptable a cualquier bicicleta, ilumina el camino con claridad y seguridad. Su diseño compacto y su fácil sistema de montaje permiten un ajuste rápido, ideal para trayectos nocturnos o condiciones de baja visibilidad',
                 'subcategoria' => 'Accesorios',
                 'categoria' => 'Luz',
                 'modelo' => 'Aurora 400',
@@ -217,7 +217,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Llave Fixit 13',
                 'marca' => 'Sprinter',
-                'especificacion' => 'Herramienta especial con 12 tipos de llaves especial para darle ese mantenimiento a la bicicleta con un diseño delgado',
+                'especificacion' => 'Herramienta multifuncional con 12 llaves: ideal para el mantenimiento de tu bicicleta, diseñada en un formato delgado y compacto que facilita su transporte. Incluye las llaves esenciales para ajustes y reparaciones rápidas, ofreciendo funcionalidad y conveniencia en un solo dispositivo',
                 'subcategoria' => 'Herramientas',
                 'categoria' => 'Llave',
                 'modelo' => 'Fixit 13',
@@ -229,7 +229,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Llave Fixit 15',
                 'marca' => 'Sprinter',
-                'especificacion' => 'Herramienta especial con 12 tipos de llaves especial para darle ese mantenimiento a la bicicleta',
+                'especificacion' => 'Herramienta multifuncional de 12 llaves: diseñada para realizar el mantenimiento completo de tu bicicleta. Incluye todas las llaves esenciales para ajustes rápidos y precisos, ideal para ciclistas que buscan una solución práctica y compacta para el cuidado de su equipo',
                 'subcategoria' => 'Herramientas',
                 'categoria' => 'Llave',
                 'modelo' => 'Fixit 15',
@@ -241,7 +241,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Pasador Tiagra',
                 'marca' => 'Shimano',
-                'especificacion' => 'Pasador de cambios de 11 velocidades para bicicleta de ruta',
+                'especificacion' => 'Pasador de cambios de 11 velocidades para bicicleta de ruta: optimiza la precisión y rapidez en cada cambio de marcha. Diseñado específicamente para el rendimiento en rutas, garantiza una transmisión suave y confiable, ideal para ciclistas que buscan eficiencia en sus recorridos',
                 'subcategoria' => 'Repuestos',
                 'categoria' => 'Pasador',
                 'modelo' => 'Tiagra',
@@ -253,7 +253,7 @@ class ProductoSeeder extends Seeder
             ],[
                 'nombre' => 'Pasador Sram',
                 'marca' => 'Sram',
-                'especificacion' => 'Pasador de cambios de 12 velocidades para bicicleta de montaña',
+                'especificacion' => 'Pasador de cambios de 12 velocidades para bicicleta de montaña: diseñado para cambios suaves y precisos en terrenos exigentes. Su construcción robusta asegura durabilidad y rendimiento óptimo, ideal para ciclistas de montaña que buscan confiabilidad y control en cada ascenso y descenso',
                 'subcategoria' => 'Repuestos',
                 'categoria' => 'Pasador',
                 'modelo' => 'Sx',
