@@ -176,7 +176,7 @@ export function Productos() {
                 </div>
               ) : productoFiltrados.length === 0 ? (
                 <p className="text-center text-gray-600">
-                  No hay productos disponibles.
+                  No se encontraron productos.
                 </p>
               ) : (
                 productoFiltrados.map((producto) => (

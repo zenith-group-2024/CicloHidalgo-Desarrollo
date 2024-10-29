@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js';
 import Navbar from './Navbar.jsx';
@@ -25,6 +25,8 @@ export default function DetalleProducto() {
     minimumFractionDigits: 2,
   });
 
+  
+
   const handleAddToCart = (e) => {
     e.stopPropagation();
 
@@ -35,6 +37,16 @@ export default function DetalleProducto() {
 
     addToCart(producto);
   };
+
+  const hayExistencias = (cantidad) => {
+  
+    if (cantidad != 0){
+      return true;
+    }else {
+      return false;
+    }
+
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen"> 
@@ -52,6 +64,7 @@ export default function DetalleProducto() {
           <div className="flex flex-col justify-center space-y-6">
             <h1 className="font-primary font-bold text-3xl ">{producto.nombre}</h1>
             <p className="font-primary text-lg text-gray">{producto.especificacion}</p>
+            <p className="font-primary text-lg text-gray">{hayExistencias(producto.cantidad)? 'Hay disponibilidad': 'Esperando Repocición'}</p>
             <p className="font-primary text-2xl font-semibold text-old">{formattedPrice} (IVAI)</p>
             <button
               onClick={handleAddToCart}
