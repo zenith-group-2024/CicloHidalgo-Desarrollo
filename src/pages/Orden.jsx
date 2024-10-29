@@ -62,6 +62,16 @@ function FormularioEnvio() {
     setShowModal(true); // Abre el modal de confirmación
   };
 
+  const handleEnvioChange = (envioSeleccionado) => {
+    setEnvio(envioSeleccionado);
+    setFormData(prevData => ({ ...prevData, metodo_envio: envioSeleccionado }));
+  };
+
+  const handlePagoChange = (pagoSeleccionado) => {
+    setPago(pagoSeleccionado);
+    setFormData(prevData => ({ ...prevData, metodo_pago: pagoSeleccionado }));
+  };
+
   const closeModal = () => setShowModal(false);
 
   if (userLoading) return <p className="text-2xl font-semibold text-center text-gray-500 italic mx-auto">Cargando...</p>;
@@ -115,7 +125,7 @@ function FormularioEnvio() {
                   name="entrega"
                   value={type}
                   checked={envio === type}
-                  onChange={() => setEnvio(type)}
+                  onChange={() => handleEnvioChange(type)}
                   className="form-radio h-5 w-5 text-blue-600"
                 />
                 <span className="ml-3 text-gray-700">{type === "envia" ? "Envío" : "Retiro en tienda"}</span>
@@ -194,7 +204,7 @@ function FormularioEnvio() {
                   name="pago"
                   value={type}
                   checked={pago === type}
-                  onChange={() => setPago(type)}
+                  onChange={() => handlePagoChange(type)}
                   className="form-radio h-5 w-5 text-blue-600"
                 />
                 <span className="ml-3 text-gray-700">{capitalize(type)}</span>
@@ -216,12 +226,12 @@ function FormularioEnvio() {
               <div className="flex justify-center space-x-4">
                 <button
                   onClick={closeModal}
-                  className="px-6 py-2 bg-gray-500 text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105">
+                  className="px-6 py-2 bg-gray text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105">
                   Cancelar
                 </button>
                 <button
                   onClick={handleFinalizarOrden}
-                  className="px-6 py-2 bg-red-500 text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105">
+                  className="px-6 py-2 bg-red text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105">
                   Confirmar
                 </button>
               </div>

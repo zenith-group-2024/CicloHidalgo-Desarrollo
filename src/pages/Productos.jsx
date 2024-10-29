@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Card from "../UI/CardProductos";
 import Navbar from "../UI/Navbar";
 import Footer from "../UI/Footer";
-import { CartContext } from '../UI/Prueba_Carrito.jsx';
+import { CartContext } from '../UI/prueba_carrito.jsx';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 import loadingGif from '../assets/animaciones/AnimationLoading.gif';

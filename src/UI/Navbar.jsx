@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, UserCheck, UserRound, AlignJustify, X } from 'lucide-react';
 import { GlobalContext } from '../global/GlobalState.jsx'; 
-import AuthForm from '../forms/Login.jsx'; 
+import LoginForm from '../forms/Login.jsx'; 
 import logo from '../assets/images/logo.svg'; 
 import MenuPerfil from '../pages/MenuPerfil.jsx';
 import { motion } from 'framer-motion';
@@ -13,7 +13,7 @@ const Navbar = () => {
   const { isAuthenticated, isAdmin } = state;
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isPerfilModalOpen, setIsPerfilModalOpen] = useState(false); 
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
   const location = useLocation();
   const { cart, message, showMessage } = useContext(CartContext);
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -131,7 +131,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {isAuthModalOpen && <AuthForm isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
+      {isAuthModalOpen && <LoginForm  isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />}
       {isPerfilModalOpen && <MenuPerfil isOpen={isPerfilModalOpen} onClose={() => setIsPerfilModalOpen(false)} />} 
     </nav>
   );

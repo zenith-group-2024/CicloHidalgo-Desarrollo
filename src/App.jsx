@@ -7,7 +7,7 @@ import Servicios from './pages/Servicios';
 import AdminDashboard from './UI/VistaCRUDs.jsx';
 import AdminCRUD from './UI/AdminCRUD';
 import { Carrito } from './pages/Carrito';
-import { CartProvider } from './UI/Prueba_Carrito';
+import { CartProvider } from './UI/prueba_carrito';
 import DetalleProducto from './UI/DetalleProducto';
 import PerfilCliente from './pages/PerfilCliente.jsx';
 import { GlobalProvider } from '../src/global/GlobalState.jsx';
