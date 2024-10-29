@@ -24,7 +24,7 @@ class UserController extends Controller
 
     public function listAdmins()
     {
-        $admins = User::where('admin', true)->get(['id', 'nombre', 'email']);
+        $admins = User::where('admin', true)->get(['id', 'nombre', 'email', 'contacto', 'direccion']);
 
         if ($admins->isEmpty()) {
             return response()->json(['message' => 'No se encontraron administradores'], 404);
