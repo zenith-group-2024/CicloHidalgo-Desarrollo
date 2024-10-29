@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('marca');
-            $table->string('especificacion')->nullable();            
+            $table->longText('especificacion')->nullable();            
             $table->string('subcategoria');
             $table->string('categoria');
             $table->string('modelo')->nullable();
