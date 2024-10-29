@@ -5,6 +5,7 @@ import { GlobalContext } from '../global/GlobalState.jsx';
 import AuthForm from '../forms/Login.jsx'; 
 import logo from '../assets/images/logo.svg'; 
 import MenuPerfil from '../pages/MenuPerfil.jsx';
+import { motion } from 'framer-motion';
 import { CartContext } from '../UI/prueba_carrito.jsx';
 
 const Navbar = () => {
@@ -42,38 +43,47 @@ const Navbar = () => {
 
       
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-40 md:hidden" onClick={() => setIsMenuOpen(false)}>
-          <div className="fixed right-0 top-0 w-2/4 bg-white h-full p-4">
-          <button onClick={() => setIsMenuOpen(false)} className="text-black mb-4 absolute top-4 right-4">
-              <X size={24} />
-            </button>
-            <div className="flex flex-col space-y-4">
-              <Link to="/" onClick={() => setIsMenuOpen(false)} className={`text-black font-primary font-bold hover:text-gray ${location.pathname === '/' ? 'text-red' : ''}`}>
-                Inicio
-              </Link>
-              <Link to="/Productos" onClick={() => setIsMenuOpen(false)} className={`text-black font-primary font-bold hover:text-gray ${location.pathname === '/Productos' ? 'text-red' : ''}`}>
-                Productos
-              </Link>
-              <Link to="/Contenido" onClick={() => setIsMenuOpen(false)} className={`text-black font-primary font-bold hover:text-gray ${location.pathname === '/Contenido' ? 'text-red' : ''}`}>
-                Contenido
-              </Link>
-              <Link to="/Servicios" onClick={() => setIsMenuOpen(false)} className={`text-black font-primary font-bold hover:text-gray ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
-                Servicios
-              </Link>
-              {isAdmin && (
-                <Link to="/admin-dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black font-primary font-bold hover:text-gray ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
-                  Admin CRUD
-                </Link>
-              )}
-              {isAdmin && (
-                <Link to="/Dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black font-primary font-bold hover:text-gray ${location.pathname === '/Dashboard' ? 'text-red' : ''}`}>
-                  Dashboard
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 z-40 md:hidden" onClick={() => setIsMenuOpen(false)}>
+    <motion.div
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100%" }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed right-0 top-0 w-full bg-white h-full p-4 shadow-lg rounded-lg"
+    >
+      <button onClick={() => setIsMenuOpen(false)} className="text-black hover:text-red mb-4 absolute top-4 right-4">
+        <X size={24} />
+      </button>
+      <div className="flex flex-col space-y-4 font-semibold text-lg">
+      <Link to="/" className={`transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
+          <img src={logo} alt="logo" className="lg:h-10 md:h-10 " />
+        </Link>
+        <Link to="/" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/' ? 'text-red' : ''}`}>
+          Inicio
+        </Link>
+        <Link to="/Productos" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Productos' ? 'text-red' : ''}`}>
+          Productos
+        </Link>
+        <Link to="/Contenido" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}>
+          Contenido
+        </Link>
+        <Link to="/Servicios" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
+          Servicios
+        </Link>
+        {isAdmin && (
+          <>
+            <Link to="/admin-dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
+              Admin CRUD
+            </Link>
+            <Link to="/Dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Dashboard' ? 'text-red' : ''}`}>
+              Dashboard
+            </Link>
+          </>
+        )}
+      </div>
+    </motion.div>
+  </div>
+)}
 
       <div className="hidden md:flex flex-grow justify-center xl:space-x-10 lg:space-x-10 md:space-x-4">
         <Link to="/" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
