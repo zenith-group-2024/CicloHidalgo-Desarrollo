@@ -93,7 +93,7 @@ class UserController extends Controller
         ]);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message' => 'No autorizado'], 401);
+            return response()->json(['message' => 'Contraseña o email incorrectos intente de nuevo '], 401);
         }
 
         $user = Auth::user();
