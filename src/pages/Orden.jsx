@@ -35,7 +35,19 @@ function FormularioEnvio() {
 
   const handleFinalizarOrden = async (e) => {
     e.preventDefault();
+
+
+    // Si el método de envío es "retiro", elimina los campos de dirección
+    if (formOrdenData.metodo_envio === "retiro") {
+        formOrdenData.direccion = null;
+        formOrdenData.direccion_detalles = null;
+        formOrdenData.provincia = null;
+        formOrdenData.ciudad = null;
+        formOrdenData.codigo_postal = null;
+    }
+
     try {
+      console.log(formOrdenData);
       const response = await fetch('http://localhost:8000/api/registrar-orden', {
         method: 'POST',
         headers: {
@@ -74,7 +86,15 @@ function FormularioEnvio() {
 
   const closeModal = () => setShowModal(false);
 
-  if (userLoading) return <p className="text-2xl font-semibold text-center text-gray-500 italic mx-auto">Cargando...</p>;
+  if (userLoading) return <>
+  <Navbar />
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <p className="text-2xl font-semibold text-center text-blue italic mx-auto">Redirigiendo...</p>
+      <div className="my-6 w-10 h-10 border-4 border-dashed rounded-full animate-spin border-red"></div>
+      <p className="mx-auto text-center text-gray-500">Si experimentas problemas de carga es porque no has iniciado sesión.</p>
+    </div>
+    <Footer />
+    </>;
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">

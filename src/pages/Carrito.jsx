@@ -5,8 +5,10 @@ import { CartContext } from '../UI/prueba_carrito.jsx';
 import { Link } from "react-router-dom";
 import { Trash, SquarePlus, SquareMinus } from 'lucide-react';
 import Footer from '../UI/Footer.jsx';
+import { GlobalContext } from "../global/GlobalState.jsx";
 
 export const Carrito = () => {
+  const { state } = useContext(GlobalContext);
   const { cart, setCart } = useContext(CartContext);
   const [showModal, setShowModal] = useState(false); 
   const navigate = useNavigate();
@@ -67,6 +69,10 @@ export const Carrito = () => {
   };
 
   const handleCheckout = () => {
+    if (!state.id) {
+      alert("Por favor, inicie sesión para continuar.");
+      return;
+    }
     navigate("/Orden");
   };
 
