@@ -5,13 +5,16 @@ export const CartContext = createContext();
 
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(() => {
+        const savedCart = localStorage.getItem('cart');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
     const [message, setMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
 
     
     useEffect(() => {
-     
+        localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
 
     
@@ -56,9 +59,13 @@ export const CartProvider = ({ children }) => {
 
     };
 
+    const clearCart = () => {
+        setCart([]);
+        localStorage.removeItem('cart');
+    };
     
     return (
-        <CartContext.Provider value={{ cart, setCart, addToCart, message, showMessage }}>
+        <CartContext.Provider value={{ cart, setCart, addToCart, message, showMessage, clearCart }}>
             {children}
         </CartContext.Provider>
     );

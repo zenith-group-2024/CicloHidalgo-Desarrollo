@@ -115,7 +115,7 @@ export default function EditarOferta() {
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((producto) => (
                                 <div className="grid grid-cols-5 p-4" key={producto.id}>
-                                      <img className="m-auto w-20 h-20 object-cover rounded-lg" src={producto.imagen} alt={producto.nombre} />
+                                      <img className="m-auto w-20 h-20 object-contain rounded-lg" src={producto.imagen} alt={producto.nombre} />
                                     <p className="m-auto">{producto.nombre}</p>
                                     <p className="m-auto">{producto.marca}</p>
                                     <p className="m-auto">{producto.descuento}%</p>
