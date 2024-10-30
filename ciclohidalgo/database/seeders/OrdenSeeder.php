@@ -16,7 +16,7 @@ class OrdenSeeder extends Seeder
         
         // Métodos de envío y pago para variedad
         $metodosEnvio = ['envia', 'retiro'];
-        $metodosPago = ['sinpe', 'efectivo', 'credomatic', 'bn', 'mini_cuotas'];
+        $metodosPago = ['SINPE Móvil', 'Efectivo', 'Credomatic (Tasa 0)', 'Banco Nacional', 'Mini Cuotas Banco Nacional'];
         
         for ($i = 0; $i < 6; $i++) {
             $orden = Orden::create([
