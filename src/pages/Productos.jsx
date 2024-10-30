@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Card from "../UI/CardProductos";
 import Navbar from "../UI/Navbar";
 import Footer from "../UI/Footer";
-import { CartContext } from '../UI/Prueba_Carrito.jsx';
+import { CartContext } from '../UI/prueba_carrito.jsx';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 import loadingGif from '../assets/animaciones/AnimationLoading.gif';
@@ -12,12 +12,15 @@ import loadingGif from '../assets/animaciones/AnimationLoading.gif';
 
 export function Productos() {
     const { addToCart } = useContext(CartContext); 
-    const { productos, isLoading } = useFetchProductos(); // Assuming useFetchProductos provides an isLoading flag
+    const { productos, isLoading } = useFetchProductos(); 
 
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [filteredProductos, setFilteredProductos] = useState(productos);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 9;
 
     const handleCategoryChange = useCallback((selected) => {
         setSelectedCategories(selected);
@@ -94,8 +97,15 @@ export function Productos() {
         }
     }
 
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProductos.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const nextPage = () => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredProductos.length / productsPerPage)));
+    const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
     return (
-      <div className="bg-gray-50 min-h-screen">
+      <div className="bg-gray-50 min-h-screen ">
         <Navbar />
 
         <div className="container mx-auto py-8">
@@ -152,12 +162,12 @@ export function Productos() {
                 <div className="flex justify-center items-center col-span-full">
                   <img src={loadingGif} alt="Loading" className="w-20 h-20" />
                 </div>
-              ) : filteredProductos.length === 0 ? (
+              ) : currentProducts.length === 0 ? (
                 <p className="text-center text-gray-600">
                   No hay productos disponibles.
                 </p>
               ) : (
-                filteredProductos.map((producto) => (
+                currentProducts.map((producto) => (
                   <motion.div
                     key={producto.id}
                     variants={cardVariants}
@@ -169,6 +179,7 @@ export function Productos() {
                   </motion.div>
                 ))
               )
+              
             
             : isLoading ? (
                 <div className="flex justify-center items-center col-span-full">
@@ -176,7 +187,7 @@ export function Productos() {
                 </div>
               ) : productoFiltrados.length === 0 ? (
                 <p className="text-center text-gray-600">
-                  No hay productos disponibles.
+                  No se encontraron productos.
                 </p>
               ) : (
                 productoFiltrados.map((producto) => (
@@ -195,8 +206,24 @@ export function Productos() {
             </div>
           </motion.div>
         </div>
-
-        <Footer />
+        <div className="flex justify-center mt-4 mb-4">
+                    <button
+                        className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
+                        onClick={prevPage}
+                        disabled={currentPage === 1}
+                    >
+                        Anterior
+                    </button>
+                    <span className="px-4 py-2">Página {currentPage}</span>
+                    <button
+                        className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
+                        onClick={nextPage}
+                        disabled={currentPage === Math.ceil(productos.length / productsPerPage)}
+                    >
+                        Siguiente
+                    </button>
+                </div>
+        <Footer/>
       </div>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { CartContext } from './Prueba_Carrito';
+import { CartContext } from './prueba_carrito';
 import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js';
 
 const CardDestacado = ({ nombre, title, precio, img, id, pauseCarousel, resumeCarousel }) => {

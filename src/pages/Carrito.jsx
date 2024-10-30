@@ -5,8 +5,10 @@ import { CartContext } from '../UI/prueba_carrito.jsx';
 import { Link } from "react-router-dom";
 import { Trash, SquarePlus, SquareMinus } from 'lucide-react';
 import Footer from '../UI/Footer.jsx';
+import { GlobalContext } from "../global/GlobalState.jsx";
 
 export const Carrito = () => {
+  const { state } = useContext(GlobalContext);
   const { cart, setCart } = useContext(CartContext);
   const [showModal, setShowModal] = useState(false); 
   const navigate = useNavigate();
@@ -67,6 +69,10 @@ export const Carrito = () => {
   };
 
   const handleCheckout = () => {
+    if (!state.id) {
+      alert("Por favor, inicie sesión para continuar.");
+      return;
+    }
     navigate("/Orden");
   };
 
@@ -104,7 +110,7 @@ export const Carrito = () => {
               {/* Sección Producto */}
               <div className="flex flex-col items-center md:flex-row md:items-center lg:mx-auto md:justify-start">
                 <img
-                  className="w-24 h-24 object-cover rounded-lg shadow-lg mx-auto md:mr-6"
+                  className="w-24 h-24 object-contain rounded-lg shadow-lg mx-auto md:mr-6"
                   src={producto.imagen} 
                   alt={producto.title}
                 />
@@ -148,7 +154,6 @@ export const Carrito = () => {
           ))
         )}
 
-        {/* Total y botones */}
         {cart.length > 0 && (
           <div className="flex flex-col md:flex-row justify-between items-center mt-8">
             <h3 className="font-primary font-semibold text-2xl text-gray-800 mb-4 md:mb-0">

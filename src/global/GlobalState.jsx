@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer, useEffect, useContext } from 'react';
+import { CartContext } from '../UI/prueba_carrito.jsx';
 
 const initialState = {
     isAuthenticated: false,
@@ -34,6 +35,7 @@ const globalReducer = (state, action) => {
 
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(globalReducer, initialState);
+    const { clearCart } = useContext(CartContext);
 
     useEffect(() => {
         const token = localStorage.getItem('authToken');
@@ -56,6 +58,7 @@ export const GlobalProvider = ({ children }) => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('id'); 
         localStorage.removeItem('isAdmin');
+        clearCart();
     };
 
     return (

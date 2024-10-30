@@ -54,45 +54,55 @@ const FormEliminarAdmin = ({ onClose }) => {
     );
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4">Eliminar Administrador</h2>
-            <p className="mb-4">Buscar administrador para eliminar:</p>
+        <div className="flex items-center justify-center py-10">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                <h2 className="text-2xl font-bold mb-4 text-center">Eliminar Administrador</h2>
+                <p className="mb-4 text-center">Buscar administrador para eliminar:</p>
 
-            <input
-                type="text"
-                placeholder="Buscar por nombre o email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="border border-gray-300 p-2 rounded mb-4 w-full"
-            />
+                <input
+                    type="text"
+                    placeholder="Buscar por nombre o email..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full p-3 border rounded mb-4"
+                />
 
-            <ul className="max-h-60 overflow-y-auto border border-gray-300 mb-4">
-                {filteredAdmins.length > 0 ? (
-                    filteredAdmins.map(admin => (
-                        <li
-                            key={admin.id}
-                            className={`admin-item p-2 cursor-pointer ${selectedAdmin === admin.id ? 'bg-gray-200' : ''}`}
-                            onClick={() => setSelectedAdmin(admin.id)}
-                        >
-                            {admin.nombre} ({admin.email})
-                        </li>
-                    ))
-                ) : (
-                    <li className="p-2">No se encontraron administradores.</li>
+                <ul className="max-h-40 overflow-y-auto border rounded mb-4">
+                    {filteredAdmins.length > 0 ? (
+                        filteredAdmins.map(admin => (
+                            <li
+                                key={admin.id}
+                                className={`p-3 cursor-pointer admin-item ${selectedAdmin === admin.id ? 'bg-gray' : ''}`}
+                                onClick={() => setSelectedAdmin(admin.id)}
+                            >
+                                {admin.nombre} ({admin.email})
+                            </li>
+                        ))
+                    ) : (
+                        <li className="p-3 text-center">No se encontraron administradores.</li>
+                    )}
+                </ul>
+
+                {selectedAdmin && (
+                    <div className="text-center">
+                        <p className="mb-4">¿Está seguro de que desea eliminar a este administrador?</p>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                onClick={handleDelete}
+                                className="bg-red text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue transition duration-200"
+                            >
+                                Eliminar
+                            </button>
+                            <button
+                                onClick={onClose}
+                                className="bg-gray text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition duration-200"
+                            >
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
                 )}
-            </ul>
-
-            {selectedAdmin && (
-                <div className="mb-4">
-                    <p>¿Está seguro de que desea eliminar a este administrador?</p>
-                    <button onClick={handleDelete} className="bg-red text-white px-4 py-2 rounded mr-2">
-                        Eliminar
-                    </button>
-                    <button onClick={onClose} className="bg-gray text-white px-4 py-2 rounded">
-                        Cancelar
-                    </button>
-                </div>
-            )}
+            </div>
         </div>
     );
 };
