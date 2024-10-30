@@ -110,7 +110,7 @@ function FormularioEnvio() {
             cart.map((producto, index) => (
               <div key={index} className="flex items-center mb-6">
                 <div className="relative w-20 h-20">
-                  <img src={producto.imagen} alt={producto.title} className="w-full h-full rounded-lg object-cover" />
+                  <img src={producto.imagen} alt={producto.title} className="w-full h-full rounded-lg object-contain" />
                   <span className="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full">
                     {producto.quantity}
                   </span>
