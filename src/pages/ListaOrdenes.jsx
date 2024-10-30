@@ -86,7 +86,7 @@ const ListaOrdenes = () => {
                                         ))}
                                     </ul>
                                     <button
-                                        className="mt-4 px-4 py-2 bg-blue text-white rounded hover:bg-blue-700"
+                                        className="px-4 py-2 bg-blue text-white rounded hover:bg-blue-700"
                                         onClick={() => handleVerDetalles(orden.id)}
                                     >
                                         {ordenSeleccionada === orden.id ? 'Ocultar detalles' : 'Ver detalles'}
@@ -110,7 +110,7 @@ const ListaOrdenes = () => {
                 {/* Controles de paginación */}
                 <div className="flex justify-center mt-4">
                     <button
-                        className="px-4 py-2 bg-gray-300 rounded-l hover:bg-gray-400"
+                        className="text-white px-4 py-2 bg-gray rounded-l hover:bg-blue"
                         onClick={prevPage}
                         disabled={currentPage === 1}
                     >
@@ -118,7 +118,7 @@ const ListaOrdenes = () => {
                     </button>
                     <span className="px-4 py-2">Página {currentPage}</span>
                     <button
-                        className="px-4 py-2 bg-gray-300 rounded-r hover:bg-gray-400"
+                        className="text-white px-4 py-2 bg-gray rounded-r hover:bg-blue"
                         onClick={nextPage}
                         disabled={currentPage === Math.ceil(ordenes.length / ordersPerPage)}
                     >
