@@ -26,7 +26,7 @@ export const CartProvider = ({ children }) => {
                 const newQuantity = existingProduct.quantity + 1;
 
                 if (newQuantity > product.cantidad) {
-                    setMessage('No hay suficiente stock para este producto');
+                    setMessage('Producto agotado');
                     setShowMessage(true);
 
                     setTimeout(() => {

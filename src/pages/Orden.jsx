@@ -269,7 +269,7 @@ function FormularioEnvio() {
               </p>
               <button
                 onClick={() => setShowSuccessMessage(false)}
-                className="px-6 py-3 bg-gray-500 hover:bg-blue-500 text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
+                className="px-6 py-3 bg-gray  text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
               >
                 Cerrar
               </button>
