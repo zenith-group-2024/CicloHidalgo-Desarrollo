@@ -23,8 +23,9 @@ import ListaOrdenes from './pages/ListaOrdenes.jsx';
 function App() {
   return (
     <BrowserRouter>
-      <GlobalProvider>
-        <CartProvider>
+      <CartProvider>
+        <GlobalProvider>
+        
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/Contenido" element={<Contenido />} />
@@ -44,8 +45,8 @@ function App() {
             <Route path="/ListaOrdenes" element={<ListaOrdenes />} />
           </Routes>
 
-        </CartProvider>
-      </GlobalProvider>
+        </GlobalProvider>
+      </CartProvider>
     </BrowserRouter>
   );
 }

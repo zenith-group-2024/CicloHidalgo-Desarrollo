@@ -11,7 +11,7 @@ import EliminarOferta from '../forms/EliminarOferta';
 import FormCrearAdmin from '../forms/FormCrearAdmin';
 import FormEditarAdmin from '../forms/FormEditarAdmin';
 import FormEliminarAdmin from '../forms/FormEliminarAdmin';
-
+import Footer from './Footer';
 import CrudCard from './CRUDCard';
 import Navbar from './Navbar';
 
@@ -131,12 +131,12 @@ const handleDeleteUser = (userData) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 ">
        <Navbar />
       
 
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 mt-16">
         <CrudCard
           title="Productos"
           onAdd={handleAddProduct}
@@ -161,6 +161,7 @@ const handleDeleteUser = (userData) => {
           onEdit={(handleEditarOferta)}
           onDelete={(handleEliminarOferta)}
         />
+      
       </div>
 
 {isAdding && formType === 'producto' && <FormProducto onClose={handleCloseForms} />}
@@ -178,7 +179,7 @@ const handleDeleteUser = (userData) => {
 {isAdding && formType === 'usuario' && <FormCrearAdmin onClose={handleCloseForms} />}
 {isEditing && formType === 'usuarioEdit' && <FormEditarAdmin adminData={selectedAdmin} onClose={handleCloseForms} />}
 {isDeleting && formType === 'usuarioDelete' && <FormEliminarAdmin adminData={selectedAdmin} onClose={handleCloseForms} />}
-
+<Footer />
     </div>
   );
 };
