@@ -38,7 +38,7 @@ const Dashboard = () => {
                         id: producto.id,
                         nombre: producto.nombre,
                         vendidos: producto.total_cantidad,
-                        imagen: producto.imagen, // Suponiendo que existe en los datos
+                        imagen: producto.imagen, 
                     }))
                 );
             } else {

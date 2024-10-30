@@ -20,7 +20,7 @@ export default {
         black: '#1D1D1D',
         gray: '#6C757E',
         old: '#4b5563',
-        'border-gray-opacity': '#6C757E80',
+       
       },
       fontFamily: {
         primary: ['Montserrat', 'sans-serif'],

@@ -13,7 +13,7 @@ const Navbar = () => {
   const { isAuthenticated, isAdmin } = state;
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isPerfilModalOpen, setIsPerfilModalOpen] = useState(false); 
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
   const location = useLocation();
   const { cart, message, showMessage } = useContext(CartContext);
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -27,7 +27,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white p-4 w-full flex flex-col md:flex-row lg:justify-between items-center border-b-2 border-border-gray-opacity z-50">
+    <nav className="bg-white p-4 w-full flex flex-col md:flex-row lg:justify-between items-center border-b-2 border-black border-opacity-50 z-50">
       <div className="flex items-center justify-between w-full md:w-auto">
         <Link to="/" className={`transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
           <img src={logo} alt="logo" className="lg:h-16 md:h-14 m-4" />
@@ -49,33 +49,34 @@ const Navbar = () => {
       animate={{ x: 0 }}
       exit={{ x: "100%" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed right-0 top-0 w-full bg-white h-full p-4 shadow-lg rounded-lg"
+      className="fixed right-0 top-0 w-full bg-white h-full shadow-lg rounded-lg"
     >
       <button onClick={() => setIsMenuOpen(false)} className="text-black hover:text-red mb-4 absolute top-4 right-4">
         <X size={24} />
       </button>
-      <div className="flex flex-col space-y-4 font-semibold text-lg">
-      <Link to="/" className={`transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
-          <img src={logo} alt="logo" className="lg:h-10 md:h-10 " />
-        </Link>
-        <Link to="/" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/' ? 'text-red' : ''}`}>
+      <div className="flex flex-col space-y-4 font-bold text-2xl">
+          <img src={logo} alt="logo" className="lg:h-10 md:h-10 mx-auto mt-4 " />
+       
+        <hr className='border-old ' />
+        <Link to="/" onClick={() => setIsMenuOpen(false)} className={`text-black ml-2 ${location.pathname === '/' ? 'text-red' : ''}`}>
           Inicio
         </Link>
-        <Link to="/Productos" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Productos' ? 'text-red' : ''}`}>
+        
+        <Link to="/Productos" onClick={() => setIsMenuOpen(false)} className={`text-black ml-2 ${location.pathname === '/Productos' ? 'text-red' : ''}`}>
           Productos
         </Link>
-        <Link to="/Contenido" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}>
+        <Link to="/Contenido" onClick={() => setIsMenuOpen(false)} className={`text-black  ml-2 ${location.pathname === '/Contenido' ? 'text-red' : ''}`}>
           Contenido
         </Link>
-        <Link to="/Servicios" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
+        <Link to="/Servicios" onClick={() => setIsMenuOpen(false)} className={`text-black   ml-2 ${location.pathname === '/Servicios' ? 'text-red' : ''}`}>
           Servicios
         </Link>
         {isAdmin && (
           <>
-            <Link to="/admin-dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
+            <Link to="/admin-dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black ml-2 ${location.pathname === '/admin-dashboard' ? 'text-red' : ''}`}>
               Admin CRUD
             </Link>
-            <Link to="/Dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black hover:text-red transform transition-colors duration-300 ${location.pathname === '/Dashboard' ? 'text-red' : ''}`}>
+            <Link to="/Dashboard" onClick={() => setIsMenuOpen(false)} className={`text-black ml-2 ${location.pathname === '/Dashboard' ? 'text-red' : ''}`}>
               Dashboard
             </Link>
           </>
@@ -112,7 +113,7 @@ const Navbar = () => {
 
       <div className="flex lg:space-x-4 md:space-x-2 m-4 md:ml-4 relative">
         <Link to="/Carrito" className="relative flex items-center">
-          <ShoppingCart className="lg:w-8 lg:h-8 md:w-7 md:h-7 transform transition-transform duration-300 hover:scale-110" />
+          <ShoppingCart className="w-7 h-7  transform transition-transform duration-300 hover:scale-110" />
           {cartCount > 0 && (
             <span className="lg:absolute lg:-top-2 lg:-right-2">
               <span className="bg-red text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
@@ -127,7 +128,7 @@ const Navbar = () => {
           </div>
         )}
         <div onClick={() => isAuthenticated ? setIsPerfilModalOpen(true) : setIsAuthModalOpen(true)} className="transform transition-transform duration-300 hover:scale-110 cursor-pointer">
-          {isAuthenticated ? <UserCheck className='lg:w-8 lg:h-8 md:w-7 md:h-7 mt-1' /> : <UserRound className='w-8 h-8 md:w-7 md:h-7 mt-1' />}
+          {isAuthenticated ? <UserCheck className=' w-7 h-7 mt-1' /> : <UserRound className=' w-7 h-7 mt-1' />}
         </div>
       </div>
 
