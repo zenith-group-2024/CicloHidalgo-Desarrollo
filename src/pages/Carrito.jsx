@@ -69,11 +69,8 @@ export const Carrito = () => {
   };
 
   const handleCheckout = () => {
-    if (!state.id) {
-      alert("Por favor, inicie sesión para continuar.");
-      return;
-    }
-    navigate("/Orden");
+    
+      return navigate("/Orden");
   };
 
   return (

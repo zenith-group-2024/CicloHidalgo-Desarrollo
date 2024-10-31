@@ -16,6 +16,16 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
         }));
     };
 
+    useEffect(() => {
+        document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+            const { value, name } = checkbox;
+            checkbox.checked =
+                (name === "categoria" && selectedCategories.includes(value)) ||
+                (name === "subcategoria" && selectedSubCategories.includes(value)) ||
+                (name === "marca" && selectedBrands.includes(value));
+        });
+    }, [selectedCategories, selectedSubCategories, selectedBrands]);
+
     const handleSubCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedSubCategories(prev => ({
@@ -75,13 +85,18 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
         return Array.from(new Set(combinedBrands));
     };
 
+    const resetFilters = () => {
+        setSelectedCategories({});
+        setSelectedSubCategories({});
+        setSelectedBrands({});
+    };
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
     return (
         <div className="space-y-4">
-           
             <div className="space-y-2">
                 <div className="text-black w-full mb-4 font-secondary font-bold">Categoría</div>
                 {Object.keys(categorias).map((category) => (
@@ -100,7 +115,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                 ))}
             </div>
 
-           
             <div className="space-y-2">
                 <div className="text-black w-full mb-4 font-secondary font-bold">Subcategoría</div>
                 {getSubCategoriesForSelected().map((subCategory) => (
@@ -119,7 +133,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                 ))}
             </div>
 
-           
             <div className="space-y-2">
                 <div className="text-black w-full mb-4 font-secondary font-bold">Marca</div>
                 {getBrandsForSelected().map((brand) => (
@@ -137,6 +150,14 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
                     </div>
                 ))}
             </div>
+
+            <button
+                onClick={resetFilters}
+                className="p-2 border-2 border-old text-old rounded-lg focus:outline-none transform transition-transform duration-300 hover:scale-105"
+
+            >
+                Limpiar Filtros
+            </button>
         </div>
     );
 };
