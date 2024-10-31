@@ -38,7 +38,7 @@ export const Card = ({ producto }) => {
         </div>
       </Link>
 
-      {/* Botón de "Añadir al carrito" para Escritorio (visible solo en pantallas grandes y superiores) */}
+   
       <button
         onClick={() => addToCart(producto)}
         className="absolute bottom-4 right-4 bg-red text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden xl:block"
@@ -46,7 +46,7 @@ export const Card = ({ producto }) => {
         Añadir al carrito
       </button>
 
-      {/* Botón de "Añadir al carrito" para Móviles y Tabletas (hasta pantallas xl) */}
+      
       <button
         onClick={() => addToCart(producto)}
         className="bg-red text-white font-medium py-2 px-4 mt-4 rounded-lg shadow-md hover:bg-blue-600 xl:hidden ml-auto"
