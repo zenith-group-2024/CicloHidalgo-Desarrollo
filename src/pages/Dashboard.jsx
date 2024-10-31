@@ -86,6 +86,27 @@ const Dashboard = () => {
     setOrdenSeleccionada(ordenSeleccionada === pedidoId ? null : pedidoId);
   };
 
+  const toggleEstadoPedido = async (pedidoId, estadoActual) => {
+    try {
+      const nuevoEstado = estadoActual === 'PENDIENTE' ? 'COMPLETO' : 'PENDIENTE';
+      const response = await fetch(`http://localhost:8000/api/toggle-estado-orden/${pedidoId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ estado: nuevoEstado }),
+      });
+
+      if (response.ok) {
+        fetchPedidos(); // Refresca la lista de pedidos
+      } else {
+        console.error('Error al cambiar el estado de la orden');
+      }
+    } catch (error) {
+      console.error('Error de conexión:', error);
+    }
+  };
+
   const mostrarCampo = (titulo, valor) => {
     if (valor) {
       return <p className="text-gray-700"><strong>{titulo}:</strong> {valor}</p>;
@@ -174,6 +195,12 @@ const Dashboard = () => {
                             <ChevronDown className="h-4 w-4" />
                           )}
                         </button>
+                        <button
+                          className="text-green-600 border px-3 py-1 rounded-md flex items-center space-x-1 shadow-lg hover:shadow-md transition-all ml-2"
+                          onClick={() => toggleEstadoPedido(pedido.id, pedido.estado)}
+                        >
+                          Marcar como Completado
+                        </button>
                       </div>
                       {ordenSeleccionada === pedido.id && (
                         <div className="mt-4 space-y-2 text-gray-600">
@@ -217,6 +244,13 @@ const Dashboard = () => {
                             <ChevronDown className="h-4 w-4" />
                           )}
                         </button>
+                        <button
+                          className="text-yellow-600 border px-3 py-1 rounded-md flex items-center space-x-1 shadow-lg hover:shadow-md transition-all ml-2"
+                          onClick={() => toggleEstadoPedido(pedido.id, pedido.estado)}
+                        >
+                          Marcar como Pendiente
+                        </button>
+
                       </div>
                       {ordenSeleccionada === pedido.id && (
                         <div className="mt-4 space-y-2 text-gray-600">
