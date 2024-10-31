@@ -181,6 +181,7 @@ export function Productos() {
                 ))
               )
               
+              
             
             : isLoading ? (
                 <div className="flex justify-center items-center col-span-full">
@@ -224,6 +225,7 @@ export function Productos() {
                         Siguiente
                     </button>
                 </div>
+
 
                 <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
         <Footer/>
