@@ -1,79 +1,69 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../global/GlobalState';
-import { Link } from 'react-router-dom';
-import { X, User, List } from 'lucide-react';
-import { motion } from 'framer-motion';
+import FetchUser from '../../hooks/FetchUser';
+import Navbar from '../UI/Navbar';
+import Footer from '../UI/Footer';
+import { Package, User, LogOut } from 'lucide-react';
 
-const MenuPerfil = ({ onClose }) => {
-  const { state, logout } = useContext(GlobalContext);
-  const { isAuthenticated } = state;
+const MenuPerfil = () => {
+    const navigate = useNavigate();
+    const { state, logout } = useContext(GlobalContext);
+    const { isAuthenticated } = state;
 
-  const handleLogout = () => {
-    logout();
-    onClose();
-  };
+    const [nombreUsuario, setNombreUsuario] = useState('');
+    const { formData: fetchedUserData, loading: userLoading } = FetchUser();
 
-  const menuVariants = {
-    hidden: { x: '100%' }, 
-    visible: { x: 0 },     
-    exit: { x: '100%' }  
-  };
+    useEffect(() => {
+        if (!userLoading && fetchedUserData) {
+            setNombreUsuario(fetchedUserData.nombre || '');
+        }
+    }, [userLoading, fetchedUserData]);
 
-  return (
-    <motion.div
-      className="bg-white h-screen w-64 shadow-lg fixed right-0 top-0 z-50 flex flex-col rounded-l-3xl"
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      variants={menuVariants}
-    >
- 
-      <button
-        onClick={onClose}
-        className="absolute top-5 right-5 text-gray-600 hover:text-red-600 focus:outline-none"
-      >
-        <X className="w-6 h-6" />
-        <span className="sr-only">Cerrar</span>
-      </button>
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/');
+        }
+    }, [isAuthenticated, navigate]);
 
-      <div className="p-6 border-b border-gray-200  ">
-        <h1 className="text-2xl font-primary font-bold text-black">Perfil</h1>
-      </div>
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
-      <div className="flex-grow p-6">
-        {isAuthenticated && (
-          <div className="grid gap-6">
-         
-            <Link
-              to="/PerfilCliente"
-              className="flex items-center bg-blue text-white p-3 rounded-2xl text-center font-secondary text-lg transform transition-transform duration-300 hover:scale-105 shadow-md"
-            >
-              <User className="w-6 h-6 mr-3" />
-              Editar perfil
-            </Link>
+    if (userLoading) {
+        return <p className="text-center text-gray-600 font-semibold text-lg">Cargando datos...</p>;
+    }
 
-            <Link
-              to="/ListaOrdenes"
-              className="flex items-center bg-blue text-white p-3 rounded-2xl text-center font-secondary text-lg transform transition-transform duration-300 hover:scale-105 shadow-md"
-            >
-              <List className="w-6 h-6 mr-3" />
-              Ver órdenes
-            </Link>
-          </div>
-        )}
-      </div>
-
-      <div className="p-6 border-t border-gray-200">
-        <button
-          onClick={handleLogout}
-          className="bg-old text-white p-3 rounded-2xl font-secondary text-lg w-full transform transition-transform duration-300 hover:scale-105 shadow-lg"
-        >
-          Cerrar sesión
-        </button>
-      </div>
-    </motion.div>
-  );
+    return (
+        <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1 p-6">
+                <div className="max-w-5xl mx-auto bg-white rounded-2xl p-10">
+                    <h2 className="text-4xl font-bold font-primary mb-6 text-gray-800">Hola, {nombreUsuario}</h2>
+                    <p className="text-gray mb-10 text-lg font-secondary leading-relaxed">
+                        Desde este panel, puedes revisar tus pedidos recientes, gestionar tus direcciones de envío y facturación, y actualizar tu contraseña e información personal de forma sencilla.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 font-primary">
+                        <Card title="Tus pedidos" icon={<Package size={40} className="text-blue" />} onClick={() => navigate('/ListaOrdenes')} />
+                        <Card title="Datos personales" icon={<User size={40} className="text-blue" />} onClick={() => navigate('/PerfilCliente')} />
+                        <Card title="Cerrar sesión" icon={<LogOut size={40} className="text-gray" />} onClick={handleLogout} />
+                    </div>
+                </div>
+            </main>
+            <Footer />
+        </div>
+    );
 };
+
+const Card = ({ title, icon, onClick }) => (
+    <div 
+        onClick={onClick} 
+        className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center justify-center text-center hover:shadow-xl transition transform hover:scale-105 duration-300 cursor-pointer"
+    >
+        <div className="mb-4">{icon}</div>
+        <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+    </div>
+);
 
 export default MenuPerfil;

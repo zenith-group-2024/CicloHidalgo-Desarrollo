@@ -81,16 +81,16 @@ const PerfilCliente = () => {
             <Navbar />
             <div className="mx-auto w-full max-w-6xl px-10 py-12">
                 <div className="flex items-center text-gray-700 mb-8">
-                    <User className="h-10 w-10 text-blue-600 mr-2" />
+                    <User className="h-8 w-8 text-blue-600 mr-2" />
                     <h2 className="text-3xl font-bold text-left text-gray-800">
-                        {editing ? 'Edita tu Perfil' : `Hola, ${formData.nombre}`}
+                        Datos Personales
                     </h2>
                 </div>
 
                 {message && <p className="text-left text-green-600 text-lg font-semibold mb-4">{message}</p>}
 
                 <div className="bg-white rounded-2xl shadow-xl p-10 mx-auto w-full max-w-4xl">
-                    <h3 className="text-xl font-semibold text-gray-600 mb-8">{editing ? 'Actualiza tus datos' : 'Tus datos personales'}</h3>
+                    
 
                     {editing ? (
                         <>
