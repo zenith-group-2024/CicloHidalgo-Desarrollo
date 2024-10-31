@@ -96,6 +96,17 @@ class OrdenController extends Controller
         return response()->json(['mensaje' => 'Orden completada', 'orden' => $orden], 200);
     }
 
+    public function toggleEstadoOrden($id)
+    {
+        $orden = Orden::find($id);
+        if (!$orden) {
+            return response()->json(['error' => 'Orden no encontrada'], 404);
+        }
+        $orden->estado = $orden->estado === 'PENDIENTE' ? 'COMPLETO' : 'PENDIENTE';
+        $orden->save();
+        return response()->json(['mensaje' => 'Estado de la orden actualizado exitosamente', 'estado' => $orden->estado], 200);
+    }
+
     public function getTopProductosVendidos()
     {
         $topProductos = DB::table('orden_producto')
