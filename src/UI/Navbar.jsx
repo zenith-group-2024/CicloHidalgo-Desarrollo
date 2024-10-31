@@ -86,7 +86,7 @@ const Navbar = () => {
   </div>
 )}
 
-      <div className="hidden md:flex flex-grow justify-center xl:space-x-10 lg:space-x-10 md:space-x-4">
+      <div className="hidden md:flex flex-grow justify-center xl:space-x-10 lg:space-x-8 md:space-x-4">
         <Link to="/" className={`text-black font-primary font-bold lg:text-lg md:text-base hover:text-gray transform transition-transform duration-300 hover:scale-110 ${location.pathname === '/' ? 'text-red' : ''}`}>
           Inicio
         </Link>
@@ -123,7 +123,7 @@ const Navbar = () => {
           )}
         </Link>
         {showMessage && (
-          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 mb-12 bg-white text-black p-2 rounded shadow-lg text-xl z-50 transition-opacity duration-300">
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 mb-12 bg-red text-white p-2 rounded shadow-lg text-xl z-50 transition-opacity duration-300">
             {message}
           </div>
         )}

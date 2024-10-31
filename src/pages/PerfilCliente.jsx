@@ -124,7 +124,7 @@ const PerfilCliente = () => {
                     </button>
                 </div>
             ) : (
-                <div className='w-4/6 h-full mx-auto bg-white p-8 shadow-lg rounded-3xl text-lg'>
+                <div className='w-5/6 h-full mx-auto bg-white p-8 shadow-lg rounded-3xl text-lg'>
                       <h2 className="text-2xl font-bold text-black mb-6">Información del Perfil</h2>
                     <div className='flex flex-col'>
                         {Object.entries(formData).map(([key, value]) => (
