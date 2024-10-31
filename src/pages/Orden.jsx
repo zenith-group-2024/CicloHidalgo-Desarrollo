@@ -23,7 +23,10 @@ function FormularioEnvio() {
   const { formData: userData, loading: userLoading } = FetchUser();
 
   useEffect(() => {
-    setFormData(prevData => ({ ...prevData, user_id: state.id }));
+    // Asignar user_id solo si el usuario está autenticado
+    if (state.id) {
+      setFormData(prevData => ({ ...prevData, user_id: state.id }));
+    }
   }, [state.id]);
 
   const getTotal = () => cart.reduce((total, item) => total + item.precio * item.quantity, 0);
@@ -86,7 +89,7 @@ function FormularioEnvio() {
 
   const closeModal = () => setShowModal(false);
 
-  if (userLoading) return <>
+ /*  if (userLoading) return <>
   <Navbar />
     <div className="flex flex-col items-center justify-center min-h-screen">
       <p className="text-2xl font-semibold text-center text-blue italic mx-auto">Redirigiendo...</p>
@@ -94,7 +97,7 @@ function FormularioEnvio() {
       <p className="mx-auto text-center text-gray-500">Si experimentas problemas de carga es porque no has iniciado sesión.</p>
     </div>
     <Footer />
-    </>;
+    </>; */
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
@@ -131,8 +134,7 @@ function FormularioEnvio() {
         {/* Formulario de Envío */}
         <form className="w-full lg:w-2/3 bg-white rounded-lg p-6 sm:p-8 shadow-md" onSubmit={openModal} > 
           <h2 className="text-2xl font-semibold mb-6">Cuenta</h2>
-          <input type="email" value={userData.email || ""} className="w-full border p-3 mb-6 rounded-lg bg-gray-50" readOnly />
-          
+          <input type="email" value={userData?.email || "Sesión no iniciada!"} className="w-full border p-3 mb-6 rounded-lg bg-gray-50" readOnly />
           <h3 className="text-2xl font-semibold mb-4 flex items-center">
             {envio === "envia" ? <Truck className="w-6 h-6 mr-2 text-blue" /> : <Store className="w-6 h-6 mr-2 text-blue" />}
             Entrega
