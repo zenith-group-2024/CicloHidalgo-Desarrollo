@@ -8,6 +8,7 @@ import { CartContext } from '../UI/prueba_carrito.jsx';
 import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 import loadingGif from '../assets/animaciones/AnimationLoading.gif';
+import WhatsAppButton from '../UI/WhatsAppButton';
 
 
 export function Productos() {
@@ -223,6 +224,8 @@ export function Productos() {
                         Siguiente
                     </button>
                 </div>
+
+                <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
         <Footer/>
       </div>
     );

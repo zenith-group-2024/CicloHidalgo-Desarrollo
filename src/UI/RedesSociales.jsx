@@ -7,7 +7,7 @@ const SocialMediaSection = () => {
             <div className="container mx-auto px-4">
                 <div className="flex justify-center space-x-6">
                    
-                    <a href="https://wa.me/your-number" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/50683158021" target="_blank" rel="noopener noreferrer">
                         <MessageCircle
                             size={50} 
                             className="text-blue transition-transform transform hover:scale-125" 

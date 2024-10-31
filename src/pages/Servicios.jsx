@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../UI/Navbar'; 
 import Footer from '../UI/Footer';
+import WhatsAppButton from '../UI/WhatsAppButton';
 
 const Servicios = () => {
     const servicios = [
@@ -91,7 +92,7 @@ const Servicios = () => {
                     </motion.h2>
                 </footer>
             </main>
-            
+            <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus servicios." />
             <Footer />
         </div>
     );
