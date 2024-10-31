@@ -16,9 +16,4 @@ export default defineConfig({
     built: {
         outDir: 'dist',
     },
-    server: { 
-        hmr: {
-            host: 'localhost',
-        },
-    }, 
 });
