@@ -242,7 +242,7 @@ function FormularioEnvio() {
           </button>
         </form>
 
-        {/* Modal de Confirmación */}
+        
         {showModal && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
             <div className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-md transform transition-transform duration-300 ease-out scale-105">
@@ -264,7 +264,7 @@ function FormularioEnvio() {
           </div>
         )}
 
-        {/* Mensaje de éxito */}
+        
         {showSuccessMessage && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
             <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center transform transition-transform duration-300 ease-out scale-105">

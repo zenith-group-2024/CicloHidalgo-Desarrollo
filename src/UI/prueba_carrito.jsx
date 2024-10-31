@@ -37,6 +37,14 @@ export const CartProvider = ({ children }) => {
                     return prevCart;
                 }
 
+                setMessage('Producto agregado al carrito!');
+                setShowMessage(true);
+        
+                setTimeout(() => {
+                    setShowMessage(false);
+                    setMessage('');
+                }, 2000);
+
                 return prevCart.map(item =>
                     item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                 );

@@ -2,10 +2,10 @@ import React from 'react';
 import { MessageCircle } from 'lucide-react';
 
 const WhatsAppButton = ({ message }) => {
-    const phoneNumber = '50683158021'; // Asegúrate de que el número esté en formato internacional sin signos
+    const phoneNumber = '50683158021'; 
 
     const generateWhatsAppLink = () => {
-        const timestamp = new Date().getTime(); // Genera un valor único cada vez que se hace clic
+        const timestamp = new Date().getTime(); 
         return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}&timestamp=${timestamp}`;
     };
 
