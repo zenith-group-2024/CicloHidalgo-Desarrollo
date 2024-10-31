@@ -20,6 +20,7 @@ export default {
         black: '#1D1D1D',
         gray: '#6C757E',
         old: '#4b5563',
+        light: '#A2ABB3',
        
       },
       fontFamily: {

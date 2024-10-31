@@ -5,6 +5,7 @@ import Navbar from "../UI/Navbar.jsx";
 import Footer from "../UI/Footer.jsx";
 import { GlobalContext } from '../global/GlobalState.jsx';
 import FetchUser from "../../hooks/FetchUser.js";
+import WhatsAppButton from "../UI/WhatsAppButton.jsx";
 
 function FormularioEnvio() {
   const { state } = useContext(GlobalContext);
@@ -21,6 +22,7 @@ function FormularioEnvio() {
   const [showModal, setShowModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { formData: userData, loading: userLoading } = FetchUser();
+  const [whatsappMessage, setWhatsappMessage] = useState("Hola! Quisiera información sobre un pedido.");
 
   useEffect(() => {
     // Asignar user_id solo si el usuario está autenticado
@@ -42,11 +44,11 @@ function FormularioEnvio() {
 
     // Si el método de envío es "retiro", elimina los campos de dirección
     if (formOrdenData.metodo_envio === "retiro") {
-        formOrdenData.direccion = null;
-        formOrdenData.direccion_detalles = null;
-        formOrdenData.provincia = null;
-        formOrdenData.ciudad = null;
-        formOrdenData.codigo_postal = null;
+      formOrdenData.direccion = null;
+      formOrdenData.direccion_detalles = null;
+      formOrdenData.provincia = null;
+      formOrdenData.ciudad = null;
+      formOrdenData.codigo_postal = null;
     }
 
     try {
@@ -61,7 +63,8 @@ function FormularioEnvio() {
       });
 
       if (response.ok) {
-        setShowSuccessMessage(true); // Muestra el mensaje de éxito
+        setShowSuccessMessage(true);
+        setWhatsappMessage("Hola! Acabo de realizar un pedido.");
       } else {
         const data = await response.json();
         console.log(`Error: ${data.message}`);
@@ -103,7 +106,7 @@ function FormularioEnvio() {
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar />
       <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto p-6 flex-1">
-        
+
         {/* Sección de Pedido */}
         <div className="w-full lg:w-1/3 bg-white p-6 sm:p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-6">Tu Pedido</h2>
@@ -132,7 +135,7 @@ function FormularioEnvio() {
         </div>
 
         {/* Formulario de Envío */}
-        <form className="w-full lg:w-2/3 bg-white rounded-lg p-6 sm:p-8 shadow-md" onSubmit={openModal} > 
+        <form className="w-full lg:w-2/3 bg-white rounded-lg p-6 sm:p-8 shadow-md" onSubmit={openModal} >
           <h2 className="text-2xl font-semibold mb-6">Cuenta</h2>
           <input type="email" value={userData?.email || "Sesión no iniciada!"} className="w-full border p-3 mb-6 rounded-lg bg-gray-50" readOnly />
           <h3 className="text-2xl font-semibold mb-4 flex items-center">
@@ -271,13 +274,14 @@ function FormularioEnvio() {
               </p>
               <button
                 onClick={() => setShowSuccessMessage(false)}
-                className="px-6 py-3 bg-gray-500 hover:bg-blue-500 text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
+                className="px-6 py-3 bg-gray  text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
               >
                 Cerrar
               </button>
             </div>
           </div>
         )}
+        <WhatsAppButton message="¡Hola! Acabo de realizar un pedido y quisiera confirmar los detalles." />
       </div>
       <Footer />
     </div>
