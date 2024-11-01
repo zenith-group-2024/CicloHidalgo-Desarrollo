@@ -65,5 +65,6 @@ Route::get('/ordenes-usuario/{id}', [OrdenController::class, 'getOrdenesByUser']
 Route::delete('/borrar-orden/{id}', [OrdenController::class, 'destroyOrden']);
 Route::put('/orden-completa/{id}', [OrdenController::class, 'ordenCompleta']);
 Route::get('/top-productos', [OrdenController::class, 'getTopProductosVendidos']);
+Route::patch('/toggle-estado-orden/{id}', [OrdenController::class, 'toggleEstadoOrden']);
 
 Route::get('/roles', function() {return App\Models\Role::all();});
