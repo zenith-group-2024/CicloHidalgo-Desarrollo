@@ -5,6 +5,7 @@ const FetchUser = () => {
     const { state } = useContext(GlobalContext);
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchUserData = async () => {
             if (state.id) { 
@@ -17,6 +18,7 @@ const FetchUser = () => {
                         },
                     });
                     const data = await response.json();
+                   
                     setFormData(data);
                 } catch (error) {
                     console.error('Error fetching user data:', error);
@@ -25,10 +27,10 @@ const FetchUser = () => {
                 }
             }
         };
-
+    
         fetchUserData();
     }, [state.id]);
-
+    
     return { formData, loading };
 };
 

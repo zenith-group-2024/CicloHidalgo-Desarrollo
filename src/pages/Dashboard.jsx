@@ -86,6 +86,27 @@ const Dashboard = () => {
     setOrdenSeleccionada(ordenSeleccionada === pedidoId ? null : pedidoId);
   };
 
+  const toggleEstadoPedido = async (pedidoId, estadoActual) => {
+    try {
+      const nuevoEstado = estadoActual === 'PENDIENTE' ? 'COMPLETO' : 'PENDIENTE';
+      const response = await fetch(`http://localhost:8000/api/toggle-estado-orden/${pedidoId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ estado: nuevoEstado }),
+      });
+
+      if (response.ok) {
+        fetchPedidos(); // Refresca la lista de pedidos
+      } else {
+        console.error('Error al cambiar el estado de la orden');
+      }
+    } catch (error) {
+      console.error('Error de conexión:', error);
+    }
+  };
+
   const mostrarCampo = (titulo, valor) => {
     if (valor) {
       return <p className="text-gray-700"><strong>{titulo}:</strong> {valor}</p>;
@@ -138,104 +159,121 @@ const Dashboard = () => {
           </div>
 
 
-          <div className="bg-white p-8 rounded-3xl shadow-lg transform  hover:shadow-2xl ">
-            <h2 className="text-2xl font-semibold mb-6 text-old border-b border-gray-200 pb-4">Pedidos</h2>
-            <input
-              type="text"
-              placeholder="Buscar pedidos por nombre o apellido..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="mb-6 p-3 border border-gray rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white p-6 md:p-8 rounded-3xl shadow-lg transform hover:shadow-2xl max-w-6xl mx-auto">
+    <h2 className="text-2xl font-semibold mb-6 text-old border-b border-gray-200 pb-4">Pedidos</h2>
+    <input
+        type="text"
+        placeholder="Buscar pedidos por nombre o apellido..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-6 p-3 border border-gray rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
+    />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-              {/* Pedidos Pendientes */}
-              <div className="bg-light p-6 rounded-2xl shadow-md hover:shadow-lg ">
-                <div className="flex items-center mb-6">
-                  <Clock className="text-yellow-400 h-7 w-7 mr-2" />
-                  <h3 className="text-xl font-semibold text-white">Pedidos Pendientes ({pedidosPendientesFiltrados.length})</h3>
-                </div>
-                <div className="space-y-4">
-                  {pedidosPendientesFiltrados.map((pedido) => (
-                    <div key={pedido.id} className=" p-4 rounded-xl bg-white shadow-sm hover:shadow-md ">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-medium text-gray-700">{pedido.nombre} {pedido.apellido}</p>
-                          <p className="text-sm text-gray-500">{formatFecha(pedido.created_at)}</p>
-                        </div>
-                        <button
-                          className="text-old border px-3 py-1 rounded-md  flex items-center space-x-1 shadow-lg hover:shadow-md transition-all"
-                          onClick={() => handleVerDetalles(pedido.id)}
-                        >
-                          <span>{ordenSeleccionada === pedido.id ? 'Ocultar' : 'Ver Detalles'}</span>
-                          {ordenSeleccionada === pedido.id ? (
-                            <ChevronUp className="h-4 w-4" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4" />
-                          )}
-                        </button>
-                      </div>
-                      {ordenSeleccionada === pedido.id && (
-                        <div className="mt-4 space-y-2 text-gray-600">
-                          {mostrarCampo("ID del pedido", pedido.id)}
-                          {mostrarCampo("Método de Pago", pedido.metodo_pago)}
-                          {mostrarCampo("Teléfono", pedido.telefono)}
-                          {mostrarCampo("Dirección", pedido.direccion)}
-                          {mostrarCampo("Provincia", pedido.provincia)}
-                          {mostrarCampo("Ciudad", pedido.ciudad)}
-                          {mostrarCampo("Código Postal", pedido.codigo_postal)}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Pedidos Completados */}
-              <div className="bg-light p-6 rounded-2xl shadow-md hover:shadow-lg ">
-                <div className="flex items-center mb-6">
-                  <CheckCircle className="text-green-400 h-7 w-7 mr-2" />
-                  <h3 className="text-xl font-semibold text-white">Pedidos Completados ({pedidosCompletadosFiltrados.length})</h3>
-                </div>
-                <div className="space-y-4">
-                  {pedidosCompletadosFiltrados.map((pedido) => (
-                    <div key={pedido.id} className=" p-4 rounded-xl bg-white shadow-sm hover:shadow-md ">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-medium text-gray-700">{pedido.nombre} {pedido.apellido}</p>
-                          <p className="text-sm text-gray-500">▸ {formatFecha(pedido.created_at)}</p>
-                          <p className="text-sm text-gray-500">▹ {formatFecha(pedido.updated_at)}</p>
-                        </div>
-                        <button
-                          className="text-old border px-3 py-1 rounded-md transition-all flex items-center space-x-1"
-                          onClick={() => handleVerDetalles(pedido.id)}
-                        >
-                          <span>{ordenSeleccionada === pedido.id ? 'Ocultar' : 'Ver Detalles'}</span>
-                          {ordenSeleccionada === pedido.id ? (
-                            <ChevronUp className="h-4 w-4" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4" />
-                          )}
-                        </button>
-                      </div>
-                      {ordenSeleccionada === pedido.id && (
-                        <div className="mt-4 space-y-2 text-gray-600">
-                          {mostrarCampo("ID del pedido", pedido.id)}
-                          {mostrarCampo("Método de Pago", pedido.metodo_pago)}
-                          {mostrarCampo("Teléfono", pedido.telefono)}
-                          {mostrarCampo("Dirección", pedido.direccion)}
-                          {mostrarCampo("Provincia", pedido.provincia)}
-                          {mostrarCampo("Ciudad", pedido.ciudad)}
-                          {mostrarCampo("Código Postal", pedido.codigo_postal)}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+        {/* Pedidos Pendientes */}
+        <div className="bg-light p-6 rounded-2xl shadow-md hover:shadow-lg">
+            <div className="flex items-center mb-6">
+                <Clock className="text-yellow-400 h-7 w-7 mr-2" />
+                <h3 className="text-xl font-semibold text-white">Pedidos Pendientes ({pedidosPendientesFiltrados.length})</h3>
             </div>
-          </div>
+            <div className="space-y-4">
+                {pedidosPendientesFiltrados.map((pedido) => (
+                    <div key={pedido.id} className="p-4 rounded-xl bg-white shadow-sm hover:shadow-md">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <p className="font-medium text-gray-700">{pedido.nombre} {pedido.apellido}</p>
+                                <p className="text-sm text-gray-500">{formatFecha(pedido.created_at)}</p>
+                            </div>
+                            <div className="flex space-x-2">
+                                <button
+                                    className="text-old border px-2 py-1 rounded-full text-sm flex items-center space-x-1 shadow-md hover:shadow-sm transition-all"
+                                    onClick={() => handleVerDetalles(pedido.id)}
+                                >
+                                    <span>{ordenSeleccionada === pedido.id ? 'Ocultar' : 'Ver Detalles'}</span>
+                                    {ordenSeleccionada === pedido.id ? (
+                                        <ChevronUp className="h-4 w-4" />
+                                    ) : (
+                                        <ChevronDown className="h-4 w-4" />
+                                    )}
+                                </button>
+                                <button
+                                    className="text-green-600 border border-green-300 bg-green-50 px-2 py-1 rounded-full text-sm flex items-center shadow-md hover:shadow-sm transition-all"
+                                    onClick={() => toggleEstadoPedido(pedido.id, pedido.estado)}
+                                >
+                                    <CheckCircle className="h-4 w-4 mr-1" /> Completar
+                                </button>
+                            </div>
+                        </div>
+                        {ordenSeleccionada === pedido.id && (
+                            <div className="mt-4 space-y-2 text-gray-600">
+                                {mostrarCampo("ID del pedido", pedido.id)}
+                                {mostrarCampo("Método de Pago", pedido.metodo_pago)}
+                                {mostrarCampo("Teléfono", pedido.telefono)}
+                                {mostrarCampo("Dirección", pedido.direccion)}
+                                {mostrarCampo("Provincia", pedido.provincia)}
+                                {mostrarCampo("Ciudad", pedido.ciudad)}
+                                {mostrarCampo("Código Postal", pedido.codigo_postal)}
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        {/* Pedidos Completados */}
+        <div className="bg-light p-6 rounded-2xl shadow-md hover:shadow-lg">
+            <div className="flex items-center mb-6">
+                <CheckCircle className="text-green-400 h-7 w-7 mr-2" />
+                <h3 className="text-xl font-semibold text-white">Pedidos Completados ({pedidosCompletadosFiltrados.length})</h3>
+            </div>
+            <div className="space-y-4">
+                {pedidosCompletadosFiltrados.map((pedido) => (
+                    <div key={pedido.id} className="p-4 rounded-xl bg-white shadow-sm hover:shadow-md">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <p className="font-medium text-gray-700">{pedido.nombre} {pedido.apellido}</p>
+                                <p className="text-sm text-gray-500">▸ {formatFecha(pedido.created_at)}</p>
+                                <p className="text-sm text-gray-500">▹ {formatFecha(pedido.updated_at)}</p>
+                            </div>
+                            <div className="flex space-x-2">
+                                <button
+                                    className="text-old border px-2 py-1 rounded-full text-sm flex items-center space-x-1 shadow-md hover:shadow-sm transition-all"
+                                    onClick={() => handleVerDetalles(pedido.id)}
+                                >
+                                    <span>{ordenSeleccionada === pedido.id ? 'Ocultar' : 'Ver Detalles'}</span>
+                                    {ordenSeleccionada === pedido.id ? (
+                                        <ChevronUp className="h-4 w-4" />
+                                    ) : (
+                                        <ChevronDown className="h-4 w-4" />
+                                    )}
+                                </button>
+                                <button
+                                    className="text-yellow-600 border border-yellow-300 bg-yellow-50 px-2 py-1 rounded-full text-sm flex items-center shadow-md hover:shadow-sm transition-all"
+                                    onClick={() => toggleEstadoPedido(pedido.id, pedido.estado)}
+                                >
+                                    <Clock className="h-4 w-4 mr-1" /> Pendiente
+                                </button>
+                            </div>
+                        </div>
+                        {ordenSeleccionada === pedido.id && (
+                            <div className="mt-4 space-y-2 text-gray-600">
+                                {mostrarCampo("ID del pedido", pedido.id)}
+                                {mostrarCampo("Método de Pago", pedido.metodo_pago)}
+                                {mostrarCampo("Teléfono", pedido.telefono)}
+                                {mostrarCampo("Dirección", pedido.direccion)}
+                                {mostrarCampo("Provincia", pedido.provincia)}
+                                {mostrarCampo("Ciudad", pedido.ciudad)}
+                                {mostrarCampo("Código Postal", pedido.codigo_postal)}
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
         </div>
       </main>

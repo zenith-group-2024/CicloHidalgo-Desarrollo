@@ -215,28 +215,27 @@ export function Productos() {
                   </motion.div>
                 ))
               )}
-
-          </div>
-
-        </motion.div>
-      </div>
-      <div className="flex justify-center mt-4 mb-4">
-        <button
-          className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
-          onClick={prevPage}
-          disabled={currentPage === 1}
-        >
-          Anterior
-        </button>
-        <span className="px-4 py-2">Página {currentPage}</span>
-        <button
-          className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
-          onClick={nextPage}
-          disabled={currentPage === Math.ceil(productos.length / productsPerPage)}
-        >
-          Siguiente
-        </button>
-      </div>
+              
+            </div>
+          </motion.div>
+        </div>
+        <div className="flex justify-center mt-4 mb-4">
+                    <button
+                        className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
+                        onClick={prevPage}
+                        disabled={currentPage === 1}
+                    >
+                        Anterior
+                    </button>
+                    <span className="px-4 py-2">Página {currentPage}</span>
+                    <button
+                        className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
+                        onClick={nextPage}
+                        disabled={currentPage === Math.ceil(productos.length / productsPerPage)}
+                    >
+                        Siguiente
+                    </button>
+                </div>
 
                 <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
       <Footer />
