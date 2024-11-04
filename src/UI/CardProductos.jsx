@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Link } from 'react-router-dom';
-import {CartContext} from '../UI/prueba_carrito'
+import {CartContext} from './prueba_carrito'
 
 
 export const Card = ({producto}) => {
