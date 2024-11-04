@@ -4,7 +4,7 @@ import { GlobalContext } from '../global/GlobalState';
 import FetchUser from '../../hooks/FetchUser';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
-import { Package, User, LogOut, Box, FileText, Users, Tag } from 'lucide-react';
+import { Package, User, LogOut, Box, FileText, Users, Tag, LayoutDashboard, ShoppingBag } from 'lucide-react';
 
 const MenuPerfil = () => {
     const navigate = useNavigate();
@@ -17,12 +17,8 @@ const MenuPerfil = () => {
 
     useEffect(() => {
         if (!userLoading && fetchedUserData) {
-           
             setNombreUsuario(fetchedUserData.nombre || '');
-            
-            
             const isUserAdmin = fetchedUserData.admin === true;
-            console.log('Is User Admin:', isUserAdmin); 
             setIsAdmin(isUserAdmin);
         }
     }, [userLoading, fetchedUserData]);
@@ -50,7 +46,7 @@ const MenuPerfil = () => {
                     <h2 className="text-4xl font-bold font-primary mb-6 text-gray-800">Hola, {nombreUsuario}</h2>
                     <p className="text-gray mb-10 text-lg font-secondary leading-relaxed">
                         {isAdmin
-                            ? 'Desde este panel de administración, puedes gestionar productos, contenido, usuarios y ofertas.'
+                            ? 'Desde este panel de administración, puedes gestionar productos, contenido, usuarios, pedidos y ofertas.'
                             : 'Desde este panel, puedes revisar tus pedidos recientes, gestionar tus direcciones de envío y facturación, y actualizar tu contraseña e información personal de forma sencilla.'}
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 font-primary">
@@ -59,7 +55,9 @@ const MenuPerfil = () => {
                                 <Card title="Gestionar Productos" icon={<Box size={40} className="text-blue" />} onClick={() => navigate('/gestionar-productos')} />
                                 <Card title="Gestionar Contenido" icon={<FileText size={40} className="text-blue" />} onClick={() => navigate('/gestionarcontenido')} />
                                 <Card title="Gestionar Usuarios" icon={<Users size={40} className="text-blue" />} onClick={() => navigate('/gestionUsuarios')} />
-                                <Card title="Ofertas" icon={<Tag size={40} className="text-blue" />} onClick={() => navigate('/Ofertas')} />
+                                <Card title="Gestionar Ofertas" icon={<Tag size={40} className="text-blue" />} onClick={() => navigate('/Ofertas')} />
+                                <Card title="Gestionar Pedidos" icon={<ShoppingBag size={40} className="text-blue" />} onClick={() => navigate('/Pedidos')} />
+                                <Card title="Dashboard" icon={<LayoutDashboard size={40} className="text-blue" />} onClick={() => navigate('/Dashboard')} />
                             </>
                         ) : (
                             <>
@@ -74,7 +72,6 @@ const MenuPerfil = () => {
             <Footer />
         </div>
     );
-    
 };
 
 const Card = ({ title, icon, onClick }) => (
