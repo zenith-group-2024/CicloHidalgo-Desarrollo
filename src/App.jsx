@@ -19,6 +19,8 @@ import Dashboard from './pages/Dashboard.jsx';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ListaOrdenes from './pages/ListaOrdenes.jsx';
+import CRUDProductos from '../src/UI/CRUDProductos.jsx';
+import CRUDContenido from '../src/UI/CRUDContenido.jsx';
 
 function App() {
   return (
@@ -43,6 +45,10 @@ function App() {
             <Route path="/admin/editar/:id" element={<FormEditarAdmin />} />
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
             <Route path="/ListaOrdenes" element={<ListaOrdenes />} />
+            <Route path="/gestionar-productos" element={<CRUDProductos />} />
+            <Route path="/gestionarcontenido" element={<CRUDContenido />} />
+          
+            
           </Routes>
 
         </GlobalProvider>
