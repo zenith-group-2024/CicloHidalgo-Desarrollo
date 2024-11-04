@@ -5,7 +5,7 @@ import { GlobalContext } from '../global/GlobalState.jsx';
 import LoginForm from '../forms/Login.jsx';
 import logo from '../assets/images/logo.svg';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CartContext } from '../UI/prueba_carrito.jsx';
+import { CartContext } from './prueba_carrito.jsx';
 
 const Navbar = () => {
   const { state, logout } = useContext(GlobalContext);
