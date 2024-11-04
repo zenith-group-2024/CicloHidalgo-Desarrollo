@@ -10,7 +10,8 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ProfileController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use App\Http\Controllers\OrdenController;
-use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\EmailController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -49,7 +50,12 @@ Route::post('/contenido/creacion', [ContenidoController::class, 'store']);
 Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
 Route::put('/contenido/update/{id}', [ContenidoController::class, 'update']);
 
-Route::post('/password/email', [PasswordResetController::class, 'enviarEnlaceRestablecimiento']);
+
+Route::post('/enviar-correo-personalizado', [EmailController::class, 'enviarCorreoPersonalizado']);
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
+
+
 
 Route::middleware('auth:sanctum')->group(function () {
 });
