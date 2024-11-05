@@ -120,7 +120,6 @@ const Navbar = () => {
         >
           Servicios
         </Link>
-        
       </div>
 
 
@@ -138,6 +137,11 @@ const Navbar = () => {
             <div className="absolute -top-5 left-1 transform -translate-x-1/2 bg-gray text-white text-xs font-medium rounded-md px-3 py-1 shadow-md opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-300 ease-in-out whitespace-nowrap">
               Ir a mi carrito
             </div>
+            {showMessage && (
+              <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 mb-12 bg-red text-white p-2 rounded shadow-lg text-xl z-50 transition-opacity duration-300">
+                {message}
+              </div>
+            )}
           </div>
         )}
 
