@@ -25,16 +25,15 @@ class EmailController extends Controller
                 return response()->json(['error' => 'El correo no pertenece a un usuario registrado'], 400);
             }
 
-            // Generar un token de restablecimiento de contraseña
-            $token = Str::random(60);
-            Password::createToken($user);
 
-            // Aquí puedes personalizar el mensaje y agregar el enlace para restablecer la contraseña
+            $token = Password::createToken($user);  
+
+           
             $nombre = $user->nombre;
-            $url = url("/api/reset-password/{$token}");
+            $url = url("/reset-password/{$token}");
             $mensaje = "Hola {$nombre},\n\nEste es un mensaje personalizado para ti.\n\nPara restablecer tu contraseña, por favor visita el siguiente enlace: {$url}";
 
-            // Enviar el correo
+       
             Mail::to($email)->send(new CorreoPersonalizado($nombre, $mensaje));
 
             return response()->json(['message' => 'Correo de restablecimiento de contraseña enviado exitosamente']);

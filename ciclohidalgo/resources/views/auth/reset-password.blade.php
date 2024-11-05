@@ -9,6 +9,7 @@
     <form action="{{ route('password.update') }}" method="POST">
         @csrf
         <input type="hidden" name="token" value="{{ $token }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <label for="email">Correo electrónico</label>
         <input type="email" name="email" required>

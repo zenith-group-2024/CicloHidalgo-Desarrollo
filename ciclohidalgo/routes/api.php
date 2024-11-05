@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ProfileController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use App\Http\Controllers\OrdenController;
-use App\Http\Controllers\PasswordResetController;
+
 use App\Http\Controllers\EmailController;
 
 Route::get('/user', function (Request $request) {
@@ -52,8 +52,6 @@ Route::put('/contenido/update/{id}', [ContenidoController::class, 'update']);
 
 
 Route::post('/enviar-correo-personalizado', [EmailController::class, 'enviarCorreoPersonalizado']);
-Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
-Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
 
 
 

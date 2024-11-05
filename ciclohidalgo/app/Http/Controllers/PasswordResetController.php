@@ -19,26 +19,24 @@ class PasswordResetController extends Controller
     public function reset(Request $request)
     {
         $request->validate([
-            'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|confirmed|min:8',
+            'token' => 'required'
         ]);
     
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
-                Log::info('Restableciendo contraseña para el usuario: ' . $user->email);
+                \Log::info("Usuario: {$user->email}, Nueva contraseña: {$password}");
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ])->save();
             }
         );
     
-        Log::info('Estado del restablecimiento de contraseña: ' . $status);
-    
         return $status === Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))
-                    : back()->withErrors(['email' => [__($status)]]);
+                    : back()->withErrors(['email' => __($status)]);
     }
      }
 
