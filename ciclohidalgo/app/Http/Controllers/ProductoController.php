@@ -223,4 +223,10 @@ class ProductoController extends Controller
 
         return response()->json(['message' => 'Descuentos actualizados!']);
     }
+
+    public function getDestacados()
+    {
+        $productosDestacados = Producto::where('destacado', true)->get();
+        return response()->json(['productos' => $productosDestacados]);
+    }
 }

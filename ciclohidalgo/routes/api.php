@@ -35,6 +35,7 @@ Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
+Route::get('/destacados', [ProductoController::class, 'getDestacados']);
 
 Route::post('/user/login', [UserController::class, 'check'])->name('login');
 Route::post('/user/signin', [UserController::class, 'store']);
