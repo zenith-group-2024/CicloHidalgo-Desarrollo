@@ -22,6 +22,6 @@ export const useFetchProductos = () => {
 
     return {
         productos,
-        isLoading // Ensure isLoading is returned
+        isLoading
     };
 };
