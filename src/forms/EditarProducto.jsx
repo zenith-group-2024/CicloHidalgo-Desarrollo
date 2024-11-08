@@ -6,13 +6,10 @@ import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import { div, label } from 'framer-motion/client';
 
 const FormEditarProducto = ({ onClose }) => {
-
   const { update } = useUpdateProducto();
   const { productos } = useFetchProductos();
-
   const [imagen, setImagen] = useState();
   const inputFile = useRef(null);
-
 
   const [producto, setProducto] = useState({
     id: '',
@@ -29,7 +26,6 @@ const FormEditarProducto = ({ onClose }) => {
   });
 
   const handleChange = (e) => {
-
    
     const { name, value, type, checked, files } = e.target;
     setProducto({
@@ -51,7 +47,6 @@ const FormEditarProducto = ({ onClose }) => {
   const [selectedOption, setSelectedOption] = useState();
 
   const handleProductChanged = (option) => {
-  
     setSelectedOption(option);
     setProducto((producto) => ({
       ...producto,
@@ -63,8 +58,6 @@ const FormEditarProducto = ({ onClose }) => {
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-
-
   const crearOpciones = () => {
     const opciones = productos.map(producto => ({
       value : producto.id,
@@ -77,12 +70,9 @@ const FormEditarProducto = ({ onClose }) => {
 
   crearOpciones(); 
   },[productos]);
-  
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(producto);
     update(
       producto.id,
       producto.nombre,
@@ -118,7 +108,6 @@ const FormEditarProducto = ({ onClose }) => {
       inputFile.current.type = 'text';
       inputFile.current.type = 'file';
     }
-    
   };
 
   return (
@@ -154,7 +143,6 @@ const FormEditarProducto = ({ onClose }) => {
                       </div>
                   </div>
                 )} />  
-                
             </div>
 
             <div className="mb-4">
@@ -244,7 +232,6 @@ const FormEditarProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
             
             <div className="mb-4">
               <label className="block text-gray-700">Imagen</label>
@@ -258,7 +245,6 @@ const FormEditarProducto = ({ onClose }) => {
                 className="w-full px-4 py-2 border rounded-lg"
               />
             </div>
-
            
             <div className="mb-4">
               <label className="block text-gray-700">Cantidad</label>

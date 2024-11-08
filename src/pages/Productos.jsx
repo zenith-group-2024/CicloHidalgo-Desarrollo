@@ -11,12 +11,9 @@ import loadingGif from '../assets/animaciones/AnimationLoading.gif';
 import WhatsAppButton from '../UI/WhatsAppButton';
 import { ChevronDown } from 'lucide-react';
 
-
-
 export function Productos() {
   const { addToCart } = useContext(CartContext);
   const { productos, isLoading } = useFetchProductos();
-
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
@@ -37,10 +34,9 @@ export function Productos() {
     setSelectedBrands(selected);
   }, []);
 
-  
   const handleToggleFiltros = () => {
     setCheckboxFiltros(!checkboxFiltros);
-};
+  };
 
   useEffect(() => {
     const filterProducts = () => {
@@ -108,10 +104,8 @@ export function Productos() {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProductos.slice(indexOfFirstProduct, indexOfLastProduct);
-
   const nextPage = () => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredProductos.length / productsPerPage)));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-
 
   return (
     <div className="bg-gray-50 min-h-screen ">
@@ -193,7 +187,6 @@ export function Productos() {
                 ))
               )
 
-
               : isLoading ? (
                 <div className="flex justify-center items-center col-span-full">
                   <img src={loadingGif} alt="Loading" className="w-20 h-20" />
@@ -215,29 +208,29 @@ export function Productos() {
                   </motion.div>
                 ))
               )}
-              
-            </div>
-          </motion.div>
-        </div>
-        <div className="flex justify-center mt-4 mb-4">
-                    <button
-                        className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
-                        onClick={prevPage}
-                        disabled={currentPage === 1}
-                    >
-                        Anterior
-                    </button>
-                    <span className="px-4 py-2">Página {currentPage}</span>
-                    <button
-                        className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
-                        onClick={nextPage}
-                        disabled={currentPage === Math.ceil(productos.length / productsPerPage)}
-                    >
-                        Siguiente
-                    </button>
-                </div>
 
-                <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
+          </div>
+        </motion.div>
+      </div>
+      <div className="flex justify-center mt-4 mb-4">
+        <button
+          className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
+          onClick={prevPage}
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </button>
+        <span className="px-4 py-2">Página {currentPage}</span>
+        <button
+          className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
+          onClick={nextPage}
+          disabled={currentPage === Math.ceil(productos.length / productsPerPage)}
+        >
+          Siguiente
+        </button>
+      </div>
+
+      <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
       <Footer />
     </div>
   );
