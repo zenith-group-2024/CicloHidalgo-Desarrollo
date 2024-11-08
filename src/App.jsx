@@ -21,6 +21,7 @@ import ListaOrdenes from './pages/ListaOrdenes.jsx';
 import CRUDProductos from '../src/UI/CRUDProductos.jsx';
 import CRUDContenido from '../src/UI/CRUDContenido.jsx';
 import Pedidos from './pages/GestionPedidos.jsx';
+import CRUDUsuarios from './UI/CRUDUsuarios.jsx';
 
 function App() {
   return (
@@ -36,17 +37,16 @@ function App() {
             <Route path="/Carrito" element={<Carrito />} />
             <Route path="/producto/:id" element={<DetalleProducto />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path="/crud/:resource" element={<AdminCRUD />} />
             <Route path="/PerfilCliente" element={<PerfilCliente />} />
             <Route path="/MenuPerfil" element={<MenuPerfil />} />
             <Route path="/Orden" element={<Orden />} />
             <Route path="/admin/lista" element={<ListAdmins />} />
-            <Route path="*" element={<Navigate to="/admin-dashboard" />} />
             <Route path="/ListaOrdenes" element={<ListaOrdenes />} />
             <Route path="/gestionar-productos" element={<CRUDProductos />} />
             <Route path="/gestionarcontenido" element={<CRUDContenido />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Pedidos" element={<Pedidos />} />
+            <Route path="/gestionarUsuarios" element={<CRUDUsuarios />} />/
           </Routes>
 
         </GlobalProvider>
