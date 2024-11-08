@@ -10,17 +10,19 @@ import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 import loadingGif from '../assets/animaciones/AnimationLoading.gif';
 import WhatsAppButton from '../UI/WhatsAppButton';
 import { ChevronDown } from 'lucide-react';
+import GlobalProductos from '../global/GlobalProductos.jsx';
 
 
 
 export function Productos() {
   const { addToCart } = useContext(CartContext);
-  const { productos, isLoading } = useFetchProductos();
+  const { isLoading } = useFetchProductos();
+  const globalProductos  = useContext(GlobalProductos)
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
-  const [filteredProductos, setFilteredProductos] = useState(productos);
+  const [filteredProductos, setFilteredProductos] = useState(globalProductos);
 
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 9;
@@ -44,7 +46,7 @@ export function Productos() {
 
   useEffect(() => {
     const filterProducts = () => {
-      const filtered = productos.filter((producto) => {
+      const filtered = globalProductos.filter((producto) => {
         const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(producto.categoria);
         const subCategoryMatch = selectedSubCategories.length === 0 || selectedSubCategories.includes(producto.subcategoria);
         const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(producto.marca);
@@ -54,13 +56,13 @@ export function Productos() {
     };
 
     filterProducts();
-  }, [productos, selectedCategories, selectedSubCategories, selectedBrands]);
+  }, [globalProductos ,selectedCategories, selectedSubCategories, selectedBrands]);
 
   useEffect(() => {
-    if (productos.length > 0) {
-      setFilteredProductos(productos);
+    if (globalProductos.length > 0) {
+      setFilteredProductos(globalProductos);
     }
-  }, [productos]);
+  }, [globalProductos]);
 
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -89,7 +91,7 @@ export function Productos() {
     const searchTerm = e.target.value;
     setSearchProducto(searchTerm)
 
-    const productoFiltrados = productos.filter((producto) =>
+    const productoFiltrados = globalProductos.filter((producto) =>
       producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -116,7 +118,6 @@ export function Productos() {
   return (
     <div className="bg-gray-50 min-h-screen ">
       <Navbar />
-
       <div className="container mx-auto py-8">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-4 gap-8"
@@ -231,7 +232,7 @@ export function Productos() {
                     <button
                         className="px-4 py-2 text-white bg-slate-500 rounded-md hover:bg-slate-600"
                         onClick={nextPage}
-                        disabled={currentPage === Math.ceil(productos.length / productsPerPage)}
+                        disabled={currentPage === Math.ceil(globalProductos.length / productsPerPage)}
                     >
                         Siguiente
                     </button>

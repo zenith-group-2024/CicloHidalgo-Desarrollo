@@ -1,13 +1,46 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { useFetchProductosFiltro } from "../../hooks/FetchFiltros"; 
+import GlobalProductos from "../global/GlobalProductos";
 
 const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChange }) => {
-    const { categorias, isLoading } = useFetchProductosFiltro();
-    
+    const { isLoading } = useFetchProductosFiltro();
+    const globalProductos = useContext(GlobalProductos);
+    const [categorias, setCategorias] = useState({});
+
     const [selectedCategories, setSelectedCategories] = useState({});
     const [selectedSubCategories, setSelectedSubCategories] = useState({});
     const [selectedBrands, setSelectedBrands] = useState({});
 
+    useEffect(() => {
+    const categoriasMap = {};
+        globalProductos.forEach(producto => {
+                const { categoria, subcategoria, marca } = producto;
+                
+                if (!categoriasMap[categoria]) {
+                    categoriasMap[categoria] = { 
+                        label: categoria, 
+                        subcategories: new Set(), 
+                        brands: new Set() 
+                    };
+                }
+                
+                if (subcategoria) {
+                    categoriasMap[categoria].subcategories.add(subcategoria);
+                }
+                
+                if (marca) {
+                    categoriasMap[categoria].brands.add(marca);
+                }
+            });
+
+           
+            Object.keys(categoriasMap).forEach(key => {
+                categoriasMap[key].subcategories = Array.from(categoriasMap[key].subcategories);
+                categoriasMap[key].brands = Array.from(categoriasMap[key].brands);
+            });
+
+        setCategorias(categoriasMap);
+    },[globalProductos])
     const handleCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedCategories(prev => ({
