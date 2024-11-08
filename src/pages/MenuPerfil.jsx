@@ -58,6 +58,7 @@ const MenuPerfil = () => {
                                 <Card title="Gestionar Usuarios" icon={<Users size={40} className="text-blue" />} onClick={() => navigate('/gestionarUsuarios')} />
                                 <Card title="Gestionar Pedidos" icon={<ShoppingBag size={40} className="text-blue" />} onClick={() => navigate('/Pedidos')} />
                                 <Card title="Dashboard" icon={<LayoutDashboard size={40} className="text-blue" />} onClick={() => navigate('/Dashboard')} />
+                                <Card title="Gestionar Ofertas" icon={<Tag size={40} className="text-blue" />} onClick={() => navigate('/Ofertas')} />
                             </>
                         ) : (
                             <>

@@ -24,6 +24,7 @@ import Pedidos from './pages/GestionPedidos.jsx';
 import { useFetchProductos } from '../hooks/FetchProductos.js'
 import GlobalProductos from './global/GlobalProductos.jsx'
 import CRUDUsuarios from './UI/CRUDUsuarios.jsx';
+import Ofertas from './pages/Ofertas.jsx';
 
 function App() {
 
@@ -83,6 +84,7 @@ useEffect(() =>{
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Pedidos" element={<Pedidos />} />
             <Route path="/gestionarUsuarios" element={<CRUDUsuarios />} />/
+            <Route path="Ofertas" element={<Ofertas />}/>
           </Routes>
 
         </GlobalProvider>
