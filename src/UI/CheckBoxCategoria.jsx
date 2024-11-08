@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback, useContext } from "react";
-import { useFetchProductosFiltro } from "../../hooks/FetchFiltros"; 
 import GlobalProductos from "../global/GlobalProductos";
 
 const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChange }) => {
-    const { isLoading } = useFetchProductosFiltro();
+    const [isLoading, setIsLoading] = useState(true);
     const globalProductos = useContext(GlobalProductos);
     const [categorias, setCategorias] = useState({});
 
@@ -12,6 +11,8 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
     const [selectedBrands, setSelectedBrands] = useState({});
 
     useEffect(() => {
+        setIsLoading(true);
+        setTimeout(() => {
     const categoriasMap = {};
         globalProductos.forEach(producto => {
                 const { categoria, subcategoria, marca } = producto;
@@ -40,7 +41,10 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
             });
 
         setCategorias(categoriasMap);
-    },[globalProductos])
+        setIsLoading(false);
+        }, 0);
+    },[globalProductos]);
+
     const handleCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedCategories(prev => ({
@@ -101,6 +105,10 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
     useEffect(() => {
         updateBrands();
     }, [selectedBrands, updateBrands]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     const getSubCategoriesForSelected = () => {
         const combinedSubCategories = Object.keys(selectedCategories)

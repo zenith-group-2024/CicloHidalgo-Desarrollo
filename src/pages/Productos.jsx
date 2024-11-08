@@ -5,7 +5,6 @@ import Card from "../UI/CardProductos";
 import Navbar from "../UI/Navbar";
 import Footer from "../UI/Footer";
 import { CartContext } from '../UI/prueba_carrito.jsx';
-import { useFetchProductos } from '../../hooks/FetchProductos.js';
 import CheckBoxCategoria from '../UI/CheckBoxCategoria';
 import loadingGif from '../assets/animaciones/AnimationLoading.gif';
 import WhatsAppButton from '../UI/WhatsAppButton';
@@ -16,7 +15,7 @@ import GlobalProductos from '../global/GlobalProductos.jsx';
 
 export function Productos() {
   const { addToCart } = useContext(CartContext);
-  const { isLoading } = useFetchProductos();
+  const [isLoading, setIsLoading] = useState(true);
   const globalProductos  = useContext(GlobalProductos)
 
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -42,6 +41,16 @@ export function Productos() {
   const handleToggleFiltros = () => {
     setCheckboxFiltros(!checkboxFiltros);
   };
+
+  useEffect(() => {
+    if (globalProductos.length > 0) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setFilteredProductos(globalProductos);
+        setIsLoading(false);
+      }, 0);
+    }
+  }, [globalProductos]);
 
   useEffect(() => {
     const filterProducts = () => {
