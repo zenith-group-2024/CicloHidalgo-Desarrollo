@@ -13,7 +13,6 @@ import PerfilCliente from './pages/PerfilCliente.jsx';
 import { GlobalProvider } from '../src/global/GlobalState.jsx';
 import MenuPerfil from './pages/MenuPerfil.jsx';
 import ListAdmins from './UI/ListAdmins.jsx';
-import FormEditarAdmin from './forms/FormEditarAdmin.jsx';
 import Orden from './pages/Orden';
 import Dashboard from './pages/Dashboard.jsx';
 import "slick-carousel/slick/slick.css";
@@ -78,15 +77,12 @@ useEffect(() =>{
             <Route path="/MenuPerfil" element={<MenuPerfil />} />
             <Route path="/Orden" element={<Orden />} />
             <Route path="/admin/lista" element={<ListAdmins />} />
-            <Route path="/admin/editar/:id" element={<FormEditarAdmin />} />
             <Route path="*" element={<Navigate to="/admin-dashboard" />} />
             <Route path="/ListaOrdenes" element={<ListaOrdenes />} />
             <Route path="/gestionar-productos" element={<CRUDProductos />} />
             <Route path="/gestionarcontenido" element={<CRUDContenido />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Pedidos" element={<Pedidos />} />
-          
-            
           </Routes>
 
         </GlobalProvider>

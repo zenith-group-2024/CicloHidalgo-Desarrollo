@@ -39,10 +39,9 @@ export function Productos() {
     setSelectedBrands(selected);
   }, []);
 
-  
   const handleToggleFiltros = () => {
     setCheckboxFiltros(!checkboxFiltros);
-};
+  };
 
   useEffect(() => {
     const filterProducts = () => {
@@ -110,10 +109,8 @@ export function Productos() {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProductos.slice(indexOfFirstProduct, indexOfLastProduct);
-
   const nextPage = () => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredProductos.length / productsPerPage)));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-
 
   return (
     <div className="bg-gray-50 min-h-screen ">
@@ -194,7 +191,6 @@ export function Productos() {
                 ))
               )
 
-
               : isLoading ? (
                 <div className="flex justify-center items-center col-span-full">
                   <img src={loadingGif} alt="Loading" className="w-20 h-20" />
@@ -238,7 +234,7 @@ export function Productos() {
                     </button>
                 </div>
 
-                <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
+      <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre sus productos." />
       <Footer />
     </div>
   );

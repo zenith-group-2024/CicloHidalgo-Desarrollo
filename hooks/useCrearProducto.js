@@ -34,7 +34,6 @@ export const useCrearProducto = () => {
         console.log(error);
       } finally {
         setIsLoading(false);
-        //console.log(message);
       }
     };
     

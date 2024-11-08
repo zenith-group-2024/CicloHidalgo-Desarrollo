@@ -120,6 +120,17 @@ const Pedidos = () => {
                         {mostrarCampo("Provincia", pedido.provincia)}
                         {mostrarCampo("Ciudad", pedido.ciudad)}
                         {mostrarCampo("Código Postal", pedido.codigo_postal)}
+                        {/* Lista de productos */}
+                        <h4 className="font-semibold mt-2">Productos en la Orden:</h4>
+                        <ul className="list-disc pl-5">
+                          {pedido.productos && pedido.productos.map((producto) => (
+                            <li key={producto.id} className="text-gray-800">
+                              <p>{producto.nombre}</p>
+                              <p>Cantidad: {producto.pivot.cantidad}</p>
+                              <p>₡{producto.pivot.precio}</p>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                   </div>
@@ -167,6 +178,17 @@ const Pedidos = () => {
                         {mostrarCampo("Provincia", pedido.provincia)}
                         {mostrarCampo("Ciudad", pedido.ciudad)}
                         {mostrarCampo("Código Postal", pedido.codigo_postal)}
+                        {/* Lista de productos */}
+                        <h4 className="font-semibold mt-2">Productos en la Orden:</h4>
+                        <ul className="list-disc pl-5">
+                          {pedido.productos && pedido.productos.map((producto) => (
+                            <li key={producto.id} className="text-gray-800">
+                              <p>{producto.nombre}</p>
+                              <p>Cantidad: {producto.pivot.cantidad}</p>
+                              <p>₡{producto.pivot.precio}</p>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                   </div>

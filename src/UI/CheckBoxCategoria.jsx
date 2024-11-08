@@ -187,7 +187,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
             <button
                 onClick={resetFilters}
                 className="p-2 border-2 border-old text-old rounded-lg focus:outline-none transform transition-transform duration-300 hover:scale-105"
-
             >
                 Limpiar Filtros
             </button>
