@@ -1,11 +1,50 @@
-import { useState, useEffect, useCallback } from "react";
-import { useFetchProductosFiltro } from "../../hooks/FetchFiltros";
+import { useState, useEffect, useCallback, useContext } from "react";
+import GlobalProductos from "../global/GlobalProductos";
 
 const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChange }) => {
-    const { categorias, isLoading } = useFetchProductosFiltro();
+    const [isLoading, setIsLoading] = useState(true);
+    const globalProductos = useContext(GlobalProductos);
+    const [categorias, setCategorias] = useState({});
+
     const [selectedCategories, setSelectedCategories] = useState({});
     const [selectedSubCategories, setSelectedSubCategories] = useState({});
     const [selectedBrands, setSelectedBrands] = useState({});
+
+    useEffect(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+    const categoriasMap = {};
+        globalProductos.forEach(producto => {
+                const { categoria, subcategoria, marca } = producto;
+                
+                if (!categoriasMap[categoria]) {
+                    categoriasMap[categoria] = { 
+                        label: categoria, 
+                        subcategories: new Set(), 
+                        brands: new Set() 
+                    };
+                }
+                
+                if (subcategoria) {
+                    categoriasMap[categoria].subcategories.add(subcategoria);
+                }
+                
+                if (marca) {
+                    categoriasMap[categoria].brands.add(marca);
+                }
+            });
+
+           
+            Object.keys(categoriasMap).forEach(key => {
+                categoriasMap[key].subcategories = Array.from(categoriasMap[key].subcategories);
+                categoriasMap[key].brands = Array.from(categoriasMap[key].brands);
+            });
+
+        setCategorias(categoriasMap);
+        setIsLoading(false);
+        }, 0);
+    },[globalProductos]);
+
     const handleCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedCategories(prev => ({
@@ -66,6 +105,10 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
     useEffect(() => {
         updateBrands();
     }, [selectedBrands, updateBrands]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     const getSubCategoriesForSelected = () => {
         const combinedSubCategories = Object.keys(selectedCategories)

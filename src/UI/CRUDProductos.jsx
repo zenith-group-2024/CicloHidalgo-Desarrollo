@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import FormAddProduct from '../forms/AñadirProducto';
-import FormEditProduct from '../forms/EditarProducto';
-import FormDeleteProduct from '../forms/EliminarProducto';
+import FormEditarProducto from '../forms/EditarProducto';
 import FormAddOffer from '../forms/AnadirOferta';
-import { useFetchProductos } from '../../hooks/FetchProductos';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Search } from 'lucide-react';
+import GlobalProductos from '../global/GlobalProductos';
+import { useDeleteProducto } from '../../hooks/useDeleteProducto.js';
 
 const CRUDProductos = () => {
     const [activeTab, setActiveTab] = useState('list');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const { productos, isLoading } = useFetchProductos();
-    const filteredProductos = productos.filter((producto) =>
+    const globalProductos = useContext(GlobalProductos);
+    const [isLoading, setIsLoading] = useState(true)
+    const filteredProductos = globalProductos.filter((producto) =>
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    const { deleteProducto } = useDeleteProducto();
+
+    useEffect(() => {
+        if (globalProductos.length > 0){
+            setTimeout(() => {
+                setIsLoading(false)
+            },0)
+        }
+    },[globalProductos])
 
     const generatePDF = () => {
         const doc = new jsPDF();
@@ -51,6 +61,24 @@ const CRUDProductos = () => {
         doc.save('Informe_Productos.pdf');
     };
 
+    const handleDelete = (productoId) => {
+        deleteProducto(productoId);
+        setTimeout(() => {
+            window.location.replace('');
+        },500)
+    }
+
+    useEffect(() => {
+        if(selectedProduct != null) {
+            setActiveTab('edit')
+            console.log(selectedProduct);
+        }
+    },[selectedProduct])
+
+    const handleEdit = (producto) => {
+        setSelectedProduct(producto);   
+    }
+
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
@@ -63,7 +91,6 @@ const CRUDProductos = () => {
                     <button
                         className="px-4 py-2 sm:px-6 sm:py-2 rounded-full bg-red text-white hover:bg-red-600 text-sm sm:text-base"
                         onClick={() => {
-                            setSelectedProduct(null);
                             setActiveTab('add');
                         }}
                     >
@@ -94,8 +121,7 @@ const CRUDProductos = () => {
 
 
                 {activeTab === 'add' && <FormAddProduct />}
-                {activeTab === 'edit' && selectedProduct && <FormEditProduct producto={selectedProduct} />}
-                {activeTab === 'delete' && selectedProduct && <FormDeleteProduct producto={selectedProduct} />}
+                {activeTab === 'edit' && selectedProduct != null ? <FormEditarProducto producto={selectedProduct} />:<p>error</p>}
                 {activeTab === 'addOffer' && selectedProduct && <FormAddOffer producto={selectedProduct} />}
                 {activeTab === 'list' && (
                     <div className="mt-6">
@@ -121,14 +147,14 @@ const CRUDProductos = () => {
                                         <div className="mt-4 flex flex-wrap justify-between space-y-2 sm:space-y-0">
                                             <button
                                                 className="px-3 py-1 bg-blue text-white rounded-full hover:bg-blue-600 transition text-xs sm:text-sm"
-                                                onClick={() => handleEdit(producto)}
+                                                onClick={() => handleEdit(producto)  }
                                             >
                                                 Editar
                                             </button>
 
                                             <button
                                                 className="px-3 py-1 bg-red text-white rounded-full hover:bg-red-600 transition text-xs sm:text-sm"
-                                                onClick={() => handleDelete(producto)}
+                                                onClick={() => handleDelete(producto.id)}
                                             >
                                                 Eliminar
                                             </button>
