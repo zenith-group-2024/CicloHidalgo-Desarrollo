@@ -10,7 +10,7 @@ export default function DetalleProducto() {
   const { id } = useParams();
   const { producto, isLoading, error } = useFetchProductoDetallado(id);
   const { addToCart } = useContext(CartContext);
-  const [addedToCart, setAddedToCart] = useState(false); // Estado para el mensaje de confirmación
+  const [addedToCart, setAddedToCart] = useState(false);
 
   if (isLoading) return <p className="text-center text-gray-600">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
@@ -35,9 +35,8 @@ export default function DetalleProducto() {
     }
 
     addToCart(producto);
-    setAddedToCart(true); // Muestra el mensaje
+    setAddedToCart(true);
 
-    // Oculta el mensaje después de 2 segundos
     setTimeout(() => {
       setAddedToCart(false);
     }, 2000);
@@ -72,9 +71,6 @@ export default function DetalleProducto() {
       </div>
       
      <WhatsAppButton message="¡Hola! Estoy interesado/a en obtener más información sobre el producto..." />
-
-
-
 
       <Footer />
     </div>

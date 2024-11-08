@@ -16,7 +16,6 @@ export const useDeleteProducto = () => {
         console.log(error);
       } finally {
         setIsLoading(false);
-        //console.log(message);
       }
     };
     

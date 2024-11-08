@@ -1,13 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import { useFetchProductosFiltro } from "../../hooks/FetchFiltros"; 
+import { useFetchProductosFiltro } from "../../hooks/FetchFiltros";
 
 const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChange }) => {
     const { categorias, isLoading } = useFetchProductosFiltro();
-    
     const [selectedCategories, setSelectedCategories] = useState({});
     const [selectedSubCategories, setSelectedSubCategories] = useState({});
     const [selectedBrands, setSelectedBrands] = useState({});
-
     const handleCategoryChange = (event) => {
         const { name, checked } = event.target;
         setSelectedCategories(prev => ({
@@ -154,7 +152,6 @@ const CheckBoxCategoria = ({ onCategoryChange, onBrandChange, onSubCategoryChang
             <button
                 onClick={resetFilters}
                 className="p-2 border-2 border-old text-old rounded-lg focus:outline-none transform transition-transform duration-300 hover:scale-105"
-
             >
                 Limpiar Filtros
             </button>
