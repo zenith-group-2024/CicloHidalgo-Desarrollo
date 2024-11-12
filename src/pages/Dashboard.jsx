@@ -4,7 +4,7 @@ import Navbar from '../UI/Navbar';
 import ProductosMasVendidos from '../UI/ProductosMasVendidos';
 import UltimosUsuariosRegistrados from '../UI/VistaUsuariosRegistrados';
 import ListaPedidos from '../UI/VistaPedidos';
-import GlobalProductos from '../global/GlobalProductos';
+import {GlobalProductos} from '../global/GlobalProductos';
 
 const Dashboard = () => {
   const globalProductos = useContext(GlobalProductos);
