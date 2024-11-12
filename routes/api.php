@@ -11,10 +11,11 @@ use App\Http\Controllers\ProfileController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use App\Http\Controllers\OrdenController;
 
+use App\Http\Controllers\EmailController;
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -34,6 +35,7 @@ Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::post('/productos/crear', [ProductoController::class, 'store']);
 Route::post('/productos/update/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/delete/{id}', [ProductoController::class, 'destroy']);
+Route::get('/destacados', [ProductoController::class, 'getDestacados']);
 
 Route::post('/user/login', [UserController::class, 'check'])->name('login');
 Route::post('/user/signin', [UserController::class, 'store']);
@@ -48,6 +50,11 @@ Route::get('/contenidos/all', [ContenidoController::class, 'index']);
 Route::post('/contenido/creacion', [ContenidoController::class, 'store']);
 Route::get('/contenido/delete/{id}', [ContenidoController::class, 'destroy']);
 Route::put('/contenido/update/{id}', [ContenidoController::class, 'update']);
+
+
+Route::post('/enviar-correo-personalizado', [EmailController::class, 'enviarCorreoPersonalizado']);
+
+
 
 Route::middleware('auth:sanctum')->group(function () {
 });

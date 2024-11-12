@@ -119,7 +119,7 @@ class OrdenController extends Controller
             ->get();
 
         $productosConInfo = Producto::whereIn('id', $topProductos->pluck('producto_id'))
-            ->get(['id', 'nombre']) // Solo obtener los campos 'id' y 'nombre'
+            ->get()
             ->map(function ($producto) use ($topProductos) {
                 $producto->total_cantidad = $topProductos->firstWhere('producto_id', $producto->id)->total_cantidad;
                 return $producto;

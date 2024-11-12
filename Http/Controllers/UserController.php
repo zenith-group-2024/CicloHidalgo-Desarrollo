@@ -102,6 +102,7 @@ class UserController extends Controller
         if ($user) {
             return response()->json([
                 'user' => $user,
+
             ]);
         }
 
@@ -127,7 +128,7 @@ class UserController extends Controller
             'users.email',
             'users.cumpleanos',
             'users.boletin',
-            'users.admin'
+
         )->where('id', $id)->first();
 
 
