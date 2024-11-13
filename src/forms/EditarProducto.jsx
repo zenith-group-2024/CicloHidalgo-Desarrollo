@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { X } from 'lucide-react'; 
-import { useUpdateProducto } from '../../hooks/useUpdateProducto.js';
-import { useFetchProductos } from '../../hooks/FetchProductos.js';
+import { useUpdateProducto } from '../../hooks/hooksProductos/useUpdateProducto.js';
+import { useFetchProductos } from '../../hooks/hooksProductos/FetchProductos.js';
 import { div, label } from 'framer-motion/client';
 
 const FormEditarProducto = ({idProducto }) => {

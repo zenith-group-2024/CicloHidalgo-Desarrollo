@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { CartContext } from './prueba_carrito';
-import { useFetchDestacados } from '../../hooks/useFetchDestacados';
+import { useFetchDestacados } from '../../hooks/hooksProductos/useFetchDestacados';
 import '../index.css';
 
 const ProductosDestacados = () => {

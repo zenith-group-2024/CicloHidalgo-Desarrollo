@@ -3,7 +3,7 @@ import Card from "../UI/CardContenidos";
 import Navbar from "../UI/Navbar";
 import Slider from "react-slick";
 import Footer from "../UI/Footer";
-import { useFetchContenidos } from "../../hooks/FetchContenidos"; 
+import { useFetchContenidos } from "../../hooks/hooksContenido/FetchContenidos"; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

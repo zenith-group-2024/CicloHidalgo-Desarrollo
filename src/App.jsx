@@ -21,7 +21,7 @@ import ListaOrdenes from './pages/ListaOrdenes.jsx';
 import CRUDProductos from '../src/UI/CRUDProductos.jsx';
 import CRUDContenido from '../src/UI/CRUDContenido.jsx';
 import Pedidos from './pages/GestionPedidos.jsx';
-import { useFetchProductos } from '../hooks/FetchProductos.js'
+import { useFetchProductos } from '../hooks/hooksProductos/FetchProductos.js'
 import GlobalProductos from './global/GlobalProductos.jsx'
 import CRUDUsuarios from './UI/CRUDUsuarios.jsx';
 import Ofertas from './pages/Ofertas.jsx';

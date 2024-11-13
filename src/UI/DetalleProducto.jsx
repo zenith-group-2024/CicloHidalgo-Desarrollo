@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { useFetchProductoDetallado } from '../../hooks/FetchProductoDetallado.js';
+import { useFetchProductoDetallado } from '../../hooks/hooksProductos/FetchProductoDetallado.js';
 import Navbar from './Navbar.jsx';
 import { CartContext } from '../UI/prueba_carrito.jsx';
 import Footer from "./Footer.jsx";

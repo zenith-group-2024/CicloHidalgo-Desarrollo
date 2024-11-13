@@ -4,7 +4,7 @@ import { Truck, Store } from "lucide-react";
 import Navbar from "../UI/Navbar.jsx";
 import Footer from "../UI/Footer.jsx";
 import { GlobalContext } from '../global/GlobalState.jsx';
-import FetchUser from "../../hooks/FetchUser.js";
+import FetchUser from "../../hooks/hooksUsuario/FetchUser.js";
 import WhatsAppButton from "../UI/WhatsAppButton.jsx";
 import SelectProvinciaCanton from '../UI/SelectProvinciaCanton';
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
-import useFetchAdmins from '../../hooks/useFetchAdmins';
-import useCreateAdmin from '../../hooks/useCreateAdmin';
-import useUpdateAdmin from '../../hooks/useUpdateAdmin';
-import useDeleteAdmin from '../../hooks/useDeleteAdmin';
+import useFetchAdmins from '../../hooks/hooksAdmin/useFetchAdmins';
+import useCreateAdmin from '../../hooks/hooksAdmin/useCreateAdmin';
+import useUpdateAdmin from '../../hooks/hooksAdmin/useUpdateAdmin';
+import useDeleteAdmin from '../../hooks/hooksAdmin/useDeleteAdmin';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
