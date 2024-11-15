@@ -21,7 +21,7 @@ const ProductosDestacados = () => {
 
 
   if (isLoading) return <p>Cargando productos destacados...</p>;
-  //if (error) return <p>Error: {error}</p>;
+
 
   const productosDuplicados = [...destacados, ...destacados];
 
