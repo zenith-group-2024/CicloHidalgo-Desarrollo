@@ -7,7 +7,7 @@ import { GlobalContext } from '../global/GlobalState.jsx';
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginForm = ({ isOpen, onClose }) => {
-  const { login, isLoading, userId } = useLogin(); 
+  const { login, isLoading} = useLogin(); 
   const { state = {}, setToken, logout } = useContext(GlobalContext);
   const { isAuthenticated = false } = state; 
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ const LoginForm = ({ isOpen, onClose }) => {
   const [showRegistro, setShowRegistro] = useState(false);
   const [showPasswordRecovery, setShowPasswordRecovery] = useState(false); 
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate(); 
+ 
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -43,6 +43,10 @@ const LoginForm = ({ isOpen, onClose }) => {
 
   const handlePasswordRecoveryClick = () => {
     setShowPasswordRecovery(true);
+  };
+
+  const handleCloseRegistro = () => {
+    setShowRegistro(false);
   };
 
   const handleLogout = () => {
@@ -157,7 +161,7 @@ const LoginForm = ({ isOpen, onClose }) => {
           </div>
         </div>
       )}
-      {showRegistro && <Registro />}
+      {showRegistro && <Registro onClose={handleCloseRegistro} />}
       {showPasswordRecovery && <Recuperacion_contraseña onClose={() => setShowPasswordRecovery(false)} />} {/* Modal de recuperación */}
     </>
   );
