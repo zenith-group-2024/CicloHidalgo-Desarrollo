@@ -49,7 +49,8 @@ export const Contenido = () => {
   return (
     <div className="bg-white flex flex-col min-h-screen">
       <Navbar />
-      <Slider {...settings} className="px-4 my-4 flex-grow justify-center">
+      <Slider {...settings} className="w-full flex justify-center items-center md:my-40 px-4 my-4 flex-grow">
+
         {contenidos.map((contenido) => (
           <Card
             key={contenido.id}

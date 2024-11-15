@@ -34,8 +34,8 @@ const Registro = ({ onClose }) => {
       if (isRegistered) {
         setSuccessMessage('¡Usuario creado exitosamente!');
         setTimeout(() => {
-          closeModal(); // Cerrar el modal después de un breve retraso
-        }, 2000); // Esperar 2 segundos para mostrar el mensaje
+          closeModal();
+        }, 2000); 
         setNombre('');
         setContacto('');
         setDireccion('');
