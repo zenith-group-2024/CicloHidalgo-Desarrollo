@@ -37,60 +37,63 @@ class UserController extends Controller
         $validator = validator($request->all(), [
             'nombre' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'contacto' => ['string', 'max:255'],
-            'direccion' => ['string', 'max:255'],
+            'contacto' => ['nullable', 'string', 'max:255'],
+            'direccion' => ['nullable', 'string', 'max:255'],
             'password' => [
                 'required',
                 'string',
                 'min:8',
-                'regex:/[A-Z]/',     // Requiere al menos una letra mayúscula
-                'regex:/[@$!%*?&]/'  // Requiere al menos un carácter especial
+                'regex:/[A-Z]/',        
+                'regex:/[@$!%*?&]/'  
             ],
-            'cumpleanos' => ['string', 'max:255'],
+            'cumpleanos' => ['nullable', 'string', 'max:255'],
             'boletin' => ['required', 'boolean'],
-            'admin' => ['boolean']
+            'admin' => ['nullable', 'boolean']
         ], [
             'nombre.required' => 'El campo nombre es requerido.',
             'password.required' => 'El campo contraseña es requerido.',
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
-            'password.regex' => 'La contraseña debe contener al menos una letra mayúscula y un carácter especial (@$!%*?&).', // Mensaje general para regex
-            'password.regex:/[A-Z]/' => 'La contraseña debe contener al menos una letra mayúscula.', // Mensaje específico
-            'password.regex:/[@$!%*?&]/' => 'La contraseña debe contener al menos un carácter especial (@$!%*?&).', // Mensaje específico
             'email.required' => 'El campo email es requerido.',
-            'email.email' => 'El email debe ser una dirección de correo válida.'
+            'email.email' => 'El email debe ser una dirección de correo válida.',
+            'email.unique' => 'El email ya ha sido registrado.',
+            'boletin.required' => 'El campo boletín es obligatorio.',
+            'boletin.boolean' => 'El boletín debe ser un valor booleano.'
         ]);
     
+       
         if ($validator->fails()) {
-            if ($request->is('api/*') || $request->wantsJson()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            } else {
-                return redirect()->back()->withErrors($validator)->withInput();
+            $errors = $validator->errors();
+    
+            $customErrors = [];
+    
+             if (strlen($request->password) < 8) {
+            $customErrors[] = 'La contraseña debe tener al menos 8 caracteres.';
+        }
+            if (!preg_match('/[A-Z]/', $request->password)) {
+                $customErrors[] = 'La contraseña debe contener al menos una letra mayúscula.';
             }
+            if (!preg_match('/[@$!%*?&]/', $request->password)) {
+                $customErrors[] = 'La contraseña debe contener al menos un carácter especial (@$!%*?&).';
+            }
+    
+          
+            $allErrors = array_merge(
+                $errors->get('password') ? [] : $errors->all(),
+                $customErrors
+            );
+    
+            return response()->json(['message' => $allErrors], 400);
         }
     
+        
         $validated = $validator->validated();
-        $password = Hash::make($validated['password']);
-        $rand_code = random_int(100000, 999999);
+        $validated['password'] = Hash::make($validated['password']);
     
-        $user = User::create([
-            'nombre' => $validated['nombre'],
-            'contacto' => $validated['contacto'],
-            'email' => $validated['email'],
-            'password' => $password,
-            'direccion' => $validated['direccion'],
-            'cumpleanos' => $validated['cumpleanos'],
-            'boletin' => $validated['boletin'],
-        ]);
+        $user = User::create($validated);
     
-        // Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
-    
-        if ($request->is('api/*') || $request->wantsJson()) {
-            return response()->json(['message' => 'Usuario creado exitosamente.', 'user' => $user], 201);
-        }
-    
-        return response()->json(['message' => 'Usuario Registrado'], 200);
+        return response()->json(['message' => 'Usuario creado exitosamente.', 'user' => $user], 201);
     }
-    
+
 
     public function check(Request $request)
     {
