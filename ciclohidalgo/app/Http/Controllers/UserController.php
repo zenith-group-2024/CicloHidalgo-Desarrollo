@@ -39,17 +39,27 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'contacto' => ['string', 'max:255'],
             'direccion' => ['string', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[A-Z]/',     // Requiere al menos una letra mayúscula
+                'regex:/[@$!%*?&]/'  // Requiere al menos un carácter especial
+            ],
             'cumpleanos' => ['string', 'max:255'],
             'boletin' => ['required', 'boolean'],
             'admin' => ['boolean']
         ], [
             'nombre.required' => 'El campo nombre es requerido.',
             'password.required' => 'El campo contraseña es requerido.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.regex' => 'La contraseña debe contener al menos una letra mayúscula y un carácter especial (@$!%*?&).', // Mensaje general para regex
+            'password.regex:/[A-Z]/' => 'La contraseña debe contener al menos una letra mayúscula.', // Mensaje específico
+            'password.regex:/[@$!%*?&]/' => 'La contraseña debe contener al menos un carácter especial (@$!%*?&).', // Mensaje específico
             'email.required' => 'El campo email es requerido.',
             'email.email' => 'El email debe ser una dirección de correo válida.'
         ]);
-
+    
         if ($validator->fails()) {
             if ($request->is('api/*') || $request->wantsJson()) {
                 return response()->json(['errors' => $validator->errors()], 400);
@@ -57,11 +67,11 @@ class UserController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
         }
-
+    
         $validated = $validator->validated();
         $password = Hash::make($validated['password']);
         $rand_code = random_int(100000, 999999);
-
+    
         $user = User::create([
             'nombre' => $validated['nombre'],
             'contacto' => $validated['contacto'],
@@ -70,20 +80,17 @@ class UserController extends Controller
             'direccion' => $validated['direccion'],
             'cumpleanos' => $validated['cumpleanos'],
             'boletin' => $validated['boletin'],
-
         ]);
-
+    
         // Mail::to($validated['email'])->send(new UserMail($validated['name'], $user->id, $rand_code));
-
+    
         if ($request->is('api/*') || $request->wantsJson()) {
             return response()->json(['message' => 'Usuario creado exitosamente.', 'user' => $user], 201);
         }
-
-        if ($request->is('api/*') || $request->wantsJson()) {
-        }
-
+    
         return response()->json(['message' => 'Usuario Registrado'], 200);
     }
+    
 
     public function check(Request $request)
     {
