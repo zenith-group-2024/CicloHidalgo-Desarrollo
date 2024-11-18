@@ -8,23 +8,29 @@ import FetchUser from "../../hooks/FetchUser.js";
 import WhatsAppButton from "../UI/WhatsAppButton.jsx";
 import SelectProvinciaCanton from '../UI/SelectProvinciaCanton';
 
-
 function FormularioEnvio() {
   const { state } = useContext(GlobalContext);
   const { cart, setCart } = useContext(CartContext);
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
-  const [formOrdenData, setFormData] = useState({
+
+  // Estado inicial del formulario de pedido, incluyendo provincia y cantón
+  const initialFormData = {
     user_id: state.id || "",
     metodo_envio: "envia",
     metodo_pago: "sinpe",
     productos: cart.map(item => ({ id: item.id, cantidad: item.quantity })),
-  });
+    provincia: "",  // Agregado para limpiar provincia
+    ciudad: "",     // Agregado para limpiar cantón
+  };
+
+  const [formOrdenData, setFormData] = useState(initialFormData);
   const capitalize = (str) => str.replace(/\b\w/g, char => char.toUpperCase());
   const [showModal, setShowModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { formData: userData, loading: userLoading } = FetchUser();
   const [whatsappMessage, setWhatsappMessage] = useState("Hola! Quisiera información sobre un pedido.");
+  
   const handleProvinciaChange = (provincia) => {
     setFormData(prevData => ({ ...prevData, provincia }));
   };
@@ -70,6 +76,8 @@ function FormularioEnvio() {
 
       if (response.ok) {
         setShowSuccessMessage(true);
+        setCart([]);  // Limpiar el carrito
+        setFormData(initialFormData);  // Restablecer los datos del formulario, incluyendo provincia y cantón
         setWhatsappMessage("Hola! Acabo de realizar un pedido.");
       } else {
         const data = await response.json();
@@ -267,7 +275,7 @@ function FormularioEnvio() {
               </p>
               <button
                 onClick={() => setShowSuccessMessage(false)}
-                className="px-6 py-3 bg-gray  text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
+                className="px-6 py-3 bg-gray text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
               >
                 Cerrar
               </button>
