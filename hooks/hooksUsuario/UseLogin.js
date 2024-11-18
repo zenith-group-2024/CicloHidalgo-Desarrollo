@@ -1,6 +1,6 @@
 
 import { useState,useContext } from 'react';
-import { GlobalContext } from '../src/global/GlobalState.jsx';
+import { GlobalContext } from '../../src/global/GlobalState.jsx';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);

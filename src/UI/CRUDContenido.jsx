@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import FormAddContent from '../forms/AñadirContenido';
 import FormEditContent from '../forms/EditarContenido';
 import FormDeleteContent from '../forms/EliminarContenido';
-import { useFetchContenidos } from '../../hooks/FetchContenidos';
+import { useFetchContenidos } from '../../hooks/hooksContenido/FetchContenidos';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import jsPDF from 'jspdf';

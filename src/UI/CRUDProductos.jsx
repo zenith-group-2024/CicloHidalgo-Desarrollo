@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import { Search } from 'lucide-react';
 import {GlobalProductos} from '../global/GlobalProductos';
-import { useDeleteProducto } from '../../hooks/useDeleteProducto.js';
+import { useDeleteProducto } from '../../hooks/hooksProductos/useDeleteProducto.js';
 import { Navigate, NavLink } from 'react-router-dom';
 
 const CRUDProductos = () => {

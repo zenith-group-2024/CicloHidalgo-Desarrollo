@@ -1,27 +1,27 @@
-import React from 'react';
-import { X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { handleSubmitOferta } from "../../utils/handleSubmitOferta";
+import { fetchConDescuento } from '../../hooks/hooksProductos/fetchDescuentos';
 
 export default function EliminarOferta() {
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProducts, setSelectedProducts] = useState({});
+
     const [backendMessage, setBackendMessage] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        const fetchProductos = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/con-descuento/all');
-                const data = await response.json();
-                setProductos(data.productos);
+                const productosData = await fetchConDescuento();
+                setProductos(productosData);
             } catch (error) {
                 console.error('Error al obtener los productos:', error);
             } finally {
                 setLoading(false);
             }
         };
-        fetchProductos();
+        fetchData();
     }, []);
 
     if (loading) {
@@ -36,42 +36,17 @@ export default function EliminarOferta() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const idsToUpdate = Object.keys(selectedProducts).filter((id) => selectedProducts[id]);
-        if (idsToUpdate.length === 0) {
-            alert('Por favor, seleccione al menos un producto');
-            return;
-        }
-
-        try {
-            const response = await fetch('http://localhost:8000/api/actualizar-descuento', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ids: idsToUpdate, descuento: 0 }),
-            });
-
-            if (!response.ok) {
-                console.error('Error response:', response.status, response.statusText);
-                throw new Error('Error al eliminar las ofertas');
-            }
-
-            const updatedProducts = productos.map((producto) => {
-                if (idsToUpdate.includes(producto.id.toString())) {
-                    return { ...producto, descuento: 0 };
-                }
-                return producto;
-            });
-
-            setProductos(updatedProducts);
-            const result = await response.json();
-            setBackendMessage(result.message);
-
-        } catch (error) {
-            console.error('Error al enviar los datos:', error);
-        }
+        const descuento = 0;
+        await handleSubmitOferta({
+            e,
+            selectedProducts,
+            descuento,
+            productos,
+            setProductos,
+            setBackendMessage,
+        });
     };
+
     const filteredProducts = productos.filter((producto) =>
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
         producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
