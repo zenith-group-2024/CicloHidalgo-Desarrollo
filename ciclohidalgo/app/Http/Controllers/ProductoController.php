@@ -189,7 +189,7 @@ class ProductoController extends Controller
     /////DESCUENTOS
     public function discountlist(Request $request)
     {
-        $listaProductos = Producto::where('descuento', '>', 0)->get();
+        $listaProductos = Producto::where('descuento', '>', 0)->pluck('id');
 
         if ($request->is('api/*') || $request->wantsJson()) {
             return response()->json(['productos' => $listaProductos], 200);
@@ -200,7 +200,7 @@ class ProductoController extends Controller
     public function noDiscountlist(Request $request)
     {
         $listaProductos = Producto::where('descuento', 0)
-        ->get();
+        ->pluck('id');
         if ($request->is('api/*') || $request->wantsJson()) {
             return response()->json(['productos' => $listaProductos], 200);
         }
