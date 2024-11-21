@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { GlobalContext } from '../global/GlobalState.jsx';
 import { Clock, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
 
 const Pedidos = () => {
+  const { state} = useContext(GlobalContext);
+  const { isAdmin } = state;
   const [pedidosPendientes, setPedidosPendientes] = useState([]);
   const [pedidosCompletados, setPedidosCompletados] = useState([]);
   const [ordenSeleccionada, setOrdenSeleccionada] = useState(null);
@@ -68,6 +71,16 @@ const Pedidos = () => {
     return null;
   };
 
+  if (!isAdmin) {
+    return (        
+    <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow p-4 sm:p-6 bg-gray-50">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 sm:mt-8 mb-4 sm:mb-8 text-center text-old font-primary text-red">Acceso Denegado</h2>
+        </div>
+        <Footer />
+    </div>); }
+    else {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar />
@@ -81,7 +94,6 @@ const Pedidos = () => {
             className="mb-6 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-300 shadow"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Pedidos Pendientes */}
             <div className="bg-yellow-50 p-6 rounded-2xl shadow-md hover:shadow-lg">
               <div className="flex items-center mb-6">
                 <Clock className="text-yellow-500 h-7 w-7 mr-2" />
@@ -120,7 +132,6 @@ const Pedidos = () => {
                         {mostrarCampo("Provincia", pedido.provincia)}
                         {mostrarCampo("Ciudad", pedido.ciudad)}
                         {mostrarCampo("Código Postal", pedido.codigo_postal)}
-                        {/* Lista de productos */}
                         <h4 className="font-semibold mt-2">Productos en la Orden:</h4>
                         <ul className="list-disc pl-5">
                           {pedido.productos && pedido.productos.map((producto) => (
@@ -138,7 +149,6 @@ const Pedidos = () => {
               </div>
             </div>
 
-            {/* Pedidos Completados */}
             <div className="bg-green-50 p-6 rounded-2xl shadow-md hover:shadow-lg">
               <div className="flex items-center mb-6">
                 <CheckCircle className="text-green-500 h-7 w-7 mr-2" />
@@ -178,7 +188,6 @@ const Pedidos = () => {
                         {mostrarCampo("Provincia", pedido.provincia)}
                         {mostrarCampo("Ciudad", pedido.ciudad)}
                         {mostrarCampo("Código Postal", pedido.codigo_postal)}
-                        {/* Lista de productos */}
                         <h4 className="font-semibold mt-2">Productos en la Orden:</h4>
                         <ul className="list-disc pl-5">
                           {pedido.productos && pedido.productos.map((producto) => (
@@ -200,7 +209,7 @@ const Pedidos = () => {
       </main>
       <Footer />
     </div>
-  );
+  );}
 };
 
 export default Pedidos;

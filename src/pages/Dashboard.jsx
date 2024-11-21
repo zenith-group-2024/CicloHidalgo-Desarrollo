@@ -4,11 +4,14 @@ import Navbar from '../UI/Navbar';
 import ProductosMasVendidos from '../UI/ProductosMasVendidos';
 import UltimosUsuariosRegistrados from '../UI/VistaUsuariosRegistrados';
 import ListaPedidos from '../UI/VistaPedidos';
+import { GlobalContext } from '../global/GlobalState.jsx';
 import {GlobalProductos} from '../global/GlobalProductos';
 
 import { fetchTopProductos, fetchUsuarios, fetchPedidos } from "../../hooks/hooksDashboard/dashboardHooks.js";
 
 const Dashboard = () => {
+  const { state} = useContext(GlobalContext);
+  const { isAdmin } = state;
   const globalProductos = useContext(GlobalProductos);
   const [usuariosRegistrados, setUsuariosRegistrados] = useState(0);
   const [ultimosUsuarios, setUltimosUsuarios] = useState([]);
@@ -35,6 +38,16 @@ const Dashboard = () => {
     </div>
   );
 
+  if (!isAdmin) {
+    return (        
+    <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow p-4 sm:p-6 bg-gray-50">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 sm:mt-8 mb-4 sm:mb-8 text-center text-old font-primary text-red">Acceso Denegado</h2>
+        </div>
+        <Footer />
+    </div>); }
+    else {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800">
       <Navbar />
@@ -61,7 +74,7 @@ const Dashboard = () => {
       </main>
       <Footer />
     </div>
-  );
+  );}
 };
 
 export default Dashboard;
