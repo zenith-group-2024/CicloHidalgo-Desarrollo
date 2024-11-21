@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { handleSubmitOferta } from "../../utils/handleSubmitOferta";
 import { fetchConDescuento } from '../../hooks/hooksProductos/fetchDescuentos';
+import { GlobalProductos } from '../global/GlobalProductos';
 
 export default function EliminarOferta() {
-    const [productos, setProductos] = useState([]);
+    const globalProductos = useContext(GlobalProductos);
+    const [productosConDescuento, setProductosConDescuento] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProducts, setSelectedProducts] = useState({});
-
     const [backendMessage, setBackendMessage] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const productosData = await fetchConDescuento();
-                setProductos(productosData);
+                const productoIDs = await fetchConDescuento();
+                const productosFiltrados = globalProductos.filter((producto) =>
+                    productoIDs.includes(producto.id)
+                );
+                setProductosConDescuento(productosFiltrados);
             } catch (error) {
-                console.error('Error al obtener los productos:', error);
+                console.error('Error al filtrar los productos:', error);
             } finally {
                 setLoading(false);
             }
         };
         fetchData();
-    }, []);
+    }, [globalProductos]);
 
     if (loading) {
         return <p className="text-center m-auto">Cargando productos...</p>;
@@ -41,13 +45,13 @@ export default function EliminarOferta() {
             e,
             selectedProducts,
             descuento,
-            productos,
-            setProductos,
+            productos: productosConDescuento,
+            setProductos: setProductosConDescuento,
             setBackendMessage,
         });
     };
 
-    const filteredProducts = productos.filter((producto) =>
+    const filteredProducts = productosConDescuento.filter((producto) =>
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
         producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
     );

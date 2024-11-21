@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { handleSubmitOferta } from "../../utils/handleSubmitOferta";
 import { fetchConDescuento } from '../../hooks/hooksProductos/fetchDescuentos';
+import { GlobalProductos } from '../global/GlobalProductos';
 
 export default function EditarOferta() {
-    const [productos, setProductos] = useState([]);
+    const globalProductos = useContext(GlobalProductos);
+    const [productosConDescuento, setProductosConDescuento] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProducts, setSelectedProducts] = useState({});
     const [descuento, setDescuento] = useState(0);
@@ -13,8 +15,11 @@ export default function EditarOferta() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const productosData = await fetchConDescuento();
-                setProductos(productosData);
+                const idsConDescuento = await fetchConDescuento();
+                const productosFiltrados = globalProductos.filter((producto) =>
+                    idsConDescuento.includes(producto.id)
+                );
+                setProductosConDescuento(productosFiltrados);
             } catch (error) {
                 console.error('Error al obtener los productos:', error);
             } finally {
@@ -22,7 +27,7 @@ export default function EditarOferta() {
             }
         };
         fetchData();
-    }, []);
+    }, [globalProductos]);
 
     if (loading) {
         return <p className="text-center m-auto">Cargando productos...</p>;
@@ -36,18 +41,16 @@ export default function EditarOferta() {
     };
 
     const handleSubmit = async (e) => {
-
         await handleSubmitOferta({
             e,
             selectedProducts,
             descuento,
-            productos,
-            setProductos,
+            productos: productosConDescuento,
             setBackendMessage,
         });
     };
 
-    const filteredProducts = productos.filter((producto) =>
+    const filteredProducts = productosConDescuento.filter((producto) =>
         producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || 
         producto.marca.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -83,7 +86,7 @@ export default function EditarOferta() {
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((producto) => (
                                 <div className="grid grid-cols-5 p-4" key={producto.id}>
-                                      <img className="m-auto w-20 h-20 object-contain rounded-lg" src={producto.imagen} alt={producto.nombre} />
+                                    <img className="m-auto w-20 h-20 object-contain rounded-lg" src={producto.imagen} alt={producto.nombre} />
                                     <p className="m-auto">{producto.nombre}</p>
                                     <p className="m-auto">{producto.marca}</p>
                                     <p className="m-auto">{producto.descuento}%</p>

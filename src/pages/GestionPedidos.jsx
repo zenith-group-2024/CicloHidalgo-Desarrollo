@@ -4,6 +4,8 @@ import { Clock, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import Navbar from '../UI/Navbar';
 import Footer from '../UI/Footer';
 
+import { fetchPedidos, toggleEstadoPedido } from "../../hooks/hooksOrdenes/pedidosHooks.js";
+
 const Pedidos = () => {
   const { state} = useContext(GlobalContext);
   const { isAdmin } = state;
@@ -16,35 +18,28 @@ const Pedidos = () => {
     fetchPedidos();
   }, []);
 
-  const fetchPedidos = async () => {
+  useEffect(() => {
+    const cargarPedidos = async () => {
+      try {
+        const data = await fetchPedidos();
+        setPedidosPendientes(data.filter(p => p.estado === 'PENDIENTE'));
+        setPedidosCompletados(data.filter(p => p.estado === 'COMPLETO'));
+      } catch (error) {
+        console.error('Error al cargar los pedidos:', error);
+      }
+    };
+
+    cargarPedidos();
+  }, []);
+
+  const handleCambioEstado = async (pedidoId, estadoActual) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/ordenes/all`);
-      const data = await response.json();
+      await toggleEstadoPedido(pedidoId, estadoActual);
+      const data = await fetchPedidos();
       setPedidosPendientes(data.filter(p => p.estado === 'PENDIENTE'));
       setPedidosCompletados(data.filter(p => p.estado === 'COMPLETO'));
     } catch (error) {
-      console.error('Error al obtener pedidos:', error);
-    }
-  };
-
-  const toggleEstadoPedido = async (pedidoId, estadoActual) => {
-    try {
-      const nuevoEstado = estadoActual === 'PENDIENTE' ? 'COMPLETO' : 'PENDIENTE';
-      const response = await fetch(`http://localhost:8000/api/toggle-estado-orden/${pedidoId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ estado: nuevoEstado }),
-      });
-
-      if (response.ok) {
-        fetchPedidos();
-      } else {
-        console.error('Error al cambiar el estado de la orden');
-      }
-    } catch (error) {
-      console.error('Error de conexión:', error);
+      console.error('Error al cambiar el estado del pedido:', error);
     }
   };
 
@@ -82,6 +77,7 @@ const Pedidos = () => {
     </div>); }
     else {
   return (
+    
     <div className="min-h-screen flex flex-col bg-gray-100">
       <Navbar />
       <main className="flex-grow p-6">
@@ -117,7 +113,7 @@ const Pedidos = () => {
                         </button>
                         <button
                           className="text-green-600 border border-green-400 bg-green-100 px-2 py-1 rounded-full text-sm font-medium flex items-center shadow-md hover:shadow-lg transition-all"
-                          onClick={() => toggleEstadoPedido(pedido.id, pedido.estado)}
+                          onClick={() => handleCambioEstado(pedido.id, pedido.estado)}
                         >
                           <CheckCircle className="h-4 w-4 mr-1" /> Completar
                         </button>
@@ -173,7 +169,7 @@ const Pedidos = () => {
                         </button>
                         <button
                           className="text-yellow-600 border border-yellow-400 bg-yellow-100 px-2 py-1 rounded-full text-sm font-medium flex items-center shadow-md hover:shadow-lg transition-all"
-                          onClick={() => toggleEstadoPedido(pedido.id, pedido.estado)}
+                          onClick={() => handleCambioEstado(pedido.id, pedido.estado)}
                         >
                           <Clock className="h-4 w-4 mr-1" /> Pendiente
                         </button>

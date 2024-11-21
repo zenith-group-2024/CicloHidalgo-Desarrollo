@@ -7,6 +7,7 @@ import { GlobalContext } from '../global/GlobalState.jsx';
 import FetchUser from "../../hooks/hooksUsuario/FetchUser.js";
 import WhatsAppButton from "../UI/WhatsAppButton.jsx";
 import SelectProvinciaCanton from '../UI/SelectProvinciaCanton';
+import { finalizarOrden } from "../../utils/handleFinalizarOrden.js"; 
 
 function FormularioEnvio() {
   const { state } = useContext(GlobalContext);
@@ -14,14 +15,13 @@ function FormularioEnvio() {
   const [envio, setEnvio] = useState("envia");
   const [pago, setPago] = useState("sinpe");
 
-  // Estado inicial del formulario de pedido, incluyendo provincia y cantón
   const initialFormData = {
     user_id: state.id || "",
     metodo_envio: "envia",
     metodo_pago: "sinpe",
     productos: cart.map(item => ({ id: item.id, cantidad: item.quantity })),
-    provincia: "",  // Agregado para limpiar provincia
-    ciudad: "",     // Agregado para limpiar cantón
+    provincia: "",
+    ciudad: "",
   };
 
   const [formOrdenData, setFormData] = useState(initialFormData);
@@ -54,37 +54,15 @@ function FormularioEnvio() {
 
   const handleFinalizarOrden = async (e) => {
     e.preventDefault();
-
-    if (formOrdenData.metodo_envio === "retiro") {
-      formOrdenData.direccion = null;
-      formOrdenData.direccion_detalles = null;
-      formOrdenData.provincia = null;
-      formOrdenData.ciudad = null;
-      formOrdenData.codigo_postal = null;
-    }
-
     try {
-      console.log(formOrdenData);
-      const response = await fetch('http://localhost:8000/api/registrar-orden', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify(formOrdenData),
-      });
-
-      if (response.ok) {
-        setShowSuccessMessage(true);
-        setCart([]);  // Limpiar el carrito
-        setFormData(initialFormData);  // Restablecer los datos del formulario, incluyendo provincia y cantón
-        setWhatsappMessage("Hola! Acabo de realizar un pedido.");
-      } else {
-        const data = await response.json();
-        console.log(`Error: ${data.message}`);
-      }
+      const authToken = localStorage.getItem('authToken');
+      await finalizarOrden(formOrdenData, authToken);
+      setShowSuccessMessage(true);
+      setCart([]);
+      setFormData(initialFormData);
+      setWhatsappMessage("Hola! Acabo de realizar un pedido.");
     } catch (error) {
-      console.error('Error:', error);
+      console.error(error.message);
     }
     setShowModal(false);
   };
