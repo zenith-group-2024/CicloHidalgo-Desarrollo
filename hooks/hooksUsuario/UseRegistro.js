@@ -46,5 +46,6 @@ export const useRegistro = () => {
     isLoading,
     errorMessage,
     register,
+    setErrorMessage,
   };
 };

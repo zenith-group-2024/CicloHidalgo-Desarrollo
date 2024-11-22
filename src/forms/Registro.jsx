@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { useRegistro } from '../../hooks/hooksUsuario/UseRegistro';
 import PhoneInput from 'react-phone-input-2';
@@ -15,7 +15,8 @@ const Registro = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [successMessage, setSuccessMessage] = useState(''); 
 
-  const { register, isLoading, errorMessage } = useRegistro();
+
+  const { register, isLoading, errorMessage, setErrorMessage } = useRegistro();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -53,12 +54,21 @@ const Registro = ({ onClose }) => {
     setIsOpen(false);
     if (onClose) onClose();
   };
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage(''); 
+      }, 3000);
+
+      return () => clearTimeout(timer); 
+    }
+  }, [errorMessage]);
 
   return (
     <>
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 overflow-hidden">
-          <div className="relative bg-white p-8 rounded-lg shadow-xl w-full max-w-md h-fit mx-4 my-8">
+          <div className="relative bg-white p-8  rounded-lg shadow-xl w-full max-w-md  mx-4 my-8">
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none"
@@ -71,7 +81,7 @@ const Registro = ({ onClose }) => {
             {successMessage ? (
               <p className="text-blue text-center font-medium">{successMessage}</p>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
                
                 <div>
                   <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
@@ -172,7 +182,7 @@ const Registro = ({ onClose }) => {
                 </div>
 
                 {errorMessage && (
-                  <p className="text-red font-primary font-normal text-lg text-center">{errorMessage}</p>
+                  <p className="text-red font-primary font-semibold text-center">{errorMessage}</p>
                 )}
 
                 <button

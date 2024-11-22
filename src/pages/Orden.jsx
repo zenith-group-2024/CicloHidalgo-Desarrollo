@@ -8,7 +8,7 @@ import FetchUser from "../../hooks/hooksUsuario/FetchUser.js";
 import WhatsAppButton from "../UI/WhatsAppButton.jsx";
 import SelectProvinciaCanton from '../UI/SelectProvinciaCanton';
 import { useNavigate } from "react-router-dom";
-import { finalizarOrden } from "../../utils/handleFinalizarOrden.js"; 
+import { finalizarOrden } from "../../utils/handleFinalizarOrden.js";
 
 function FormularioEnvio() {
   const navigate = useNavigate(); // Hook para navegación
@@ -27,7 +27,7 @@ function FormularioEnvio() {
   };
 
 
-  
+
   const [formOrdenData, setFormData] = useState(initialFormData);
   const capitalize = (str) => str.replace(/\b\w/g, char => char.toUpperCase());
   const [showModal, setShowModal] = useState(false);
@@ -62,32 +62,26 @@ function FormularioEnvio() {
     const { name, value } = e.target;
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
-
   
-
-  const [codigoPostal, setCodigoPostal] = useState('');
-
   const handleInputChange = (e) => {
     let value = e.target.value;
-
+  
     // Elimina cualquier signo negativo si lo intentan escribir
     if (value.startsWith('-')) {
       value = value.slice(1); // Elimina el guion
     }
-
+  
     // Elimina cualquier carácter que no sea un número
     value = value.replace(/[^0-9]/g, '');
-
-   // Elimina el signo "-" (y cualquier otro carácter especial no alfanumérico)
-   const cleanedValue = value.replace(/[^a-zA-Z0-9 ]/g, ''); // Filtra 
-
+  
     // Limita el número a 5 caracteres
     if (value.length > 5) {
       value = value.slice(0, 5); // Recorta el valor a 5 caracteres
     }
-
-    setCodigoPostal(value); // Actualiza el estado con el valor corregido
+  
+    setFormData(prevData => ({ ...prevData, codigo_postal: value })); // Actualiza el estado con el valor del código postal
   };
+  
 
 
 
@@ -103,6 +97,7 @@ function FormularioEnvio() {
     } catch (error) {
       console.error(error.message);
     }
+    setCart([]);
     setShowModal(false);
   };
 
@@ -196,7 +191,7 @@ function FormularioEnvio() {
 
           {envio === "envia" && (
             <>
-            <div className="mb-6">
+              <div className="mb-6">
                 <label className="block text-gray-700 mb-2">Telefono</label>
                 <input
                   type="number"
@@ -237,21 +232,21 @@ function FormularioEnvio() {
                 onCantonChange={handleCantonChange}
               />
 
-<div className="mb-6">
-  <label className="block text-gray-700 mb-2">
-    Código Postal <span className="text-gray opacity-70">(opcional)</span>
-  </label>
-  <input
-    type="number"
-    name="codigo_postal"
-    value={codigoPostal}
-    onChange={handleInputChange}
-    placeholder="Código Postal"
-    className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-    min="0"
-    max="99999"
-  />
-</div>
+              <div className="mb-6">
+                <label className="block text-gray-700 mb-2">
+                  Código Postal <span className="text-gray opacity-70">(opcional)</span>
+                </label>
+                <input
+                  type="number"
+                  name="codigo_postal"
+                  value={formOrdenData.codigo_postal}
+                  onChange={handleInputChange}
+                  placeholder="Código Postal"
+                  className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  min="0"
+                  max="99999"
+                />
+              </div>
 
             </>
           )}
@@ -292,6 +287,7 @@ function FormularioEnvio() {
                 </button>
                 <button
                   onClick={handleFinalizarOrden}
+
                   className="px-6 py-2 bg-red text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105">
                   Confirmar
                 </button>
@@ -308,11 +304,11 @@ function FormularioEnvio() {
                 Por favor, comunícate con nosotros por medio de WhatsApp para finalizar el pago.
               </p>
               <button
-  onClick={handleExitModal} // Llama a la función directamente
-  className="px-6 py-3 bg-gray text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
->
-  Cerrar
-</button>
+                onClick={handleExitModal} // Llama a la función directamente
+                className="px-6 py-3 bg-gray text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
+              >
+                Cerrar
+              </button>
 
             </div>
           </div>

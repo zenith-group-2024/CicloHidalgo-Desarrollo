@@ -33,7 +33,7 @@ const LoginForm = ({ isOpen, onClose }) => {
       onClose();
     } catch (e) {
       setErrorMessage(e.message); 
-      console.log(e.message); 
+   
     }
   };
 
