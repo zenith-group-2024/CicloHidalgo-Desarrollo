@@ -7,8 +7,10 @@ import { GlobalContext } from '../global/GlobalState.jsx';
 import FetchUser from "../../hooks/hooksUsuario/FetchUser.js";
 import WhatsAppButton from "../UI/WhatsAppButton.jsx";
 import SelectProvinciaCanton from '../UI/SelectProvinciaCanton';
+import { useNavigate } from "react-router-dom";
 
 function FormularioEnvio() {
+  const navigate = useNavigate(); // Hook para navegación
   const { state } = useContext(GlobalContext);
   const { cart, setCart } = useContext(CartContext);
   const [envio, setEnvio] = useState("envia");
@@ -24,15 +26,24 @@ function FormularioEnvio() {
     ciudad: "",     // Agregado para limpiar cantón
   };
 
+
+  
   const [formOrdenData, setFormData] = useState(initialFormData);
   const capitalize = (str) => str.replace(/\b\w/g, char => char.toUpperCase());
   const [showModal, setShowModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { formData: userData, loading: userLoading } = FetchUser();
   const [whatsappMessage, setWhatsappMessage] = useState("Hola! Quisiera información sobre un pedido.");
-  
+
   const handleProvinciaChange = (provincia) => {
     setFormData(prevData => ({ ...prevData, provincia }));
+  };
+
+
+  const handleExitModal = () => {
+    setShowModal(false);
+    setShowSuccessMessage(false);
+    window.location.href = '/'; // Redirecciona al homepage
   };
 
   const handleCantonChange = (canton) => {
@@ -51,6 +62,34 @@ function FormularioEnvio() {
     const { name, value } = e.target;
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
+
+  
+
+  const [codigoPostal, setCodigoPostal] = useState('');
+
+  const handleInputChange = (e) => {
+    let value = e.target.value;
+
+    // Elimina cualquier signo negativo si lo intentan escribir
+    if (value.startsWith('-')) {
+      value = value.slice(1); // Elimina el guion
+    }
+
+    // Elimina cualquier carácter que no sea un número
+    value = value.replace(/[^0-9]/g, '');
+
+   // Elimina el signo "-" (y cualquier otro carácter especial no alfanumérico)
+   const cleanedValue = value.replace(/[^a-zA-Z0-9 ]/g, ''); // Filtra 
+
+    // Limita el número a 5 caracteres
+    if (value.length > 5) {
+      value = value.slice(0, 5); // Recorta el valor a 5 caracteres
+    }
+
+    setCodigoPostal(value); // Actualiza el estado con el valor corregido
+  };
+
+
 
   const handleFinalizarOrden = async (e) => {
     e.preventDefault();
@@ -161,7 +200,7 @@ function FormularioEnvio() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-            {["nombre", "apellido", "telefono"].map(field => (
+            {["nombre", "apellido"].map(field => (
               <div key={field}>
                 <label className="block text-gray-700 mb-2">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                 <input
@@ -179,6 +218,18 @@ function FormularioEnvio() {
 
           {envio === "envia" && (
             <>
+            <div className="mb-6">
+                <label className="block text-gray-700 mb-2">Telefono</label>
+                <input
+                  type="number"
+                  name="telefono"
+                  value={formOrdenData.telefono || ""}
+                  onChange={handleChange}
+                  placeholder="Telefono"
+                  className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
               <div className="mb-6">
                 <label className="block text-gray-700 mb-2">Dirección</label>
                 <input
@@ -192,7 +243,7 @@ function FormularioEnvio() {
                 />
               </div>
               <div className="mb-6">
-                <label className="block text-gray-700 mb-2">Casa, apartamento, etc. (opcional)</label>
+                <label className="block text-gray-700 mb-2">Casa, apartamento, etc. <span className="text-gray opacity-70">(opcional)</span></label>
                 <input
                   type="text"
                   name="direccion_detalles"
@@ -208,17 +259,22 @@ function FormularioEnvio() {
                 onCantonChange={handleCantonChange}
               />
 
-              <div className="mb-6">
-                <label className="block text-gray-700 mb-2">Código Postal</label>
-                <input
-                  type="text"
-                  name="codigo_postal"
-                  value={formOrdenData.codigo_postal || ""}
-                  onChange={handleChange}
-                  placeholder="Código Postal"
-                  className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+<div className="mb-6">
+  <label className="block text-gray-700 mb-2">
+    Código Postal <span className="text-gray opacity-70">(opcional)</span>
+  </label>
+  <input
+    type="number"
+    name="codigo_postal"
+    value={codigoPostal}
+    onChange={handleInputChange}
+    placeholder="Código Postal"
+    className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    min="0"
+    max="99999"
+  />
+</div>
+
             </>
           )}
 
@@ -274,11 +330,12 @@ function FormularioEnvio() {
                 Por favor, comunícate con nosotros por medio de WhatsApp para finalizar el pago.
               </p>
               <button
-                onClick={() => setShowSuccessMessage(false)}
-                className="px-6 py-3 bg-gray text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
-              >
-                Cerrar
-              </button>
+  onClick={handleExitModal} // Llama a la función directamente
+  className="px-6 py-3 bg-gray text-white rounded-full shadow-md transition duration-200 ease-in-out transform hover:scale-105"
+>
+  Cerrar
+</button>
+
             </div>
           </div>
         )}

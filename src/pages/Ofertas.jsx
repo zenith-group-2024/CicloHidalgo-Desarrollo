@@ -27,10 +27,10 @@ export default function Ofertas() {
         <div className="flex flex-col items-center min-h-[80vh]">
             
             
-            <div className="flex mx-auto items-center justify-center gap-4 max-w-[50vh]" style={{ textAlign: "center", margin: "20px 0" }}>
-                <button className="bg-blue text-white px-4 py-2 min-w-[10rem] rounded-full hover:bg-red transition w-full" onClick={() => setActiveComponent("add")}>Añadir Oferta</button>
-                <button className="bg-blue text-white px-4 py-2 min-w-[10rem] rounded-full hover:bg-red transition w-full" onClick={() => setActiveComponent("edit")}>Editar Oferta</button>
-                <button className="bg-blue text-white px-4 py-2 min-w-[10rem] rounded-full hover:bg-red transition w-full" onClick={() => setActiveComponent("delete")}>Eliminar Oferta</button>
+            <div className="flex mx-auto items-center justify-center gap-4 max-w-[50vh] " style={{ textAlign: "center", margin: "20px 0" }}>
+                <button className="bg-blue text-white px-4 py-2 mt-5 min-w-[10rem] rounded-full hover:bg-red transition w-full" onClick={() => setActiveComponent("add")}>Añadir Oferta</button>
+                <button className="bg-blue text-white px-4 py-2 mt-5 min-w-[10rem] rounded-full hover:bg-red transition w-full" onClick={() => setActiveComponent("edit")}>Editar Oferta</button>
+                <button className="bg-blue text-white px-4 py-2 mt-5 min-w-[10rem] rounded-full hover:bg-red transition w-full" onClick={() => setActiveComponent("delete")}>Eliminar Oferta</button>
             </div>
             
             <div style={{ marginTop: "20px" }}>

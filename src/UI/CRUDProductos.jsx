@@ -118,7 +118,7 @@ const CRUDProductos = () => {
                         ) : filteredProductos.length > 0 ? (
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                                 {filteredProductos.map((producto) => (
-                                    <div key={producto.id} className="rounded-lg shadow-lg hover:shadow-lg transition-shadow p-4 bg-white flex flex-col">
+                                    <div key={producto.id} className="rounded-lg shadow-lg shadow-lg transition-shadow p-4 bg-white flex flex-col">
                                         <div className="w-full h-48 overflow-hidden rounded-md mb-4 flex items-center justify-center bg-gray-100">
                                             <img
                                                 src={producto.imagen}

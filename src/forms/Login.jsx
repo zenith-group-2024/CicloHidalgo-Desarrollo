@@ -147,15 +147,15 @@ const LoginForm = ({ isOpen, onClose }) => {
             )}
 
             <p className="mt-4 text-center text-gray-600">
-              No tienes una cuenta?{' '}
+            ¿No tienes una cuenta?{' '}
               <button onClick={handleRegisterClick} className="text-red underline">
                 Regístrate aquí
               </button>
             </p>
             <p className="mt-4 text-center text-gray-600">
-              ¿Olvidaste tu contraseña?{' '}
+              {' '}
               <button onClick={handlePasswordRecoveryClick} className="text-red underline">
-                Recuperación de contraseña
+              ¿Olvidaste tu contraseña?
               </button>
             </p>
           </div>
