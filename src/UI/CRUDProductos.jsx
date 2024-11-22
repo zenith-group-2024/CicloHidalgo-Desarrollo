@@ -9,8 +9,11 @@ import { Search } from 'lucide-react';
 import {GlobalProductos} from '../global/GlobalProductos';
 import { useDeleteProducto } from '../../hooks/hooksProductos/useDeleteProducto.js';
 import { Navigate, NavLink } from 'react-router-dom';
+import { GlobalContext } from '../global/GlobalState.jsx';
 
 const CRUDProductos = () => {
+    const { state} = useContext(GlobalContext);
+    const { isAdmin } = state;
     const [activeTab, setActiveTab] = useState('list');
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
@@ -68,6 +71,16 @@ const CRUDProductos = () => {
         },500)
     }
 
+    if (!isAdmin) {
+        return (        
+        <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <div className="flex-grow p-4 sm:p-6 bg-gray-50">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 sm:mt-8 mb-4 sm:mb-8 text-center text-old font-primary text-red">Acceso Denegado</h2>
+            </div>
+            <Footer />
+        </div>); }
+        else {
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
@@ -159,7 +172,7 @@ const CRUDProductos = () => {
 
             <Footer />
         </div>
-    );
+    );}
 };
 
 export default CRUDProductos;
