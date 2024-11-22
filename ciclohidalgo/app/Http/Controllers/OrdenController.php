@@ -39,7 +39,7 @@ class OrdenController extends Controller
     public function registrarOrden(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'metodo_envio' => 'required|string',
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
